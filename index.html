@@ -1,205 +1,493 @@
+```html
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berkan'dan İpuçları | English & AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkan'dan İpuçları | English & AI</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: {
-    extend: {
-      fontFamily: { sans: ['Roboto','sans-serif'] },
-      colors: {
-        google:{
-          blue:'#0B57D0',
-          blueHover:'#004A77',
-          bg:'#F8FAFD',
-          surface:'#FFFFFF',
-          text:'#1F1F1F',
-          subtext:'#444746',
-          border:'#E0E3E7',
-          lightBlue:'#C2E7FF',
-        },
-        dark:{
-          bg:'#121212',
-          surface:'#1E1E1E',
-          border:'#444746',
-          text:'#E3E3E3',
-          blue:'#A8C7FA',
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        google: {
+                            blue: '#0B57D0',
+                            blueHover: '#004A77',
+                            bg: '#F8FAFD',
+                            surface: '#FFFFFF',
+                            text: '#1F1F1F',
+                            subtext: '#444746',
+                            border: '#E0E3E7',
+                            lightBlue: '#C2E7FF',
+                        },
+                        dark: {
+                            bg: '#121212',
+                            surface: '#1E1E1E',
+                            border: '#444746',
+                            text: '#E3E3E3',
+                            blue: '#A8C7FA',
+                        }
+                    },
+                    boxShadow: {
+                        'material': '0 2px 4px 0 rgba(60,64,67,0.1), 0 4px 8px 2px rgba(60,64,67,0.05)',
+                        'material-hover': '0 4px 8px 0 rgba(60,64,67,0.2), 0 8px 16px 4px rgba(60,64,67,0.1)',
+                        'material-active': '0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 4px 1px rgba(60,64,67,0.15)',
+                    },
+                    transitionTimingFunction: {
+                        'material': 'cubic-bezier(0.4, 0, 0.2, 1)',
+                    },
+                    scale: {
+                        '102': '1.02',
+                    },
+                }
+            }
         }
-      }
-    }
-  }
-}
-</script>
+    </script>
+    
+    <style>
+        .btn-pill { border-radius: 9999px; }
+        .card-rounded { border-radius: 24px; }
+        .material-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
 
-<style>
-.btn-pill { border-radius:9999px }
-.card-rounded { border-radius:24px }
+        /* Enhanced button styles for weight and smoothness */
+        .btn-enhanced {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-enhanced:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .btn-enhanced:active {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
 
-/* BUTTON WEIGHT */
-.btn-heavy {
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.btn-heavy:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(0,0,0,.15);
-}
-.btn-heavy:active {
-  transform: translateY(1px);
-  box-shadow: 0 4px 10px rgba(0,0,0,.15);
-}
+        /* Card hover effects */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
 
-/* CARD FLOAT */
-.card-float {
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-.card-float:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(0,0,0,.12);
-}
-</style>
+        /* Smooth fade-in for sections */
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
+<body class="bg-google-bg text-google-text dark:bg-dark-bg dark:text-dark-text transition-colors duration-300 antialiased font-sans">
 
-<body class="bg-google-bg text-google-text dark:bg-dark-bg dark:text-dark-text transition-colors antialiased">
+    <nav class="fixed w-full z-50 bg-google-surface/95 dark:bg-dark-surface/95 backdrop-blur-lg border-b border-google-border dark:border-dark-border shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 font-medium text-lg tracking-tight">
+                <div class="bg-google-blue dark:bg-dark-blue text-white dark:text-dark-surface p-1.5 rounded-lg shadow-md">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <span>Berkan'dan İpuçları</span>
+            </a>
 
-<!-- NAV -->
-<nav class="fixed w-full z-50 bg-google-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-google-border dark:border-dark-border">
-<div class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="#materials" class="px-4 py-2 rounded-full text-sm font-medium hover:bg-google-border dark:hover:bg-dark-border transition-colors text-google-subtext dark:text-gray-300">Materyaller</a>
+                <a href="#roadmap" class="px-4 py-2 rounded-full text-sm font-medium hover:bg-google-border dark:hover:bg-dark-border transition-colors text-google-subtext dark:text-gray-300">Yol Haritası</a>
+                <a href="#prompts" class="px-4 py-2 rounded-full text-sm font-medium hover:bg-google-border dark:hover:bg-dark-border transition-colors text-google-subtext dark:text-gray-300">Promptlar</a>
+            </div>
 
-<a href="#" class="flex items-center gap-2 font-medium text-lg">
-<div class="bg-google-blue text-white p-1.5 rounded-lg">
-<i data-lucide="sparkles"></i>
-</div>
-Berkan'dan İpuçları
-</a>
+            <div class="flex items-center gap-3">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-google-border dark:hover:bg-dark-border transition-colors text-google-subtext dark:text-gray-300">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="btn-pill btn-enhanced bg-google-blue hover:bg-google-blueHover dark:bg-dark-blue dark:hover:bg-white text-white dark:text-dark-surface px-5 py-2 text-sm font-medium transition-all shadow-md flex items-center gap-2">
+                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                    <span>Abone Ol</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<div class="hidden md:flex gap-1">
-<a href="#materials" class="px-4 py-2 rounded-full hover:bg-google-border">Materyaller</a>
-<a href="#roadmap" class="px-4 py-2 rounded-full hover:bg-google-border">Yol Haritası</a>
-<a href="#prompts" class="px-4 py-2 rounded-full hover:bg-google-border">Promptlar</a>
-</div>
+    <section class="pt-32 pb-16 px-6 text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-normal mb-6 text-google-text dark:text-white leading-tight">
+            İngilizce öğrenimini <br>
+            <span class="text-google-blue dark:text-dark-blue font-medium">sadeleştiriyoruz.</span>
+        </h1>
+        <p class="text-lg text-google-subtext dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Klasik ders kitaplarını bir kenara bırakın. Yapay zeka destekli yöntemler, hazır materyaller ve adım adım rehberlerle hedefinize ulaşın.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#materials" class="btn-pill btn-enhanced bg-google-blue text-white dark:bg-dark-blue dark:text-dark-surface px-8 py-3 font-medium shadow-md flex items-center justify-center gap-2">
+                <i data-lucide="folder-open" class="w-5 h-5"></i>
+                Öğretmen Kasası
+            </a>
+            <a href="#roadmap" class="btn-pill btn-enhanced bg-white border border-google-border text-google-blue dark:bg-dark-surface dark:border-dark-border dark:text-dark-blue px-8 py-3 font-medium transition-all flex items-center justify-center gap-2">
+                <i data-lucide="map" class="w-5 h-5"></i>
+                Yol Haritası
+            </a>
+        </div>
+    </section>
 
-<a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank"
-class="btn-pill btn-heavy bg-google-blue hover:bg-google-blueHover text-white px-5 py-2 flex items-center gap-2 shadow-md">
-<i data-lucide="youtube" class="w-4 h-4"></i> Abone Ol
-</a>
+    <section class="py-12 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white dark:bg-dark-surface p-4 card-rounded shadow-material border border-google-border dark:border-dark-border card-hover">
+                <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black relative">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="mt-4 flex items-center justify-between px-2">
+                    <div>
+                        <h3 class="font-medium text-lg">Son Video: İngilizce Nasıl Çalışılmaz?</h3>
+                        <p class="text-sm text-google-subtext dark:text-gray-400">Yapay zeka ile hatalarınızı nasıl düzeltirsiniz?</p>
+                    </div>
+                    <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-3 hover:bg-google-bg dark:hover:bg-[#333] rounded-full transition-colors">
+                        <i data-lucide="external-link" class="w-5 h-5 text-google-subtext dark:text-gray-400"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</div>
-</nav>
+    <section id="roadmap" class="py-20 bg-google-bg dark:bg-[#181818]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-medium mb-2">Öğrenme Yol Haritası</h2>
+                <p class="text-google-subtext dark:text-gray-400">Sıfırdan zirveye giden yolculuk.</p>
+            </div>
 
-<!-- HERO -->
-<section class="pt-32 pb-16 text-center max-w-4xl mx-auto px-6">
-<h1 class="text-4xl md:text-6xl mb-6 leading-tight">
-İngilizce öğrenimini<br>
-<span class="text-google-blue font-medium">sadeleştiriyoruz.</span>
-</h1>
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-google-border dark:bg-dark-border rounded-full"></div>
+                
+                <div class="relative flex items-center justify-between mb-12 card-hover">
+                    <div class="w-5/12 text-right pr-8">
+                        <h3 class="font-bold text-lg text-google-blue dark:text-dark-blue">Başlangıç (A1-A2)</h3>
+                        <p class="text-sm text-google-subtext dark:text-gray-400">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin.</p>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-google-blue dark:bg-dark-blue rounded-full ring-4 ring-white dark:ring-dark-bg shadow-md"></div>
+                    <div class="w-5/12 pl-8"></div>
+                </div>
 
-<p class="text-lg text-google-subtext max-w-2xl mx-auto mb-10">
-Yapay zeka destekli yöntemler ve hazır materyallerle hedefinize ulaşın.
-</p>
+                <div class="relative flex items-center justify-between mb-12 card-hover">
+                    <div class="w-5/12"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-google-blue dark:bg-dark-blue rounded-full ring-4 ring-white dark:ring-dark-bg shadow-md"></div>
+                    <div class="w-5/12 pl-8 text-left">
+                        <h3 class="font-bold text-lg text-google-blue dark:text-dark-blue">Gelişme (B1-B2)</h3>
+                        <p class="text-sm text-google-subtext dark:text-gray-400">Speaking partneri promptlarını kullanın. Quizlet setlerimi çalışın.</p>
+                    </div>
+                </div>
 
-<div class="flex flex-col sm:flex-row justify-center gap-4">
-<a href="#materials" class="btn-pill btn-heavy bg-google-blue text-white px-8 py-3 shadow-md flex items-center gap-2">
-<i data-lucide="folder-open"></i> Öğretmen Kasası
-</a>
+                <div class="relative flex items-center justify-between card-hover">
+                    <div class="w-5/12 text-right pr-8">
+                        <h3 class="font-bold text-lg text-google-blue dark:text-dark-blue">Ustalık (C1+)</h3>
+                        <p class="text-sm text-google-subtext dark:text-gray-400">Akademik makale yazımı ve IELTS hazırlık promptlarına geçin.</p>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-google-blue dark:bg-dark-blue rounded-full ring-4 ring-white dark:ring-dark-bg shadow-md"></div>
+                    <div class="w-5/12 pl-8"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<a href="#roadmap" class="btn-pill btn-heavy bg-white border border-google-border text-google-blue px-8 py-3 shadow-md flex items-center gap-2">
-<i data-lucide="map"></i> Yol Haritası
-</a>
-</div>
-</section>
+    <section id="materials" class="py-20 bg-white dark:bg-dark-surface border-t border-google-border dark:border-dark-border">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-google-lightBlue/30 text-google-blue dark:bg-dark-blue/20 dark:text-dark-blue text-xs font-bold uppercase mb-6">
+                    Öğretmen Kasası
+                </div>
+                <h2 class="text-3xl font-medium mb-4">Hazır Ders Materyalleri</h2>
+                <p class="text-lg text-google-subtext dark:text-gray-400 mb-6">
+                    Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="btn-pill btn-enhanced bg-google-blue text-white dark:bg-dark-blue dark:text-dark-surface px-6 py-2.5 font-medium shadow-md flex items-center gap-2">
+                        Drive'a Git <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="bg-google-bg dark:bg-[#252525] p-8 rounded-[32px] border border-google-border dark:border-dark-border card-hover shadow-material">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-white dark:bg-dark-surface rounded-2xl shadow-md">
+                        <i data-lucide="folder-heart" class="w-8 h-8 text-google-blue dark:text-dark-blue"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-lg">Berkan's Archive</h3>
+                        <p class="text-sm text-google-subtext dark:text-gray-400">Google Drive • 50+ Dosya</p>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 p-3 bg-white dark:bg-dark-surface rounded-xl border border-google-border dark:border-dark-border card-hover">
+                        <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
+                        <span class="text-sm">Lesson Plans.pdf</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-white dark:bg-dark-surface rounded-xl border border-google-border dark:border-dark-border card-hover">
+                        <i data-lucide="image" class="w-5 h-5 text-gray-400"></i>
+                        <span class="text-sm">Flashcards.png</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- VIDEO CARD -->
-<section class="py-12 px-6">
-<div class="max-w-4xl mx-auto">
-<div class="bg-white p-4 card-rounded card-float border border-google-border">
+    <section class="py-20 bg-google-bg dark:bg-[#181818] border-t border-google-border dark:border-dark-border">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-2xl font-medium mb-8">Önerdiğim Araçlar</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-google-border dark:border-dark-border flex items-center gap-4 card-hover shadow-material">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 font-bold">C</div>
+                    <div>
+                        <h3 class="font-medium text-sm">ChatGPT</h3>
+                        <p class="text-xs text-google-subtext">AI Asistan</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-google-border dark:border-dark-border flex items-center gap-4 card-hover shadow-material">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 font-bold">Q</div>
+                    <div>
+                        <h3 class="font-medium text-sm">Quizlet</h3>
+                        <p class="text-xs text-google-subtext">Kelime</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-google-border dark:border-dark-border flex items-center gap-4 card-hover shadow-material">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 font-bold">D</div>
+                    <div>
+                        <h3 class="font-medium text-sm">DeepL</h3>
+                        <p class="text-xs text-google-subtext">Çeviri</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-google-border dark:border-dark-border flex items-center gap-4 card-hover shadow-material">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-red-600 font-bold">Y</div>
+                    <div>
+                        <h3 class="font-medium text-sm">YouTube</h3>
+                        <p class="text-xs text-google-subtext">Video</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="aspect-video rounded-2xl overflow-hidden bg-black">
-<iframe class="w-full h-full"
-src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-allowfullscreen></iframe>
-</div>
+    <section class="py-20 bg-white dark:bg-dark-surface border-t border-google-border dark:border-dark-border">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-2xl font-medium mb-8">Faydalı Linkler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <a href="https://youglish.com/" target="_blank" class="group block p-6 rounded-2xl border border-google-border dark:border-dark-border transition-all hover:border-google-blue dark:hover:border-dark-blue bg-google-bg dark:bg-[#252525] card-hover shadow-material">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="bg-red-100 text-red-600 p-2 rounded-lg group-hover:bg-red-600 group-hover:text-white transition-colors">
+                            <i data-lucide="mic" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-google-text dark:text-white">YouGlish</h3>
+                    </div>
+                    <p class="text-sm text-google-subtext dark:text-gray-400">Kelime telaffuzlarını videolardan öğrenin.</p>
+                </a>
 
-<div class="mt-4 flex justify-between items-center">
-<div>
-<h3 class="font-medium">Son Video</h3>
-<p class="text-sm text-google-subtext">İngilizce Nasıl Çalışılmaz?</p>
-</div>
+                <a href="https://lyricstraining.com/" target="_blank" class="group block p-6 rounded-2xl border border-google-border dark:border-dark-border transition-all hover:border-google-blue dark:hover:border-dark-blue bg-google-bg dark:bg-[#252525] card-hover shadow-material">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <i data-lucide="music" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-google-text dark:text-white">LyricsTraining</h3>
+                    </div>
+                    <p class="text-sm text-google-subtext dark:text-gray-400">Şarkı sözleriyle İngilizce pratiği yapın.</p>
+                </a>
 
-<a href="https://www.youtube.com/@berkandanipuclar%C4%B1"
-class="p-3 rounded-full hover:bg-google-bg">
-<i data-lucide="external-link"></i>
-</a>
-</div>
+                <a href="https://www.bbc.co.uk/learningenglish/" target="_blank" class="group block p-6 rounded-2xl border border-google-border dark:border-dark-border transition-all hover:border-google-blue dark:hover:border-dark-blue bg-google-bg dark:bg-[#252525] card-hover shadow-material">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="bg-green-100 text-green-600 p-2 rounded-lg group-hover:bg-green-600 group-hover:text-white transition-colors">
+                            <i data-lucide="tv" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-google-text dark:text-white">BBC English</h3>
+                    </div>
+                    <p class="text-sm text-google-subtext dark:text-gray-400">Güncel haberlerle İngilizce öğrenin.</p>
+                </a>
 
-</div>
-</div>
-</section>
+                <a href="https://dictionary.cambridge.org/" target="_blank" class="group block p-6 rounded-2xl border border-google-border dark:border-dark-border transition-all hover:border-google-blue dark:hover:border-dark-blue bg-google-bg dark:bg-[#252525] card-hover shadow-material">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="bg-yellow-100 text-yellow-600 p-2 rounded-lg group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                            <i data-lucide="book-open" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-google-text dark:text-white">Cambridge</h3>
+                    </div>
+                    <p class="text-sm text-google-subtext dark:text-gray-400">En güvenilir İngilizce sözlük.</p>
+                </a>
 
-<!-- PROMPTS -->
-<section id="prompts" class="py-20 bg-google-bg">
-<div class="max-w-6xl mx-auto px-6">
-<h2 class="text-2xl font-medium mb-8">Prompt Kütüphanesi</h2>
+            </div>
+        </div>
+    </section>
 
-<div class="grid md:grid-cols-3 gap-6">
+    <section id="prompts" class="py-20 max-w-6xl mx-auto px-6 bg-google-bg dark:bg-[#181818] border-t border-google-border dark:border-dark-border">
+        <h2 class="text-2xl font-medium mb-8">Prompt Kütüphanesi</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-dark-surface p-6 card-rounded border border-google-border dark:border-dark-border shadow-material flex flex-col card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold text-google-blue dark:text-dark-blue bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">PLANLAMA</span>
+                    <i data-lucide="copy" class="w-4 h-4 text-gray-400"></i>
+                </div>
+                <h3 class="font-medium mb-2">Ders Planı Oluşturucu</h3>
+                <p id="p1" class="text-sm font-mono text-google-subtext dark:text-gray-400 bg-google-bg dark:bg-[#252525] p-3 rounded-lg mb-4 flex-grow border border-google-border dark:border-dark-border">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
+                <button onclick="copyToClipboard('p1')" class="btn-pill btn-enhanced w-full border border-google-border dark:border-dark-border hover:bg-google-bg dark:hover:bg-[#333] py-2 text-sm font-medium">Kopyala</button>
+            </div>
+            <div class="bg-white dark:bg-dark-surface p-6 card-rounded border border-google-border dark:border-dark-border shadow-material flex flex-col card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">SINAV</span>
+                    <i data-lucide="copy" class="w-4 h-4 text-gray-400"></i>
+                </div>
+                <h3 class="font-medium mb-2">Quiz Hazırlayıcı</h3>
+                <p id="p2" class="text-sm font-mono text-google-subtext dark:text-gray-400 bg-google-bg dark:bg-[#252525] p-3 rounded-lg mb-4 flex-grow border border-google-border dark:border-dark-border">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
+                <button onclick="copyToClipboard('p2')" class="btn-pill btn-enhanced w-full border border-google-border dark:border-dark-border hover:bg-google-bg dark:hover:bg-[#333] py-2 text-sm font-medium">Kopyala</button>
+            </div>
+            <div class="bg-white dark:bg-dark-surface p-6 card-rounded border border-google-border dark:border-dark-border shadow-material flex flex-col card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full">SPEAKING</span>
+                    <i data-lucide="copy" class="w-4 h-4 text-gray-400"></i>
+                </div>
+                <h3 class="font-medium mb-2">Konuşma Partneri</h3>
+                <p id="p3" class="text-sm font-mono text-google-subtext dark:text-gray-400 bg-google-bg dark:bg-[#252525] p-3 rounded-lg mb-4 flex-grow border border-google-border dark:border-dark-border">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
+                <button onclick="copyToClipboard('p3')" class="btn-pill btn-enhanced w-full border border-google-border dark:border-dark-border hover:bg-google-bg dark:hover:bg-[#333] py-2 text-sm font-medium">Kopyala</button>
+            </div>
+        </div>
+    </section>
 
-<div class="bg-white p-6 card-rounded card-float border border-google-border flex flex-col">
-<h3 class="font-medium mb-2">Ders Planı</h3>
-<p id="p1" class="text-sm font-mono bg-google-bg p-3 rounded mb-4 flex-grow">
-Create a 40-minute English lesson plan for A2 students.
-</p>
-<button onclick="copyToClipboard('p1')"
-class="btn-pill btn-heavy border border-google-border py-2">
-Kopyala
-</button>
-</div>
+    <section class="py-20 bg-google-bg dark:bg-[#181818]">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-2xl font-medium mb-8 text-center">Sıkça Sorulan Sorular</h2>
+            <div class="space-y-4">
+                <details class="group bg-white dark:bg-dark-surface p-6 rounded-2xl border border-google-border dark:border-dark-border cursor-pointer card-hover shadow-material">
+                    <summary class="flex justify-between items-center font-medium">
+                        Materyaller ücretsiz mi?
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-google-subtext dark:text-gray-400 text-sm">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir.</p>
+                </details>
+                <details class="group bg-white dark:bg-dark-surface p-6 rounded-2xl border border-google-border dark:border-dark-border cursor-pointer card-hover shadow-material">
+                    <summary class="flex justify-between items-center font-medium">
+                        Özel ders veriyor musunuz?
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-google-subtext dark:text-gray-400 text-sm">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri için kontenjan açabiliyorum. İletişime geçebilirsiniz.</p>
+                </details>
+                <details class="group bg-white dark:bg-dark-surface p-6 rounded-2xl border border-google-border dark:border-dark-border cursor-pointer card-hover shadow-material">
+                    <summary class="flex justify-between items-center font-medium">
+                        Bu promptları nasıl kullanırım?
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-google-subtext dark:text-gray-400 text-sm">Kopyala butonuna basıp ChatGPT, Gemini veya Claude'a yapıştırmanız yeterlidir.</p>
+                </details>
+            </div>
+        </div>
+    </section>
 
-<div class="bg-white p-6 card-rounded card-float border border-google-border flex flex-col">
-<h3 class="font-medium mb-2">Quiz</h3>
-<p id="p2" class="text-sm font-mono bg-google-bg p-3 rounded mb-4 flex-grow">
-Generate reading comprehension questions.
-</p>
-<button onclick="copyToClipboard('p2')"
-class="btn-pill btn-heavy border border-google-border py-2">
-Kopyala
-</button>
-</div>
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto bg-google-blue dark:bg-dark-surface rounded-[32px] p-8 md:p-16 text-center text-white relative overflow-hidden shadow-lg card-hover">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent to-white/10"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-medium mb-4">Yeni İpuçlarını Kaçırmayın</h2>
+                <p class="mb-8 opacity-90 max-w-lg mx-auto">Yeni bir ders materyali veya AI ipucu paylaştığımda haberdar olmak için e-posta listesine katılın.</p>
+                
+                <form action="BURAYA_FORMSPREE_LINKINI_YAPISTIR" method="POST" class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+                    <input type="email" name="email" required placeholder="E-posta adresiniz" class="px-6 py-3 rounded-full text-google-text outline-none focus:ring-2 ring-white/50 w-full shadow-inner">
+                    <button type="submit" class="btn-enhanced px-8 py-3 rounded-full bg-white text-google-blue dark:bg-google-blue dark:text-white font-medium hover:bg-gray-100 transition-colors shadow-md">
+                        Kaydol
+                    </button>
+                </form>
 
-<div class="bg-white p-6 card-rounded card-float border border-google-border flex flex-col">
-<h3 class="font-medium mb-2">Speaking</h3>
-<p id="p3" class="text-sm font-mono bg-google-bg p-3 rounded mb-4 flex-grow">
-Act as a waiter and practice ordering food.
-</p>
-<button onclick="copyToClipboard('p3')"
-class="btn-pill btn-heavy border border-google-border py-2">
-Kopyala
-</button>
-</div>
+            </div>
+        </div>
+    </section>
 
-</div>
-</div>
-</section>
+    <footer class="py-12 text-center border-t border-google-border dark:border-dark-border bg-google-bg dark:bg-[#121212]">
+        <div class="max-w-4xl mx-auto px-6">
+            <span class="text-xl font-medium text-google-text dark:text-white block mb-2">Berkan'dan İpuçları</span>
+            <p class="text-sm text-google-subtext dark:text-gray-500 mb-8">© 2025. Tüm hakları saklıdır.</p>
+            <div class="flex justify-center gap-4">
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" class="p-3 rounded-full bg-white dark:bg-dark-surface border border-google-border dark:border-dark-border hover:bg-gray-50 dark:hover:bg-[#333] transition-colors card-hover">
+                    <i data-lucide="youtube" class="w-5 h-5 text-red-600"></i>
+                </a>
+                <a href="#" class="p-3 rounded-full bg-white dark:bg-dark-surface border border-google-border dark:border-dark-border hover:bg-gray-50 dark:hover:bg-[#333] transition-colors card-hover">
+                    <i data-lucide="instagram" class="w-5 h-5 text-pink-600"></i>
+                </a>
+                <a href="#" class="p-3 rounded-full bg-white dark:bg-dark-surface border border-google-border dark:border-dark-border hover:bg-gray-50 dark:hover:bg-[#333] transition-colors card-hover">
+                    <i data-lucide="linkedin" class="w-5 h-5 text-blue-700"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 
-<footer class="py-12 text-center border-t border-google-border bg-google-bg">
-<p class="text-sm text-google-subtext">© 2025 Berkan'dan İpuçları</p>
-</footer>
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#323232] dark:bg-white text-white dark:text-[#323232] px-6 py-3 rounded-lg shadow-lg transform translate-y-32 opacity-0 transition-all duration-300 z-50 flex items-center justify-between min-w-[300px]">
+        <span class="text-sm font-medium">Panoya kopyalandı.</span>
+        <button onclick="document.getElementById('toast').classList.add('translate-y-32', 'opacity-0')" class="text-google-blue dark:text-google-blue font-bold text-sm ml-4 uppercase">Kapat</button>
+    </div>
 
-<script>
-lucide.createIcons();
-function copyToClipboard(id){
-navigator.clipboard.writeText(document.getElementById(id).innerText);
-}
-</script>
+    <script>
+        lucide.createIcons();
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
 
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        toggleBtn.addEventListener('click', toggleTheme);
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const cleanText = text.replace(/^"|"$/g, '');
+            navigator.clipboard.writeText(cleanText).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-32', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-32', 'opacity-0');
+                }, 3000);
+            });
+        }
+
+        // Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
+```
