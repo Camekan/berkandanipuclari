@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 <head>
@@ -60,6 +59,11 @@
                     boxShadow: {
                         'soft': '0 2px 15px -3px rgba(0,0,0,0.07), 0 10px 20px -2px rgba(0,0,0,0.04)',
                         'soft-hover': '0 4px 20px 0 rgba(0,0,0,0.1), 0 7px 10px -5px rgba(59,130,246,0.5)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                        'glass-hover': '0 12px 40px 0 rgba(31, 38, 135, 0.45)',
+                    },
+                    backdropBlur: {
+                        xs: '2px',
                     },
                     transitionTimingFunction: {
                         'material': 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -112,6 +116,25 @@
             display: none;
         }
 
+        /* Glassmorphism styles */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+        .dark .glass-hover:hover {
+            background: rgba(30, 41, 59, 0.35);
+        }
+
         /* Enhanced button styles */
         .btn-enhanced {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -129,16 +152,10 @@
         /* Card hover effects */
         .card-hover {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: white;
-            border: 1px solid rgba(0,0,0,0.05);
         }
         .card-hover:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-        }
-        .dark .card-hover {
-            background-color: #1e293b;
-            border-color: rgba(255,255,255,0.1);
         }
 
         /* Section transitions */
@@ -173,21 +190,29 @@
             animation: pulse 1s infinite;
         }
 
-        /* Modern background */
+        /* Modern background with subtle gradient */
         body {
             background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);
         }
         .dark body {
             background: linear-gradient(to bottom, #0f172a, #1e293b);
         }
+
+        /* Enhanced visual polish */
+        h1, h2, h3 {
+            letter-spacing: -0.025em;
+        }
+        p {
+            line-height: 1.75;
+        }
     </style>
 </head>
 <body class="text-neutral-900 dark:text-neutral-100 transition-colors duration-300 antialiased font-sans">
 
-    <nav class="fixed w-full z-50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200/50 dark:border-neutral-700/50 shadow-sm">
+    <nav class="fixed w-full z-50 glass glass-hover backdrop-blur-xl border-b border-neutral-200/20 dark:border-neutral-700/20 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 font-semibold text-xl tracking-tight">
-                <div class="bg-primary-500 text-white p-2 rounded-xl shadow-md">
+                <div class="bg-primary-500/10 dark:bg-primary-900/30 text-primary-500 p-2 rounded-xl shadow-md backdrop-blur-sm">
                     <i data-lucide="sparkles" class="w-5 h-5"></i>
                 </div>
                 <span>Berkan'dan İpuçları</span>
@@ -200,11 +225,11 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-neutral-600 dark:text-neutral-300">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-white/20 dark:hover:bg-neutral-800/20 transition-colors text-neutral-600 dark:text-neutral-300">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
                 </button>
-                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="btn-pill btn-enhanced bg-primary-500 hover:bg-primary-600 text-white px-6 py-2.5 text-sm font-medium flex items-center gap-2">
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="btn-pill btn-enhanced bg-primary-500 hover:bg-primary-600 text-white px-6 py-2.5 text-sm font-medium flex items-center gap-2 shadow-glass">
                     <i data-lucide="youtube" class="w-4 h-4"></i>
                     <span>Abone Ol</span>
                 </a>
@@ -221,12 +246,12 @@
             Klasik ders kitaplarını bir kenara bırakın. Yapay zeka destekli yöntemler, hazır materyaller ve adım adım rehberlerle hedefinize ulaşın.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#materials" class="btn-pill btn-enhanced bg-primary-500 text-white px-8 py-4 font-medium flex items-center justify-center gap-2">
-                <i data-lucide="folder-open" class="w-5 h-5"></i>
+            <a href="#materials" class="btn-pill btn-enhanced bg-primary-500 text-white px-8 py-4 font-medium flex items-center justify-center gap-2 shadow-glass">
+                <i data-lucide="folder-open" class="w-5 h-5 icon-hover"></i>
                 Öğretmen Kasası
             </a>
-            <a href="#roadmap" class="btn-pill btn-enhanced bg-white/50 dark:bg-neutral-800/50 border border-primary-200 dark:border-primary-800 text-primary-600 dark:text-primary-300 px-8 py-4 font-medium flex items-center justify-center gap-2">
-                <i data-lucide="map" class="w-5 h-5"></i>
+            <a href="#roadmap" class="btn-pill btn-enhanced glass glass-hover text-primary-600 dark:text-primary-300 px-8 py-4 font-medium flex items-center justify-center gap-2">
+                <i data-lucide="map" class="w-5 h-5 icon-hover"></i>
                 Yol Haritası
             </a>
         </div>
@@ -234,7 +259,7 @@
 
     <section class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto">
-            <div class="bg-white dark:bg-neutral-800 p-6 card-rounded shadow-soft border border-neutral-100 dark:border-neutral-700 card-hover">
+            <div class="glass glass-hover p-6 card-rounded shadow-glass card-hover">
                 <div class="aspect-video w-full rounded-3xl overflow-hidden bg-black relative shadow-md">
                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
@@ -243,8 +268,8 @@
                         <h3 class="font-semibold text-xl text-neutral-900 dark:text-white">Son Video: İngilizce Nasıl Çalışılmaz?</h3>
                         <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Yapay zeka ile hatalarınızı nasıl düzeltirsiniz?</p>
                     </div>
-                    <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-full transition-colors">
-                        <i data-lucide="external-link" class="w-5 h-5 text-neutral-500 dark:text-neutral-400"></i>
+                    <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-3 hover:bg-white/10 dark:hover:bg-neutral-700/10 rounded-full transition-colors">
+                        <i data-lucide="external-link" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover"></i>
                     </a>
                 </div>
             </div>
@@ -258,21 +283,21 @@
                 <p class="text-lg text-neutral-600 dark:text-neutral-400">Sıfırdan zirveye giden yolculuk.</p>
             </div>
 
-            <div class="relative">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-neutral-200 dark:bg-neutral-700 rounded-full"></div>
+            <div class="relative glass glass-hover p-8 rounded-3xl shadow-glass">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-neutral-200/50 dark:bg-neutral-700/50 rounded-full backdrop-blur-xs"></div>
                 
                 <div class="relative flex items-center justify-between mb-16 timeline-item">
                     <div class="w-5/12 text-right pr-12">
                         <h3 class="font-bold text-xl text-primary-500">Başlangıç (A1-A2)</h3>
                         <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin.</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white dark:ring-neutral-900 shadow-md timeline-dot"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot"></div>
                     <div class="w-5/12 pl-12"></div>
                 </div>
 
                 <div class="relative flex items-center justify-between mb-16 timeline-item">
                     <div class="w-5/12"></div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white dark:ring-neutral-900 shadow-md timeline-dot"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot"></div>
                     <div class="w-5/12 pl-12 text-left">
                         <h3 class="font-bold text-xl text-primary-500">Gelişme (B1-B2)</h3>
                         <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Speaking partneri promptlarını kullanın. Quizlet setlerimi çalışın.</p>
@@ -284,7 +309,7 @@
                         <h3 class="font-bold text-xl text-primary-500">Ustalık (C1+)</h3>
                         <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Akademik makale yazımı ve IELTS hazırlık promptlarına geçin.</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white dark:ring-neutral-900 shadow-md timeline-dot"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot"></div>
                     <div class="w-5/12 pl-12"></div>
                 </div>
             </div>
@@ -302,15 +327,15 @@
                     Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun.
                 </p>
                 <div class="flex gap-4">
-                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="btn-pill btn-enhanced bg-primary-500 text-white px-8 py-4 font-medium flex items-center gap-2">
-                        Drive'a Git <i data-lucide="external-link" class="w-5 h-5"></i>
+                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="btn-pill btn-enhanced bg-primary-500 text-white px-8 py-4 font-medium flex items-center gap-2 shadow-glass">
+                        Drive'a Git <i data-lucide="external-link" class="w-5 h-5 icon-hover"></i>
                     </a>
                 </div>
             </div>
-            <div class="bg-white dark:bg-neutral-800 p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 card-hover shadow-soft">
+            <div class="glass glass-hover p-8 rounded-3xl shadow-glass card-hover">
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="p-4 bg-primary-50 dark:bg-primary-900/30 rounded-2xl shadow-sm">
-                        <i data-lucide="folder-heart" class="w-8 h-8 text-primary-500"></i>
+                    <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-2xl shadow-sm backdrop-blur-xs">
+                        <i data-lucide="folder-heart" class="w-8 h-8 text-primary-500 icon-hover"></i>
                     </div>
                     <div>
                         <h3 class="font-bold text-xl text-neutral-900 dark:text-white">Berkan's Archive</h3>
@@ -318,13 +343,13 @@
                     </div>
                 </div>
                 <div class="space-y-4">
-                    <div class="flex items-center gap-4 p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-2xl border border-neutral-100 dark:border-neutral-600 card-hover">
-                        <i data-lucide="file-text" class="w-6 h-6 text-neutral-500"></i>
-                        <span class="text-base font-medium">Lesson Plans.pdf</span>
+                    <div class="flex items-center gap-4 p-4 bg-white/20 dark:bg-neutral-700/20 rounded-2xl border border-white/10 dark:border-neutral-600/50 card-hover backdrop-blur-xs">
+                        <i data-lucide="file-text" class="w-6 h-6 text-neutral-500 icon-hover"></i>
+                        <span class="text-base font-medium text-neutral-900 dark:text-white">Lesson Plans.pdf</span>
                     </div>
-                    <div class="flex items-center gap-4 p-4 bg-neutral-50 dark:bg-neutral-700/50 rounded-2xl border border-neutral-100 dark:border-neutral-600 card-hover">
-                        <i data-lucide="image" class="w-6 h-6 text-neutral-500"></i>
-                        <span class="text-base font-medium">Flashcards.png</span>
+                    <div class="flex items-center gap-4 p-4 bg-white/20 dark:bg-neutral-700/20 rounded-2xl border border-white/10 dark:border-neutral-600/50 card-hover backdrop-blur-xs">
+                        <i data-lucide="image" class="w-6 h-6 text-neutral-500 icon-hover"></i>
+                        <span class="text-base font-medium text-neutral-900 dark:text-white">Flashcards.png</span>
                     </div>
                 </div>
             </div>
@@ -335,29 +360,29 @@
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-neutral-900 dark:text-white">Önerdiğim Araçlar</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white dark:bg-neutral-800 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-700 flex items-center gap-4 card-hover shadow-soft">
-                    <div class="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center text-green-600 font-bold text-xl">C</div>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover">
+                    <div class="w-12 h-12 bg-green-50/50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center text-green-600 font-bold text-xl backdrop-blur-xs icon-hover">C</div>
                     <div>
                         <h3 class="font-bold text-base text-neutral-900 dark:text-white">ChatGPT</h3>
                         <p class="text-sm text-neutral-500 dark:text-neutral-400">AI Asistan</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-neutral-800 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-700 flex items-center gap-4 card-hover shadow-soft">
-                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl">Q</div>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover">
+                    <div class="w-12 h-12 bg-blue-50/50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl backdrop-blur-xs icon-hover">Q</div>
                     <div>
                         <h3 class="font-bold text-base text-neutral-900 dark:text-white">Quizlet</h3>
                         <p class="text-sm text-neutral-500 dark:text-neutral-400">Kelime</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-neutral-800 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-700 flex items-center gap-4 card-hover shadow-soft">
-                    <div class="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center text-purple-600 font-bold text-xl">D</div>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover">
+                    <div class="w-12 h-12 bg-purple-50/50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-600 font-bold text-xl backdrop-blur-xs icon-hover">D</div>
                     <div>
                         <h3 class="font-bold text-base text-neutral-900 dark:text-white">DeepL</h3>
                         <p class="text-sm text-neutral-500 dark:text-neutral-400">Çeviri</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-neutral-800 p-6 rounded-3xl border border-neutral-100 dark:border-neutral-700 flex items-center gap-4 card-hover shadow-soft">
-                    <div class="w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-2xl flex items-center justify-center text-red-600 font-bold text-xl">Y</div>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover">
+                    <div class="w-12 h-12 bg-red-50/50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center text-red-600 font-bold text-xl backdrop-blur-xs icon-hover">Y</div>
                     <div>
                         <h3 class="font-bold text-base text-neutral-900 dark:text-white">YouTube</h3>
                         <p class="text-sm text-neutral-500 dark:text-neutral-400">Video</p>
@@ -372,9 +397,9 @@
             <h2 class="text-3xl font-bold mb-12 text-neutral-900 dark:text-white">Faydalı Linkler</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <a href="https://youglish.com/" target="_blank" class="group block p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 hover:border-primary-200 dark:hover:border-primary-800 bg-white dark:bg-neutral-800 card-hover shadow-soft transition-all">
+                <a href="https://youglish.com/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="bg-red-50 dark:bg-red-900/30 text-red-600 p-4 rounded-2xl group-hover:bg-red-600 group-hover:text-white transition-colors">
+                        <div class="bg-red-50/50 dark:bg-red-900/20 text-red-600 p-4 rounded-2xl group-hover:bg-red-600 group-hover:text-white transition-colors backdrop-blur-xs icon-hover">
                             <i data-lucide="mic" class="w-6 h-6"></i>
                         </div>
                         <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">YouGlish</h3>
@@ -382,9 +407,9 @@
                     <p class="text-base text-neutral-600 dark:text-neutral-400">Kelime telaffuzlarını videolardan öğrenin.</p>
                 </a>
 
-                <a href="https://lyricstraining.com/" target="_blank" class="group block p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 hover:border-primary-200 dark:hover:border-primary-800 bg-white dark:bg-neutral-800 card-hover shadow-soft transition-all">
+                <a href="https://lyricstraining.com/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 p-4 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <div class="bg-blue-50/50 dark:bg-blue-900/20 text-blue-600 p-4 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors backdrop-blur-xs icon-hover">
                             <i data-lucide="music" class="w-6 h-6"></i>
                         </div>
                         <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">LyricsTraining</h3>
@@ -392,9 +417,9 @@
                     <p class="text-base text-neutral-600 dark:text-neutral-400">Şarkı sözleriyle İngilizce pratiği yapın.</p>
                 </a>
 
-                <a href="https://www.bbc.co.uk/learningenglish/" target="_blank" class="group block p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 hover:border-primary-200 dark:hover:border-primary-800 bg-white dark:bg-neutral-800 card-hover shadow-soft transition-all">
+                <a href="https://www.bbc.co.uk/learningenglish/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="bg-green-50 dark:bg-green-900/30 text-green-600 p-4 rounded-2xl group-hover:bg-green-600 group-hover:text-white transition-colors">
+                        <div class="bg-green-50/50 dark:bg-green-900/20 text-green-600 p-4 rounded-2xl group-hover:bg-green-600 group-hover:text-white transition-colors backdrop-blur-xs icon-hover">
                             <i data-lucide="tv" class="w-6 h-6"></i>
                         </div>
                         <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">BBC English</h3>
@@ -402,9 +427,9 @@
                     <p class="text-base text-neutral-600 dark:text-neutral-400">Güncel haberlerle İngilizce öğrenin.</p>
                 </a>
 
-                <a href="https://dictionary.cambridge.org/" target="_blank" class="group block p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 hover:border-primary-200 dark:hover:border-primary-800 bg-white dark:bg-neutral-800 card-hover shadow-soft transition-all">
+                <a href="https://dictionary.cambridge.org/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 p-4 rounded-2xl group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                        <div class="bg-yellow-50/50 dark:bg-yellow-900/20 text-yellow-600 p-4 rounded-2xl group-hover:bg-yellow-500 group-hover:text-white transition-colors backdrop-blur-xs icon-hover">
                             <i data-lucide="book-open" class="w-6 h-6"></i>
                         </div>
                         <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Cambridge</h3>
@@ -420,32 +445,32 @@
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-neutral-900 dark:text-white">Prompt Kütüphanesi</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white dark:bg-neutral-800 p-8 card-rounded border border-neutral-100 dark:border-neutral-700 shadow-soft flex flex-col card-hover">
+                <div class="glass glass-hover p-8 card-rounded shadow-glass flex flex-col card-hover">
                     <div class="flex items-center justify-between mb-6">
-                        <span class="text-sm font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-4 py-2 rounded-full">PLANLAMA</span>
+                        <span class="text-sm font-bold text-primary-600 dark:text-primary-400 bg-primary-50/50 dark:bg-primary-900/20 px-4 py-2 rounded-full backdrop-blur-xs">PLANLAMA</span>
                         <i data-lucide="copy" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover"></i>
                     </div>
                     <h3 class="font-bold text-xl mb-4 text-neutral-900 dark:text-white">Ders Planı Oluşturucu</h3>
-                    <p id="p1" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-neutral-50 dark:bg-neutral-700 p-4 rounded-2xl mb-6 flex-grow border border-neutral-100 dark:border-neutral-600">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
-                    <button onclick="copyToClipboard('p1')" class="btn-pill btn-enhanced w-full bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600 py-3 text-base font-medium text-neutral-900 dark:text-white">Kopyala</button>
+                    <p id="p1" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-white/20 dark:bg-neutral-700/20 p-4 rounded-2xl mb-6 flex-grow border border-white/10 dark:border-neutral-600/50 backdrop-blur-xs">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
+                    <button onclick="copyToClipboard('p1')" class="btn-pill btn-enhanced w-full bg-white/30 dark:bg-neutral-700/30 hover:bg-white/40 dark:hover:bg-neutral-600/40 py-3 text-base font-medium text-neutral-900 dark:text-white backdrop-blur-xs">Kopyala</button>
                 </div>
-                <div class="bg-white dark:bg-neutral-800 p-8 card-rounded border border-neutral-100 dark:border-neutral-700 shadow-soft flex flex-col card-hover">
+                <div class="glass glass-hover p-8 card-rounded shadow-glass flex flex-col card-hover">
                     <div class="flex items-center justify-between mb-6">
-                        <span class="text-sm font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-4 py-2 rounded-full">SINAV</span>
+                        <span class="text-sm font-bold text-green-600 dark:text-green-400 bg-green-50/50 dark:bg-green-900/20 px-4 py-2 rounded-full backdrop-blur-xs">SINAV</span>
                         <i data-lucide="copy" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover"></i>
                     </div>
                     <h3 class="font-bold text-xl mb-4 text-neutral-900 dark:text-white">Quiz Hazırlayıcı</h3>
-                    <p id="p2" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-neutral-50 dark:bg-neutral-700 p-4 rounded-2xl mb-6 flex-grow border border-neutral-100 dark:border-neutral-600">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
-                    <button onclick="copyToClipboard('p2')" class="btn-pill btn-enhanced w-full bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600 py-3 text-base font-medium text-neutral-900 dark:text-white">Kopyala</button>
+                    <p id="p2" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-white/20 dark:bg-neutral-700/20 p-4 rounded-2xl mb-6 flex-grow border border-white/10 dark:border-neutral-600/50 backdrop-blur-xs">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
+                    <button onclick="copyToClipboard('p2')" class="btn-pill btn-enhanced w-full bg-white/30 dark:bg-neutral-700/30 hover:bg-white/40 dark:hover:bg-neutral-600/40 py-3 text-base font-medium text-neutral-900 dark:text-white backdrop-blur-xs">Kopyala</button>
                 </div>
-                <div class="bg-white dark:bg-neutral-800 p-8 card-rounded border border-neutral-100 dark:border-neutral-700 shadow-soft flex flex-col card-hover">
+                <div class="glass glass-hover p-8 card-rounded shadow-glass flex flex-col card-hover">
                     <div class="flex items-center justify-between mb-6">
-                        <span class="text-sm font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30 px-4 py-2 rounded-full">SPEAKING</span>
+                        <span class="text-sm font-bold text-purple-600 dark:text-purple-400 bg-purple-50/50 dark:bg-purple-900/20 px-4 py-2 rounded-full backdrop-blur-xs">SPEAKING</span>
                         <i data-lucide="copy" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover"></i>
                     </div>
                     <h3 class="font-bold text-xl mb-4 text-neutral-900 dark:text-white">Konuşma Partneri</h3>
-                    <p id="p3" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-neutral-50 dark:bg-neutral-700 p-4 rounded-2xl mb-6 flex-grow border border-neutral-100 dark:border-neutral-600">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
-                    <button onclick="copyToClipboard('p3')" class="btn-pill btn-enhanced w-full bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600 py-3 text-base font-medium text-neutral-900 dark:text-white">Kopyala</button>
+                    <p id="p3" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-white/20 dark:bg-neutral-700/20 p-4 rounded-2xl mb-6 flex-grow border border-white/10 dark:border-neutral-600/50 backdrop-blur-xs">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
+                    <button onclick="copyToClipboard('p3')" class="btn-pill btn-enhanced w-full bg-white/30 dark:bg-neutral-700/30 hover:bg-white/40 dark:hover:bg-neutral-600/40 py-3 text-base font-medium text-neutral-900 dark:text-white backdrop-blur-xs">Kopyala</button>
                 </div>
             </div>
         </div>
@@ -455,24 +480,24 @@
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">Sıkça Sorulan Sorular</h2>
             <div class="space-y-6">
-                <details class="group bg-white dark:bg-neutral-800 p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 cursor-pointer card-hover shadow-soft">
+                <details class="group glass glass-hover p-8 rounded-3xl shadow-glass cursor-pointer card-hover">
                     <summary class="flex justify-between items-center font-bold text-xl text-neutral-900 dark:text-white">
                         Materyaller ücretsiz mi?
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform"></i>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform icon-hover"></i>
                     </summary>
                     <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir.</p>
                 </details>
-                <details class="group bg-white dark:bg-neutral-800 p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 cursor-pointer card-hover shadow-soft">
+                <details class="group glass glass-hover p-8 rounded-3xl shadow-glass cursor-pointer card-hover">
                     <summary class="flex justify-between items-center font-bold text-xl text-neutral-900 dark:text-white">
                         Özel ders veriyor musunuz?
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform"></i>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform icon-hover"></i>
                     </summary>
                     <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri için kontenjan açabiliyorum. İletişime geçebilirsiniz.</p>
                 </details>
-                <details class="group bg-white dark:bg-neutral-800 p-8 rounded-3xl border border-neutral-100 dark:border-neutral-700 cursor-pointer card-hover shadow-soft">
+                <details class="group glass glass-hover p-8 rounded-3xl shadow-glass cursor-pointer card-hover">
                     <summary class="flex justify-between items-center font-bold text-xl text-neutral-900 dark:text-white">
                         Bu promptları nasıl kullanırım?
-                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform"></i>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform icon-hover"></i>
                     </summary>
                     <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400">Kopyala butonuna basıp ChatGPT, Gemini veya Claude'a yapıştırmanız yeterlidir.</p>
                 </details>
@@ -481,15 +506,15 @@
     </section>
 
     <section class="py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto bg-gradient-to-br from-primary-500 to-primary-700 dark:from-primary-600 dark:to-primary-800 rounded-3xl p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl card-hover">
+        <div class="max-w-4xl mx-auto glass glass-hover bg-gradient-to-br from-primary-500/20 to-primary-700/20 dark:from-primary-600/20 dark:to-primary-800/20 rounded-3xl p-12 md:p-20 text-center text-neutral-900 dark:text-white relative overflow-hidden shadow-glass-hover card-hover backdrop-blur-xl">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.2),rgba(255,255,255,0)_60%)] dark:bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.05),rgba(255,255,255,0)_60%)]"></div>
             <div class="relative z-10">
                 <h2 class="text-4xl font-bold mb-6">Yeni İpuçlarını Kaçırmayın</h2>
                 <p class="text-lg opacity-90 max-w-2xl mx-auto mb-12">Yeni bir ders materyali veya AI ipucu paylaştığımda haberdar olmak için e-posta listesine katılın.</p>
                 
                 <form action="BURAYA_FORMSPREE_LINKINI_YAPISTIR" method="POST" class="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
-                    <input type="email" name="email" required placeholder="E-posta adresiniz" class="px-6 py-4 rounded-full text-neutral-900 dark:text-white bg-white/80 dark:bg-neutral-800/80 outline-none focus:ring-2 ring-white/50 w-full shadow-md">
-                    <button type="submit" class="btn-enhanced px-8 py-4 rounded-full bg-white text-primary-600 font-bold hover:bg-neutral-100 transition-colors shadow-md">
+                    <input type="email" name="email" required placeholder="E-posta adresiniz" class="px-6 py-4 rounded-full text-neutral-900 dark:text-white bg-white/50 dark:bg-neutral-800/50 outline-none focus:ring-2 ring-primary-300/50 w-full shadow-glass backdrop-blur-xs">
+                    <button type="submit" class="btn-enhanced px-8 py-4 rounded-full bg-primary-500 text-white font-bold hover:bg-primary-600 transition-colors shadow-glass">
                         Kaydol
                     </button>
                 </form>
@@ -498,27 +523,27 @@
         </div>
     </section>
 
-    <footer class="py-16 text-center border-t border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+    <footer class="py-16 text-center border-t border-neutral-200/20 dark:border-neutral-700/20 bg-neutral-50/50 dark:bg-neutral-900/50">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <span class="text-2xl font-bold text-neutral-900 dark:text-white block mb-4">Berkan'dan İpuçları</span>
             <p class="text-base text-neutral-500 dark:text-neutral-400 mb-12">© 2025. Tüm hakları saklıdır.</p>
             <div class="flex justify-center gap-6">
-                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" class="p-4 rounded-full bg-white dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors shadow-sm">
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" class="p-4 rounded-full glass glass-hover transition-colors shadow-glass icon-hover">
                     <i data-lucide="youtube" class="w-6 h-6 text-red-600"></i>
                 </a>
-                <a href="#" class="p-4 rounded-full bg-white dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors shadow-sm">
+                <a href="#" class="p-4 rounded-full glass glass-hover transition-colors shadow-glass icon-hover">
                     <i data-lucide="instagram" class="w-6 h-6 text-pink-600"></i>
                 </a>
-                <a href="#" class="p-4 rounded-full bg-white dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors shadow-sm">
+                <a href="#" class="p-4 rounded-full glass glass-hover transition-colors shadow-glass icon-hover">
                     <i data-lucide="linkedin" class="w-6 h-6 text-blue-700"></i>
                 </a>
             </div>
         </div>
     </footer>
 
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-6 py-4 rounded-xl shadow-2xl transform translate-y-32 opacity-0 transition-all duration-300 z-50 flex items-center justify-between min-w-[320px]">
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 glass text-neutral-900 dark:text-white px-6 py-4 rounded-xl shadow-glass-hover transform translate-y-32 opacity-0 transition-all duration-300 z-50 flex items-center justify-between min-w-[320px] backdrop-blur-xl">
         <span class="text-base font-medium">Panoya kopyalandı.</span>
-        <button onclick="document.getElementById('toast').classList.add('translate-y-32', 'opacity-0')" class="text-primary-400 dark:text-primary-600 font-bold text-sm ml-4 uppercase">Kapat</button>
+        <button onclick="document.getElementById('toast').classList.add('translate-y-32', 'opacity-0')" class="text-primary-500 font-bold text-sm ml-4 uppercase">Kapat</button>
     </div>
 
     <script>
