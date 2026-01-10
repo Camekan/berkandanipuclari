@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth dark">
+<html lang="tr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkan's HUD | English & AI</title>
+    <title>Berkan'dan İpuçları | English & AI</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,451 +22,625 @@
                     },
                     colors: {
                         primary: {
-                            50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
-                            400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
-                            800: '#9a3412', 900: '#7c2d12'
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
                         },
                         neutral: {
-                            800: '#1e293b', 900: '#0f172a', 950: '#020617', // Daha koyu tonlar
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                            950: '#030712',
                         },
                         dark: {
-                            bg: '#020617', // Ultra koyu gamer arka planı
-                            surface: '#0f172a',
+                            bg: '#0f172a',
+                            surface: '#1e293b',
                             border: '#334155',
                             text: '#f1f5f9',
+                            blue: '#60a5fa',
                         }
                     },
                     boxShadow: {
-                        'neon': '0 0 10px rgba(249, 115, 22, 0.5), 0 0 20px rgba(249, 115, 22, 0.3)', // Neon Parlama
-                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+                        'soft': '0 2px 15px -3px rgba(0,0,0,0.07), 0 10px 20px -2px rgba(0,0,0,0.04)',
+                        'soft-hover': '0 4px 20px 0 rgba(0,0,0,0.1), 0 7px 10px -5px rgba(59,130,246,0.5)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                        'glass-hover': '0 12px 40px 0 rgba(31, 38, 135, 0.45)',
                     },
-                    animation: {
-                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    backdropBlur: {
+                        xs: '2px',
+                    },
+                    transitionTimingFunction: {
+                        'material': 'cubic-bezier(0.4, 0, 0.2, 1)',
+                    },
+                    scale: {
+                        '102': '1.02',
                     },
                     keyframes: {
-                        'pulse-glow': {
-                            '0%, 100%': { opacity: 1, boxShadow: '0 0 10px rgba(249, 115, 22, 0.5)' },
-                            '50%': { opacity: 0.8, boxShadow: '0 0 20px rgba(249, 115, 22, 0.8)' },
-                        }
-                    }
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.5 },
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        spin: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                    },
+                    animation: {
+                        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        bounce: 'bounce 1s ease-in-out infinite',
+                        spin: 'spin 1s linear infinite',
+                        fadeIn: 'fadeIn 0.5s ease-out',
+                        wiggle: 'wiggle 1s ease-in-out infinite',
+                    },
+                    backgroundImage: {
+                        'subtle-gradient': 'linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0))',
+                        'dark-subtle-gradient': 'linear-gradient(to bottom, rgba(30,41,59,0.1), rgba(30,41,59,0))',
+                    },
                 }
             }
         }
     </script>
     
     <style>
-        /* --- GAMER UI / OVERWOLF STYLE --- */
+        /* --- OVERWOLF / GAMER UI EKLEMELERİ --- */
         
-        body { 
-            background-color: #020617; 
-            color: #f1f5f9; 
-            overflow-x: hidden; /* Yatay kaydırmayı engelle */
-        }
-
-        /* XP BAR (Progress Tracker) */
+        /* XP Bar (İlerleme Çubuğu) */
         .xp-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 4px; 
-            background: #0f172a; z-index: 100;
+            position: fixed; top: 0; left: 0; width: 100%; height: 5px; 
+            background: #020617; z-index: 9999;
         }
         .xp-fill {
-            height: 100%; background: linear-gradient(90deg, #f97316, #fb923c, #fcd34d);
-            width: 0%; box-shadow: 0 0 10px #f97316;
-            border-radius: 0 2px 2px 0; transition: width 0.1s ease-out;
+            height: 100%; 
+            /* Overwolf Turuncusu ve Senin Mavinin Karışımı */
+            background: linear-gradient(90deg, #0ea5e9, #f97316, #fb923c); 
+            width: 0%; 
+            box-shadow: 0 0 15px #f97316; /* Neon Parlama */
+            border-radius: 0 4px 4px 0;
+            transition: width 0.1s ease-out;
         }
 
-        /* Arka Plan Grid Efekti */
-        .grid-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            pointer-events: none;
-        }
+        /* Scrollbar'ı Gamer Tarzı Yapma */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f97316; } /* Hover'da Turuncu */
 
-        /* Glassmorphism & Cards - Daha Keskin */
-        .glass {
-            background: rgba(15, 23, 42, 0.85); /* Daha koyu cam */
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
+        /* --- ORİJİNAL STİLLER (DOKUNULMADI) --- */
+        .btn-pill { border-radius: 9999px; }
+        .card-rounded { border-radius: 20px; }
+        .material-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* Glassmorphism styles */
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(209, 213, 219, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .dark .glass-hover:hover {
+            background: rgba(30, 41, 59, 0.35);
+        }
+
+        /* Enhanced button styles */
+        .btn-enhanced {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-enhanced:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-enhanced:active {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Card hover effects */
         .card-hover {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .card-hover:hover {
             transform: translateY(-4px);
-            border-color: rgba(249, 115, 22, 0.4); /* Turuncu kenar parlaması */
-            box-shadow: 0 0 20px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
         }
 
-        /* Buttons - Gamer Style (Kesik Köşeler) */
-        .btn-enhanced {
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            border-radius: 0 !important; /* Yuvarlaklığı iptal et */
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            transition: all 0.2s;
+        /* Section transitions */
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .btn-enhanced:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.2);
-            box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Tooltip */
+        /* Interactive animations */
+        .icon-hover:hover {
+            animation: bounce 0.5s ease-in-out;
+        }
+
+        .copy-button:active i {
+            animation: spin 0.5s linear;
+        }
+
+        details[open] > summary ~ * {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .timeline-dot {
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.5);
+            animation: pulse 1s infinite;
+        }
+
+        /* Softer light mode background */
+        body {
+            background: linear-gradient(to bottom, #ffffff, #f9fafb);
+        }
+        .dark body {
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+        }
+
+        /* Enhanced visual polish */
+        h1, h2, h3 {
+            letter-spacing: -0.025em;
+        }
+        p {
+            line-height: 1.75;
+        }
+
+        /* Accessibility improvements */
+        :focus {
+            outline: 2px solid #0ea5e9;
+            outline-offset: 2px;
+        }
+
+        /* Engagement tooltip */
+        .tooltip {
+            position: relative;
+        }
         .tooltip .tooltiptext {
-            visibility: hidden; width: 200px;
-            background-color: #0f172a; border: 1px solid #334155;
-            color: #fb923c; text-align: center; border-radius: 4px;
-            padding: 8px; position: absolute; z-index: 1;
-            bottom: 125%; left: 50%; margin-left: -100px;
-            opacity: 0; transition: opacity 0.3s;
-            font-family: monospace; letter-spacing: 0.05em;
+            visibility: hidden;
+            width: 200px;
+            background-color: #1f2937;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #334155; }
-        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
-
-        /* Typography */
-        h1, h2, h3 { letter-spacing: -0.03em; }
-        .text-primary-500 { text-shadow: 0 0 15px rgba(249, 115, 22, 0.4); }
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1f2937 transparent transparent transparent;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
-<body class="text-neutral-100 transition-colors duration-300 antialiased font-sans">
+<body class="text-neutral-900 dark:text-neutral-100 transition-colors duration-300 antialiased font-sans">
 
     <div class="xp-container">
         <div id="xp-bar" class="xp-fill"></div>
     </div>
 
-    <div class="grid-bg"></div>
-
-    <nav class="fixed w-full z-50 glass backdrop-blur-xl border-b border-neutral-700/30 shadow-lg top-1" role="navigation" aria-label="Main navigation">
+    <nav class="fixed w-full z-50 glass glass-hover backdrop-blur-xl border-b border-neutral-200/20 dark:border-neutral-700/20 shadow-sm" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3 font-semibold text-xl tracking-tight group" aria-label="Anasayfa'ya git">
-                <div class="bg-primary-900/30 text-primary-500 p-2 border border-primary-500/20 group-hover:animate-pulse-glow transition-all">
-                    <i data-lucide="gamepad-2" class="w-5 h-5" aria-hidden="true"></i>
+            <a href="#" class="flex items-center gap-3 font-semibold text-xl tracking-tight" aria-label="Anasayfa'ya git">
+                <div class="bg-primary-500/10 dark:bg-primary-900/30 text-primary-500 p-2 rounded-xl shadow-md backdrop-blur-sm icon-hover">
+                    <i data-lucide="sparkles" class="w-5 h-5" aria-hidden="true"></i>
                 </div>
-                <span class="uppercase tracking-widest text-sm font-bold">Berkan's <span class="text-primary-500">HUD</span></span>
+                <span>Berkan'dan İpuçları</span>
             </a>
 
-            <div class="hidden md:flex items-center space-x-1 bg-white/5 p-1 border border-white/5" style="clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);">
-                <a href="#materials" class="px-4 py-1.5 text-xs font-bold text-gray-400 hover:text-white hover:bg-white/10 transition-colors uppercase tracking-wider">Materyaller</a>
-                <a href="#roadmap" class="px-4 py-1.5 text-xs font-bold text-gray-400 hover:text-white hover:bg-white/10 transition-colors uppercase tracking-wider">Yol Haritası</a>
-                <a href="#prompts" class="px-4 py-1.5 text-xs font-bold text-gray-400 hover:text-white hover:bg-white/10 transition-colors uppercase tracking-wider">Promptlar</a>
+            <div class="hidden md:flex items-center space-x-6" role="menu">
+                <a href="#materials" class="text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" role="menuitem">Materyaller</a>
+                <a href="#roadmap" class="text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" role="menuitem">Yol Haritası</a>
+                <a href="#prompts" class="text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" role="menuitem">Promptlar</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <button id="theme-toggle" class="p-2 hover:bg-white/10 transition-colors text-gray-400 hover:text-white" aria-label="Tema değiştir">
-                    <i data-lucide="sun" class="w-5 h-5 hidden" aria-hidden="true"></i>
-                    <i data-lucide="moon" class="w-5 h-5 block" aria-hidden="true"></i>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-white/20 dark:hover:bg-neutral-800/20 transition-colors text-neutral-600 dark:text-neutral-300 icon-hover" aria-label="Tema değiştir">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block" aria-hidden="true"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden" aria-hidden="true"></i>
                 </button>
-                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="btn-enhanced bg-primary-600 hover:bg-primary-500 text-white px-6 py-2 text-xs font-bold flex items-center gap-2 shadow-neon" aria-label="YouTube'a abone ol">
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="btn-pill btn-enhanced bg-primary-500 hover:bg-primary-600 text-white px-6 py-2.5 text-sm font-medium flex items-center gap-2 shadow-glass icon-hover" aria-label="YouTube'a abone ol">
                     <i data-lucide="youtube" class="w-4 h-4" aria-hidden="true"></i>
-                    <span>ABONE OL</span>
+                    <span>Abone Ol</span>
                 </a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto relative z-10" aria-labelledby="hero-heading">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-500/10 border border-primary-500/30 text-primary-500 text-xs font-mono mb-6">
-            <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span> SYSTEM ONLINE
-        </div>
-        <h1 id="hero-heading" class="text-5xl md:text-8xl font-black mb-6 text-white leading-tight tracking-tighter">
-            İNGİLİZCEYİ <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">SÜPERLEŞTİR</span>
+    <section class="pt-36 pb-20 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto" aria-labelledby="hero-heading">
+        <h1 id="hero-heading" class="text-5xl md:text-7xl font-bold mb-6 text-neutral-900 dark:text-white leading-tight">
+            İngilizce öğrenimini <br>
+            <span class="text-primary-500 inline-block">sadeleştiriyoruz.</span>
         </h1>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
-            Klasik yöntemler "Game Over" oldu. Yapay zeka destekli stratejiler, hazır loot kutuları (materyaller) ve rehberlerle level atla.
+        <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+            Klasik ders kitaplarını bir kenara bırakın. Yapay zeka destekli yöntemler, hazır materyaller ve adım adım rehberlerle hedefinize ulaşın. Keşfetmeye hazır mısınız? Aşağı kaydırın ve sırları ortaya çıkarın!
         </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-6">
-            <a href="#materials" class="btn-enhanced bg-primary-600 text-white px-8 py-4 flex items-center justify-center gap-2 shadow-neon" aria-label="Öğretmen Kasası'na git">
-                <i data-lucide="sword" class="w-5 h-5" aria-hidden="true"></i>
-                LOOT'U AÇ
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#materials" class="btn-pill btn-enhanced bg-primary-500 text-white px-8 py-4 font-medium flex items-center justify-center gap-2 shadow-glass icon-hover" aria-label="Öğretmen Kasası'na git">
+                <i data-lucide="folder-open" class="w-5 h-5" aria-hidden="true"></i>
+                Öğretmen Kasası'nı Açın
             </a>
-            <a href="#roadmap" class="btn-enhanced border border-white/10 hover:bg-white/5 text-white px-8 py-4 flex items-center justify-center gap-2" aria-label="Yol Haritası'na git">
-                <i data-lucide="map" class="w-5 h-5 text-primary-500" aria-hidden="true"></i>
-                HARİTAYI GÖR
+            <a href="#roadmap" class="btn-pill btn-enhanced glass glass-hover text-primary-600 dark:text-primary-300 px-8 py-4 font-medium flex items-center justify-center gap-2 icon-hover" aria-label="Yol Haritası'na git">
+                <i data-lucide="map" class="w-5 h-5" aria-hidden="true"></i>
+                Yol Haritasını Keşfedin
             </a>
         </div>
     </section>
 
-    <section class="py-16 px-4 sm:px-6 lg:px-8 relative border-y border-white/5 bg-white/5" aria-labelledby="video-heading">
+    <section class="py-16 px-4 sm:px-6 lg:px-8" aria-labelledby="video-heading">
         <div class="max-w-5xl mx-auto">
-            <div class="glass p-1 shadow-glass card-hover" style="clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);">
-                <div class="aspect-video w-full overflow-hidden bg-black relative shadow-md">
-                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player - Son Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="glass glass-hover p-6 card-rounded shadow-glass card-hover">
+                <div class="aspect-video w-full rounded-3xl overflow-hidden bg-black relative shadow-md">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player - Son Video: İngilizce Nasıl Çalışılmaz?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="p-6 flex items-center justify-between bg-black/40">
+                <div class="mt-6 flex items-center justify-between px-2">
                     <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                            <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">LATEST DROP</span>
-                        </div>
-                        <h3 id="video-heading" class="font-bold text-2xl text-white">Son Video: İngilizce Nasıl Çalışılmaz?</h3>
-                        <p class="text-sm text-gray-400 mt-1">Yapay zeka ile hatalarını düzelt! İzle ve XP kazan!</p>
+                        <h3 id="video-heading" class="font-semibold text-xl text-neutral-900 dark:text-white">Son Video: İngilizce Nasıl Çalışılmaz?</h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Yapay zeka ile hatalarını nasıl düzeltirsiniz? İzleyin ve şaşırmaya hazır olun!</p>
                     </div>
-                    <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-3 hover:bg-white/10 rounded transition-colors text-primary-500 hover:text-white" aria-label="YouTube kanalına git">
-                        <i data-lucide="external-link" class="w-6 h-6" aria-hidden="true"></i>
+                    <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-3 hover:bg-white/10 dark:hover:bg-neutral-700/10 rounded-full transition-colors icon-hover" aria-label="YouTube kanalına git">
+                        <i data-lucide="external-link" class="w-5 h-5 text-neutral-500 dark:text-neutral-400" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="roadmap" class="py-24 px-4 sm:px-6 lg:px-8" aria-labelledby="roadmap-heading">
+    <section id="roadmap" class="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-50/50 dark:bg-neutral-900/50" aria-labelledby="roadmap-heading">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-16">
-                <span class="text-primary-500 font-bold tracking-[0.2em] text-xs uppercase mb-2 block">CAMPAIGN MODE</span>
-                <h2 id="roadmap-heading" class="text-4xl font-black text-white uppercase">Öğrenme Yol Haritası</h2>
+                <h2 id="roadmap-heading" class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">Öğrenme Yol Haritası</h2>
+                <p class="text-lg text-neutral-600 dark:text-neutral-400">Sıfırdan zirveye giden yolculuk. Her adımda yeni keşifler sizi bekliyor!</p>
             </div>
 
-            <div class="relative glass p-8 border border-white/5 shadow-glass" role="region" aria-label="Timeline">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary-600 to-transparent opacity-50"></div>
+            <div class="relative glass glass-hover p-8 rounded-3xl shadow-glass" role="region" aria-label="Öğrenme yol haritası zaman çizelgesi">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-neutral-200/50 dark:bg-neutral-700/50 rounded-full backdrop-blur-xs"></div>
                 
-                <div class="relative flex items-center justify-between mb-20 timeline-item card-hover tooltip">
+                <div class="relative flex items-center justify-between mb-16 timeline-item card-hover tooltip">
                     <div class="w-5/12 text-right pr-12">
-                        <span class="text-xs font-bold text-primary-500 border border-primary-500/30 px-2 py-1 mb-2 inline-block bg-primary-500/10">LEVEL 1</span>
-                        <h3 class="font-bold text-xl text-white">Başlangıç (A1-A2)</h3>
-                        <p class="text-sm text-gray-400 mt-2">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitir.</p>
+                        <h3 class="font-bold text-xl text-primary-500">Başlangıç (A1-A2)</h3>
+                        <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin ve maceraya başlayın!</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-black border-4 border-primary-500 rounded-full flex items-center justify-center z-10 shadow-neon">
-                        <span class="text-xs font-bold text-white">1</span>
-                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot icon-hover"></div>
                     <div class="w-5/12 pl-12"></div>
-                    <span class="tooltiptext">İlk görevi tamamla!</span>
+                    <span class="tooltiptext">Temel seviyeden başlayın ve hızlı ilerleyin!</span>
                 </div>
 
-                <div class="relative flex items-center justify-between mb-20 timeline-item card-hover tooltip">
+                <div class="relative flex items-center justify-between mb-16 timeline-item card-hover tooltip">
                     <div class="w-5/12"></div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-black border-4 border-primary-500 rounded-full flex items-center justify-center z-10 shadow-neon">
-                        <span class="text-xs font-bold text-white">2</span>
-                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot icon-hover"></div>
                     <div class="w-5/12 pl-12 text-left">
-                        <span class="text-xs font-bold text-primary-500 border border-primary-500/30 px-2 py-1 mb-2 inline-block bg-primary-500/10">LEVEL 2</span>
-                        <h3 class="font-bold text-xl text-white">Gelişme (B1-B2)</h3>
-                        <p class="text-sm text-gray-400 mt-2">Speaking partneri promptlarını kullan. Kombolar yap!</p>
+                        <h3 class="font-bold text-xl text-primary-500">Gelişme (B1-B2)</h3>
+                        <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Speaking partneri promptlarını kullanın. Quizlet setlerimi çalışın ve konuşma becerilerinizi geliştirin!</p>
                     </div>
-                    <span class="tooltiptext">Skill puanlarını harca!</span>
+                    <span class="tooltiptext">Pratik yapın ve akıcı konuşun!</span>
                 </div>
 
                 <div class="relative flex items-center justify-between timeline-item card-hover tooltip">
                     <div class="w-5/12 text-right pr-12">
-                        <span class="text-xs font-bold text-primary-500 border border-primary-500/30 px-2 py-1 mb-2 inline-block bg-primary-500/10">LEVEL 3</span>
-                        <h3 class="font-bold text-xl text-white">Ustalık (C1+)</h3>
-                        <p class="text-sm text-gray-400 mt-2">Akademik makale ve IELTS. Boss fight zamanı!</p>
+                        <h3 class="font-bold text-xl text-primary-500">Ustalık (C1+)</h3>
+                        <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Akademik makale yazımı ve IELTS hazırlık promptlarına geçin. Zirveye ulaşın!</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-black border-4 border-primary-500 rounded-full flex items-center justify-center z-10 shadow-neon">
-                        <span class="text-xs font-bold text-white">3</span>
-                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot icon-hover"></div>
                     <div class="w-5/12 pl-12"></div>
-                    <span class="tooltiptext">Achievement Unlocked!</span>
+                    <span class="tooltiptext">Uzmanlaşın ve sertifikalar alın!</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="materials" class="py-24 px-4 sm:px-6 lg:px-8 border-y border-white/5 bg-white/5" aria-labelledby="materials-heading">
+    <section id="materials" class="py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="materials-heading">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-500/10 border border-primary-500/30 text-primary-500 text-xs font-bold uppercase mb-6">
-                    INVENTORY
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-300 text-sm font-bold uppercase mb-8 icon-hover tooltip">
+                    Öğretmen Kasası
+                    <span class="tooltiptext">Tüm kaynaklar burada!</span>
                 </div>
-                <h2 id="materials-heading" class="text-4xl font-black mb-6 text-white uppercase">Hazır Loot (Materyaller)</h2>
-                <p class="text-lg text-gray-400 mb-8 leading-relaxed">
-                    Staj dönemimde topladığım efsanevi itemler. Sınıf içinde test edildi, bug'lar temizlendi.
+                <h2 id="materials-heading" class="text-4xl font-bold mb-6 text-neutral-900 dark:text-white">Hazır Ders Materyalleri</h2>
+                <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
+                    Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun. İçeride sizi bekleyen sürprizleri keşfedin!
                 </p>
                 <div class="flex gap-4">
-                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="btn-enhanced bg-primary-600 hover:bg-primary-500 text-white px-8 py-4 flex items-center gap-2 shadow-neon" aria-label="Google Drive'a git">
-                        DRIVE'A GİT <i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>
+                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="btn-pill btn-enhanced bg-primary-500 text-white px-8 py-4 font-medium flex items-center gap-2 shadow-glass icon-hover" aria-label="Google Drive'a git">
+                        Drive'a Git <i data-lucide="external-link" class="w-5 h-5" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
-            <div class="glass p-1 shadow-glass card-hover" style="clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);">
-                <div class="p-8 bg-black/40">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="p-4 bg-primary-500/20 rounded border border-primary-500/30">
-                            <i data-lucide="archive" class="w-8 h-8 text-primary-500" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl text-white">Berkan's Archive</h3>
-                            <p class="text-sm text-gray-400 mt-1">Google Drive • 50+ Item</p>
-                        </div>
+            <div class="glass glass-hover p-8 rounded-3xl shadow-glass card-hover">
+                <div class="flex items-center gap-4 mb-8 tooltip">
+                    <div class="p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-2xl shadow-sm backdrop-blur-xs icon-hover">
+                        <i data-lucide="folder-heart" class="w-8 h-8 text-primary-500" aria-hidden="true"></i>
                     </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4 p-4 bg-white/5 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
-                            <i data-lucide="file-text" class="w-6 h-6 text-gray-500 group-hover:text-primary-500 transition-colors" aria-hidden="true"></i>
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-white">Lesson Plans.pdf</span>
-                                <span class="text-xs text-gray-500">Rare Item</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4 p-4 bg-white/5 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
-                            <i data-lucide="image" class="w-6 h-6 text-gray-500 group-hover:text-primary-500 transition-colors" aria-hidden="true"></i>
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-white">Flashcards.png</span>
-                                <span class="text-xs text-gray-500">Common Item</span>
-                            </div>
-                        </div>
+                    <div>
+                        <h3 class="font-bold text-xl text-neutral-900 dark:text-white">Berkan's Archive</h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Google Drive • 50+ Dosya - Her biri bir hazine!</p>
+                    </div>
+                    <span class="tooltiptext">Arşivi keşfedin!</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-4 bg-white/20 dark:bg-neutral-700/20 rounded-2xl border border-white/10 dark:border-neutral-600/50 card-hover backdrop-blur-xs icon-hover tooltip">
+                        <i data-lucide="file-text" class="w-6 h-6 text-neutral-500" aria-hidden="true"></i>
+                        <span class="text-base font-medium text-neutral-900 dark:text-white">Lesson Plans.pdf</span>
+                        <span class="tooltiptext">Ders planları burada!</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-white/20 dark:bg-neutral-700/20 rounded-2xl border border-white/10 dark:border-neutral-600/50 card-hover backdrop-blur-xs icon-hover tooltip">
+                        <i data-lucide="image" class="w-6 h-6 text-neutral-500" aria-hidden="true"></i>
+                        <span class="text-base font-medium text-neutral-900 dark:text-white">Flashcards.png</span>
+                        <span class="tooltiptext">Flashcard'larla öğrenin!</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="prompts" class="py-24 px-4 sm:px-6 lg:px-8" aria-labelledby="tools-heading">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-50/50 dark:bg-neutral-900/50" aria-labelledby="tools-heading">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-primary-500 font-bold tracking-[0.2em] text-xs uppercase mb-2 block">EQUIPPED GEAR</span>
-                <h2 id="tools-heading" class="text-3xl font-black text-white uppercase">Önerdiğim Araçlar</h2>
-            </div>
-            
+            <h2 id="tools-heading" class="text-3xl font-bold mb-12 text-neutral-900 dark:text-white">Önerdiğim Araçlar - Öğrenmeyi Eğlenceli Kılan Araçlar!</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="glass p-6 border border-white/5 hover:border-green-500/50 transition-all group cursor-pointer text-center">
-                    <div class="w-16 h-16 bg-green-500/10 mx-auto rounded-full flex items-center justify-center text-green-500 font-black text-2xl mb-4 border border-green-500/20 group-hover:shadow-[0_0_15px_rgba(34,197,94,0.4)] transition-shadow">C</div>
-                    <h3 class="font-bold text-white">ChatGPT</h3>
-                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-wider">AI ASSISTANT</p>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover icon-hover tooltip">
+                    <div class="w-12 h-12 bg-green-50/50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center text-green-600 font-bold text-xl backdrop-blur-xs">C</div>
+                    <div>
+                        <h3 class="font-bold text-base text-neutral-900 dark:text-white">ChatGPT</h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400">AI Asistan - Sohbet edin, öğrenin!</p>
+                    </div>
+                    <span class="tooltiptext">ChatGPT ile pratik yapın!</span>
                 </div>
-                <div class="glass p-6 border border-white/5 hover:border-blue-500/50 transition-all group cursor-pointer text-center">
-                    <div class="w-16 h-16 bg-blue-500/10 mx-auto rounded-full flex items-center justify-center text-blue-500 font-black text-2xl mb-4 border border-blue-500/20 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-shadow">Q</div>
-                    <h3 class="font-bold text-white">Quizlet</h3>
-                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-wider">MEMORY</p>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover icon-hover tooltip">
+                    <div class="w-12 h-12 bg-blue-50/50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl backdrop-blur-xs">Q</div>
+                    <div>
+                        <h3 class="font-bold text-base text-neutral-900 dark:text-white">Quizlet</h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400">Kelime - Kartlarla oynayın!</p>
+                    </div>
+                    <span class="tooltiptext">Kelime ezberleyin!</span>
                 </div>
-                <div class="glass p-6 border border-white/5 hover:border-purple-500/50 transition-all group cursor-pointer text-center">
-                    <div class="w-16 h-16 bg-purple-500/10 mx-auto rounded-full flex items-center justify-center text-purple-500 font-black text-2xl mb-4 border border-purple-500/20 group-hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-shadow">D</div>
-                    <h3 class="font-bold text-white">DeepL</h3>
-                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-wider">TRANSLATOR</p>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover icon-hover tooltip">
+                    <div class="w-12 h-12 bg-purple-50/50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-600 font-bold text-xl backdrop-blur-xs">D</div>
+                    <div>
+                        <h3 class="font-bold text-base text-neutral-900 dark:text-white">DeepL</h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400">Çeviri - Kusursuz çeviriler!</p>
+                    </div>
+                    <span class="tooltiptext">Doğru çeviriler için!</span>
                 </div>
-                <div class="glass p-6 border border-white/5 hover:border-red-500/50 transition-all group cursor-pointer text-center">
-                    <div class="w-16 h-16 bg-red-500/10 mx-auto rounded-full flex items-center justify-center text-red-500 font-black text-2xl mb-4 border border-red-500/20 group-hover:shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-shadow">Y</div>
-                    <h3 class="font-bold text-white">YouTube</h3>
-                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-wider">TUTORIALS</p>
+                <div class="glass glass-hover p-6 rounded-3xl shadow-glass flex items-center gap-4 card-hover icon-hover tooltip">
+                    <div class="w-12 h-12 bg-red-50/50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center text-red-600 font-bold text-xl backdrop-blur-xs">Y</div>
+                    <div>
+                        <h3 class="font-bold text-base text-neutral-900 dark:text-white">YouTube</h3>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400">Video - İzleyin, öğrenin!</p>
+                    </div>
+                    <span class="tooltiptext">Videolarla öğrenin!</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/5" aria-labelledby="prompts-library-heading">
+    <section class="py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="links-heading">
         <div class="max-w-7xl mx-auto">
-            <h2 id="prompts-library-heading" class="text-3xl font-black mb-12 text-white uppercase text-center">Cheat Codes (Promptlar)</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass p-8 border border-white/5 hover:border-primary-500/30 transition-all group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-transparent"></div>
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-xs font-bold text-primary-400 bg-primary-900/30 px-3 py-1 border border-primary-500/20">PLANLAMA</span>
-                        <i data-lucide="copy" class="w-4 h-4 text-gray-500 group-hover:text-primary-500 transition-colors"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-white mb-4">Ders Planı</h3>
-                    <div class="bg-black p-4 border border-white/10 text-xs font-mono text-gray-400 mb-6">
-                        "Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'..."
-                    </div>
-                    <button onclick="copyToClipboard('p1')" class="btn-enhanced bg-white/10 hover:bg-white/20 w-full py-3 text-xs text-white">KOPYALA</button>
-                    <p id="p1" class="hidden">Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game.</p>
-                </div>
-
-                <div class="glass p-8 border border-white/5 hover:border-green-500/30 transition-all group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-transparent"></div>
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-xs font-bold text-green-400 bg-green-900/30 px-3 py-1 border border-green-500/20">SINAV</span>
-                        <i data-lucide="copy" class="w-4 h-4 text-gray-500 group-hover:text-green-500 transition-colors"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-white mb-4">Quiz Hazırlayıcı</h3>
-                    <div class="bg-black p-4 border border-white/10 text-xs font-mono text-gray-400 mb-6">
-                        "Generate 5 multiple choice reading comprehension questions based on the text below..."
-                    </div>
-                    <button onclick="copyToClipboard('p2')" class="btn-enhanced bg-white/10 hover:bg-white/20 w-full py-3 text-xs text-white">KOPYALA</button>
-                    <p id="p2" class="hidden">Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]</p>
-                </div>
-
-                <div class="glass p-8 border border-white/5 hover:border-purple-500/30 transition-all group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-xs font-bold text-purple-400 bg-purple-900/30 px-3 py-1 border border-purple-500/20">NPC</span>
-                        <i data-lucide="copy" class="w-4 h-4 text-gray-500 group-hover:text-purple-500 transition-colors"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-white mb-4">Konuşma Partneri</h3>
-                    <div class="bg-black p-4 border border-white/10 text-xs font-mono text-gray-400 mb-6">
-                        "Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."
-                    </div>
-                    <button onclick="copyToClipboard('p3')" class="btn-enhanced bg-white/10 hover:bg-white/20 w-full py-3 text-xs text-white">KOPYALA</button>
-                    <p id="p3" class="hidden">Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 px-4 sm:px-6 lg:px-8" aria-labelledby="faq-heading">
-        <div class="max-w-4xl mx-auto">
-            <h2 id="faq-heading" class="text-3xl font-black mb-12 text-center text-white uppercase">Sıkça Sorulan Sorular</h2>
-            <div class="space-y-4">
-                <details class="group glass p-6 border border-white/5 cursor-pointer open:border-primary-500/30 transition-all" open>
-                    <summary class="flex justify-between items-center font-bold text-lg text-white list-none">
-                        Materyaller ücretsiz mi?
-                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-400 leading-relaxed text-sm">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir. Loot box yok, pay-to-win yok!</p>
-                </details>
-                <details class="group glass p-6 border border-white/5 cursor-pointer open:border-primary-500/30 transition-all">
-                    <summary class="flex justify-between items-center font-bold text-lg text-white list-none">
-                        Özel ders veriyor musunuz?
-                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-400 leading-relaxed text-sm">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri (Co-op Mode) için kontenjan açabiliyorum.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" aria-labelledby="newsletter-heading">
-        <div class="absolute inset-0 bg-primary-600/10 skew-y-3 transform origin-bottom-left"></div>
-        <div class="max-w-4xl mx-auto glass border border-primary-500/20 rounded-none p-12 text-center relative z-10">
-            <div class="relative z-10">
-                <i data-lucide="mail" class="w-12 h-12 text-primary-500 mx-auto mb-6"></i>
-                <h2 id="newsletter-heading" class="text-3xl font-black mb-4 uppercase text-white">Join the Clan</h2>
-                <p class="text-gray-400 max-w-lg mx-auto mb-8">Yeni görevler, gizli ipuçları ve güncellemelerden haberdar ol.</p>
+            <h2 id="links-heading" class="text-3xl font-bold mb-12 text-neutral-900 dark:text-white">Faydalı Linkler - Daha Fazla Keşif İçin!</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <form action="BURAYA_FORMSPREE_LINKINI_YAPISTIR" method="POST" class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-                    <input type="email" name="email" required placeholder="Player One Email" class="px-6 py-3 bg-black/50 border border-white/10 text-white focus:border-primary-500 focus:outline-none w-full font-mono text-sm placeholder-gray-600">
-                    <button type="submit" class="btn-enhanced bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 whitespace-nowrap">
-                        SIGN UP
+                <a href="https://youglish.com/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover icon-hover tooltip">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-red-50/50 dark:bg-red-900/20 text-red-600 p-4 rounded-2xl group-hover:bg-red-600 group-hover:text-white transition-colors backdrop-blur-xs">
+                            <i data-lucide="mic" class="w-6 h-6" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">YouGlish</h3>
+                    </div>
+                    <p class="text-base text-neutral-600 dark:text-neutral-400">Kelime telaffuzlarını videolardan öğrenin - Duyun ve tekrar edin!</p>
+                    <span class="tooltiptext">Telaffuz pratiği yapın!</span>
+                </a>
+
+                <a href="https://lyricstraining.com/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover icon-hover tooltip">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-blue-50/50 dark:bg-blue-900/20 text-blue-600 p-4 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors backdrop-blur-xs">
+                            <i data-lucide="music" class="w-6 h-6" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">LyricsTraining</h3>
+                    </div>
+                    <p class="text-base text-neutral-600 dark:text-neutral-400">Şarkı sözleriyle İngilizce pratiği yapın - Müzikle öğrenin!</p>
+                    <span class="tooltiptext">Şarkılarla eğlenin!</span>
+                </a>
+
+                <a href="https://www.bbc.co.uk/learningenglish/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover icon-hover tooltip">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-green-50/50 dark:bg-green-900/20 text-green-600 p-4 rounded-2xl group-hover:bg-green-600 group-hover:text-white transition-colors backdrop-blur-xs">
+                            <i data-lucide="tv" class="w-6 h-6" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">BBC English</h3>
+                    </div>
+                    <p class="text-base text-neutral-600 dark:text-neutral-400">Güncel haberlerle İngilizce öğrenin - Dünyayı takip edin!</p>
+                    <span class="tooltiptext">Haberlerle öğrenin!</span>
+                </a>
+
+                <a href="https://dictionary.cambridge.org/" target="_blank" class="group glass glass-hover p-8 rounded-3xl shadow-glass transition-all card-hover icon-hover tooltip">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-yellow-50/50 dark:bg-yellow-900/20 text-yellow-600 p-4 rounded-2xl group-hover:bg-yellow-500 group-hover:text-white transition-colors backdrop-blur-xs">
+                            <i data-lucide="book-open" class="w-6 h-6" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-neutral-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Cambridge</h3>
+                    </div>
+                    <p class="text-base text-neutral-600 dark:text-neutral-400">En güvenilir İngilizce sözlük - Kelimelerin sırlarını çözün!</p>
+                    <span class="tooltiptext">Sözlük kullanın!</span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="prompts" class="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-50/50 dark:bg-neutral-900/50" aria-labelledby="prompts-heading">
+        <div class="max-w-7xl mx-auto">
+            <h2 id="prompts-heading" class="text-3xl font-bold mb-12 text-neutral-900 dark:text-white">Prompt Kütüphanesi - AI ile Sihirli Komutlar!</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass glass-hover p-8 card-rounded shadow-glass flex flex-col card-hover tooltip">
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="text-sm font-bold text-primary-600 dark:text-primary-400 bg-primary-50/50 dark:bg-primary-900/20 px-4 py-2 rounded-full backdrop-blur-xs icon-hover">PLANLAMA</span>
+                        <i data-lucide="copy" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4 text-neutral-900 dark:text-white">Ders Planı Oluşturucu</h3>
+                    <p id="p1" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-white/20 dark:bg-neutral-700/20 p-4 rounded-2xl mb-6 flex-grow border border-white/10 dark:border-neutral-600/50 backdrop-blur-xs">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
+                    <button onclick="copyToClipboard('p1')" class="btn-pill btn-enhanced w-full bg-white/30 dark:bg-neutral-700/30 hover:bg-white/40 dark:hover:bg-neutral-600/40 py-3 text-base font-medium text-neutral-900 dark:text-white backdrop-blur-xs copy-button" aria-label="Prompt'ı kopyala">Kopyala</button>
+                    <span class="tooltiptext">Bu prompt ile ders planı oluşturun!</span>
+                </div>
+                <div class="glass glass-hover p-8 card-rounded shadow-glass flex flex-col card-hover tooltip">
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="text-sm font-bold text-green-600 dark:text-green-400 bg-green-50/50 dark:bg-green-900/20 px-4 py-2 rounded-full backdrop-blur-xs icon-hover">SINAV</span>
+                        <i data-lucide="copy" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4 text-neutral-900 dark:text-white">Quiz Hazırlayıcı</h3>
+                    <p id="p2" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-white/20 dark:bg-neutral-700/20 p-4 rounded-2xl mb-6 flex-grow border border-white/10 dark:border-neutral-600/50 backdrop-blur-xs">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
+                    <button onclick="copyToClipboard('p2')" class="btn-pill btn-enhanced w-full bg-white/30 dark:bg-neutral-700/30 hover:bg-white/40 dark:hover:bg-neutral-600/40 py-3 text-base font-medium text-neutral-900 dark:text-white backdrop-blur-xs copy-button" aria-label="Prompt'ı kopyala">Kopyala</button>
+                    <span class="tooltiptext">Quiz'ler oluşturun!</span>
+                </div>
+                <div class="glass glass-hover p-8 card-rounded shadow-glass flex flex-col card-hover tooltip">
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="text-sm font-bold text-purple-600 dark:text-purple-400 bg-purple-50/50 dark:bg-purple-900/20 px-4 py-2 rounded-full backdrop-blur-xs icon-hover">SPEAKING</span>
+                        <i data-lucide="copy" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 icon-hover" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4 text-neutral-900 dark:text-white">Konuşma Partneri</h3>
+                    <p id="p3" class="text-base font-mono text-neutral-600 dark:text-neutral-400 bg-white/20 dark:bg-neutral-700/20 p-4 rounded-2xl mb-6 flex-grow border border-white/10 dark:border-neutral-600/50 backdrop-blur-xs">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
+                    <button onclick="copyToClipboard('p3')" class="btn-pill btn-enhanced w-full bg-white/30 dark:bg-neutral-700/30 hover:bg-white/40 dark:hover:bg-neutral-600/40 py-3 text-base font-medium text-neutral-900 dark:text-white backdrop-blur-xs copy-button" aria-label="Prompt'ı kopyala">Kopyala</button>
+                    <span class="tooltiptext">Konuşma pratiği yapın!</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="faq-heading">
+        <div class="max-w-4xl mx-auto">
+            <h2 id="faq-heading" class="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">Sıkça Sorulan Sorular - Merak Ettikleriniz Burada!</h2>
+            <div class="space-y-6">
+                <details class="group glass glass-hover p-8 rounded-3xl shadow-glass cursor-pointer card-hover icon-hover" open>
+                    <summary class="flex justify-between items-center font-bold text-xl text-neutral-900 dark:text-white">
+                        Materyaller ücretsiz mi?
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform" aria-hidden="true"></i>
+                    </summary>
+                    <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir. Hemen deneyin!</p>
+                </details>
+                <details class="group glass glass-hover p-8 rounded-3xl shadow-glass cursor-pointer card-hover icon-hover">
+                    <summary class="flex justify-between items-center font-bold text-xl text-neutral-900 dark:text-white">
+                        Özel ders veriyor musunuz?
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform" aria-hidden="true"></i>
+                    </summary>
+                    <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri için kontenjan açabiliyorum. İletişime geçebilirsiniz.</p>
+                </details>
+                <details class="group glass glass-hover p-8 rounded-3xl shadow-glass cursor-pointer card-hover icon-hover">
+                    <summary class="flex justify-between items-center font-bold text-xl text-neutral-900 dark:text-white">
+                        Bu promptları nasıl kullanırım?
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-neutral-500 group-open:rotate-180 transition-transform" aria-hidden="true"></i>
+                    </summary>
+                    <p class="mt-6 text-base text-neutral-600 dark:text-neutral-400">Kopyala butonuna basıp ChatGPT, Gemini veya Claude'a yapıştırmanız yeterlidir. Anında sonuç alın!</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="newsletter-heading">
+        <div class="max-w-4xl mx-auto glass glass-hover bg-gradient-to-br from-primary-500/20 to-primary-700/20 dark:from-primary-600/20 dark:to-primary-800/20 rounded-3xl p-12 md:p-20 text-center text-neutral-900 dark:text-white relative overflow-hidden shadow-glass-hover card-hover backdrop-blur-xl icon-hover">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.2),rgba(255,255,255,0)_60%)] dark:bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.05),rgba(255,255,255,0)_60%)]"></div>
+            <div class="relative z-10">
+                <h2 id="newsletter-heading" class="text-4xl font-bold mb-6">Yeni İpuçlarını Kaçırmayın</h2>
+                <p class="text-lg opacity-90 max-w-2xl mx-auto mb-12">Yeni bir ders materyali veya AI ipucu paylaştığımda haberdar olmak için e-posta listesine katılın. Sürpriz güncellemeler sizi bekliyor!</p>
+                
+                <form action="BURAYA_FORMSPREE_LINKINI_YAPISTIR" method="POST" class="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
+                    <input type="email" name="email" required placeholder="E-posta adresiniz" class="px-6 py-4 rounded-full text-neutral-900 dark:text-white bg-white/50 dark:bg-neutral-800/50 outline-none focus:ring-2 ring-primary-300/50 w-full shadow-glass backdrop-blur-xs" aria-label="E-posta adresinizi girin">
+                    <button type="submit" class="btn-enhanced px-8 py-4 rounded-full bg-primary-500 text-white font-bold hover:bg-primary-600 transition-colors shadow-glass icon-hover" aria-label="Kaydol">
+                        Kaydol
                     </button>
                 </form>
+
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center border-t border-white/5 bg-black/40" role="contentinfo">
+    <footer class="py-16 text-center border-t border-neutral-200/20 dark:border-neutral-700/20 bg-neutral-50/50 dark:bg-neutral-900/50" role="contentinfo">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" class="p-3 bg-white/5 hover:bg-red-600 hover:text-white transition-all"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-                <a href="#" class="p-3 bg-white/5 hover:bg-pink-600 hover:text-white transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                <a href="#" class="p-3 bg-white/5 hover:bg-blue-600 hover:text-white transition-all"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            <span class="text-2xl font-bold text-neutral-900 dark:text-white block mb-4">Berkan'dan İpuçları</span>
+            <p class="text-base text-neutral-500 dark:text-neutral-400 mb-12">© 2026. Tüm hakları saklıdır. Daha fazla içerik için takipte kalın!</p>
+            <div class="flex justify-center gap-6">
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" class="p-4 rounded-full glass glass-hover transition-colors shadow-glass icon-hover" aria-label="YouTube kanalına git">
+                    <i data-lucide="youtube" class="w-6 h-6 text-red-600" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="p-4 rounded-full glass glass-hover transition-colors shadow-glass icon-hover" aria-label="Instagram'a git">
+                    <i data-lucide="instagram" class="w-6 h-6 text-pink-600" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="p-4 rounded-full glass glass-hover transition-colors shadow-glass icon-hover" aria-label="LinkedIn'e git">
+                    <i data-lucide="linkedin" class="w-6 h-6 text-blue-700" aria-hidden="true"></i>
+                </a>
             </div>
-            <p class="text-xs text-gray-600 font-mono tracking-widest uppercase">© 2026 BERKAN'S HUD. SYSTEM ONLINE.</p>
         </div>
     </footer>
 
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-primary-600 text-white px-6 py-3 shadow-neon transform translate-y-32 opacity-0 transition-all duration-300 z-50 flex items-center justify-between min-w-[300px] font-bold uppercase tracking-wide border border-primary-400" role="alert" aria-live="polite">
-        <span class="text-xs">Copied to Clipboard!</span>
-        <button onclick="document.getElementById('toast').classList.add('translate-y-32', 'opacity-0')" class="ml-4 hover:text-black transition-colors">X</button>
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 glass text-neutral-900 dark:text-white px-6 py-4 rounded-xl shadow-glass-hover transform translate-y-32 opacity-0 transition-all duration-300 z-50 flex items-center justify-between min-w-[320px] backdrop-blur-xl" role="alert" aria-live="polite">
+        <span class="text-base font-medium">Panoya kopyalandı.</span>
+        <button onclick="document.getElementById('toast').classList.add('translate-y-32', 'opacity-0')" class="text-primary-500 font-bold text-sm ml-4 uppercase" aria-label="Toast'ı kapat">Kapat</button>
     </div>
 
     <script>
         lucide.createIcons();
         const html = document.documentElement;
         const toggleBtn = document.getElementById('theme-toggle');
-
-        // Force Dark Mode by Default for Gamer Theme
-        if (!('theme' in localStorage)) {
-            localStorage.theme = 'dark';
-            html.classList.add('dark');
-        }
 
         function toggleTheme() {
             if (html.classList.contains('dark')) {
@@ -478,19 +652,17 @@
             }
         }
 
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
         toggleBtn.addEventListener('click', toggleTheme);
-
-        // XP BAR LOGIC (SCROLL PROGRESS)
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("xp-bar").style.width = scrolled + "%";
-        };
 
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(text).then(() => {
+            const cleanText = text.replace(/^"|"$/g, '');
+            navigator.clipboard.writeText(cleanText).then(() => {
                 const toast = document.getElementById('toast');
                 toast.classList.remove('translate-y-32', 'opacity-0');
                 setTimeout(() => {
@@ -499,12 +671,34 @@
             });
         }
 
+        // Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
         // Add keyboard navigation for engagement
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' && document.activeElement.tagName === 'A') {
                 document.activeElement.click();
             }
         });
+
+        // --- XP BAR SYSTEM (SCROLL BASED) - YENİ EKLENDİ ---
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("xp-bar").style.width = scrolled + "%";
+        };
     </script>
 </body>
 </html>
