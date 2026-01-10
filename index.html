@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,14 +20,21 @@ tailwind.config = {
       fontFamily: { sans: ['Roboto','sans-serif'] },
       colors: {
         google:{
-          blue:'#0B57D0', blueHover:'#004A77',
-          bg:'#F8FAFD', surface:'#FFFFFF',
-          text:'#1F1F1F', subtext:'#3c4043',
-          border:'#E0E3E7', lightBlue:'#C2E7FF'
+          blue:'#0B57D0',
+          blueHover:'#004A77',
+          bg:'#F8FAFD',
+          surface:'#FFFFFF',
+          text:'#1F1F1F',
+          subtext:'#444746',
+          border:'#E0E3E7',
+          lightBlue:'#C2E7FF',
         },
         dark:{
-          bg:'#121212', surface:'#1E1E1E',
-          text:'#EAEAEA', border:'#333', blue:'#A8C7FA'
+          bg:'#121212',
+          surface:'#1E1E1E',
+          border:'#444746',
+          text:'#E3E3E3',
+          blue:'#A8C7FA',
         }
       }
     }
@@ -36,34 +43,54 @@ tailwind.config = {
 </script>
 
 <style>
-.btn-pill{border-radius:9999px}
-.card-rounded{border-radius:28px}
-.btn-heavy{transition:transform .15s ease,box-shadow .15s ease}
-.btn-heavy:hover{transform:translateY(-1px)}
-.btn-heavy:active{transform:translateY(1px)}
+.btn-pill { border-radius:9999px }
+.card-rounded { border-radius:24px }
+
+/* BUTTON WEIGHT */
+.btn-heavy {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-heavy:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+}
+.btn-heavy:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+
+/* CARD FLOAT */
+.card-float {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card-float:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+}
 </style>
 </head>
 
 <body class="bg-google-bg text-google-text dark:bg-dark-bg dark:text-dark-text transition-colors antialiased">
 
 <!-- NAV -->
-<nav class="fixed w-full z-50 bg-google-surface/90 dark:bg-dark-surface/90 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-<div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+<nav class="fixed w-full z-50 bg-google-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-google-border dark:border-dark-border">
+<div class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
 
-<a class="flex items-center gap-2 font-semibold tracking-tight text-lg">
-<div class="bg-google-blue dark:bg-dark-blue p-2 rounded-xl text-white">
+<a href="#" class="flex items-center gap-2 font-medium text-lg">
+<div class="bg-google-blue text-white p-1.5 rounded-lg">
 <i data-lucide="sparkles"></i>
 </div>
 Berkan'dan İpuçları
 </a>
 
 <div class="hidden md:flex gap-1">
-<a class="px-4 py-2 rounded-full text-sm hover:bg-google-border">Materyaller</a>
-<a class="px-4 py-2 rounded-full text-sm hover:bg-google-border">Yol Haritası</a>
-<a class="px-4 py-2 rounded-full text-sm hover:bg-google-border">Promptlar</a>
+<a href="#materials" class="px-4 py-2 rounded-full hover:bg-google-border">Materyaller</a>
+<a href="#roadmap" class="px-4 py-2 rounded-full hover:bg-google-border">Yol Haritası</a>
+<a href="#prompts" class="px-4 py-2 rounded-full hover:bg-google-border">Promptlar</a>
 </div>
 
-<a class="btn-pill btn-heavy bg-google-blue hover:bg-google-blueHover text-white px-6 py-2.5 shadow-lg hover:shadow-xl flex items-center gap-2">
+<a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank"
+class="btn-pill btn-heavy bg-google-blue hover:bg-google-blueHover text-white px-5 py-2 flex items-center gap-2 shadow-md">
 <i data-lucide="youtube" class="w-4 h-4"></i> Abone Ol
 </a>
 
@@ -71,97 +98,107 @@ Berkan'dan İpuçları
 </nav>
 
 <!-- HERO -->
-<section class="pt-36 pb-20 text-center max-w-4xl mx-auto px-6">
-<h1 class="text-5xl md:text-6xl font-semibold tracking-tight leading-tight mb-6">
+<section class="pt-32 pb-16 text-center max-w-4xl mx-auto px-6">
+<h1 class="text-4xl md:text-6xl mb-6 leading-tight">
 İngilizce öğrenimini<br>
-<span class="text-google-blue">gerçekten</span> sadeleştiriyoruz
+<span class="text-google-blue font-medium">sadeleştiriyoruz.</span>
 </h1>
 
 <p class="text-lg text-google-subtext max-w-2xl mx-auto mb-10">
-Yapay zekâ destekli materyaller, denenmiş yöntemler ve net yol haritaları.
+Yapay zeka destekli yöntemler ve hazır materyallerle hedefinize ulaşın.
 </p>
 
 <div class="flex flex-col sm:flex-row justify-center gap-4">
-<a class="btn-pill btn-heavy bg-google-blue text-white px-8 py-3 shadow-lg hover:shadow-xl flex items-center gap-2">
+<a href="#materials" class="btn-pill btn-heavy bg-google-blue text-white px-8 py-3 shadow-md flex items-center gap-2">
 <i data-lucide="folder-open"></i> Öğretmen Kasası
 </a>
-<a class="btn-pill btn-heavy bg-white px-8 py-3 shadow-lg hover:shadow-xl flex items-center gap-2">
+
+<a href="#roadmap" class="btn-pill btn-heavy bg-white border border-google-border text-google-blue px-8 py-3 shadow-md flex items-center gap-2">
 <i data-lucide="map"></i> Yol Haritası
 </a>
 </div>
 </section>
 
-<!-- ROADMAP -->
-<section class="py-24 bg-gradient-to-b from-google-bg to-white dark:from-[#181818] dark:to-[#121212]">
-<div class="max-w-4xl mx-auto px-6 text-center">
-<h2 class="text-3xl font-semibold mb-4">Öğrenme Yol Haritası</h2>
-<p class="text-google-subtext mb-12">Sıfırdan ileri seviyeye.</p>
+<!-- VIDEO CARD -->
+<section class="py-12 px-6">
+<div class="max-w-4xl mx-auto">
+<div class="bg-white p-4 card-rounded card-float border border-google-border">
 
-<div class="space-y-6">
-<div class="card-rounded p-6 bg-white dark:bg-dark-surface shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
-<h3 class="font-semibold text-google-blue">A1–A2 Başlangıç</h3>
-<p class="text-sm text-google-subtext">Temel gramer ve kelime.</p>
+<div class="aspect-video rounded-2xl overflow-hidden bg-black">
+<iframe class="w-full h-full"
+src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+allowfullscreen></iframe>
 </div>
 
-<div class="card-rounded p-6 bg-white dark:bg-dark-surface shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
-<h3 class="font-semibold text-google-blue">B1–B2 Gelişme</h3>
-<p class="text-sm text-google-subtext">Speaking + AI pratik.</p>
+<div class="mt-4 flex justify-between items-center">
+<div>
+<h3 class="font-medium">Son Video</h3>
+<p class="text-sm text-google-subtext">İngilizce Nasıl Çalışılmaz?</p>
 </div>
 
-<div class="card-rounded p-6 bg-white dark:bg-dark-surface shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
-<h3 class="font-semibold text-google-blue">C1+ Ustalık</h3>
-<p class="text-sm text-google-subtext">Akademik & sınav odaklı.</p>
+<a href="https://www.youtube.com/@berkandanipuclar%C4%B1"
+class="p-3 rounded-full hover:bg-google-bg">
+<i data-lucide="external-link"></i>
+</a>
 </div>
+
 </div>
 </div>
 </section>
 
 <!-- PROMPTS -->
-<section class="py-24 bg-google-bg dark:bg-[#181818]">
+<section id="prompts" class="py-20 bg-google-bg">
 <div class="max-w-6xl mx-auto px-6">
-<h2 class="text-3xl font-semibold mb-10">Prompt Kütüphanesi</h2>
+<h2 class="text-2xl font-medium mb-8">Prompt Kütüphanesi</h2>
 
 <div class="grid md:grid-cols-3 gap-6">
-<div class="card-rounded p-6 bg-white dark:bg-dark-surface transition-all hover:-translate-y-1 hover:shadow-xl shadow-lg">
-<h3 class="font-semibold mb-2">Ders Planı</h3>
-<p class="text-sm font-mono bg-google-bg p-3 rounded-lg mb-4">
+
+<div class="bg-white p-6 card-rounded card-float border border-google-border flex flex-col">
+<h3 class="font-medium mb-2">Ders Planı</h3>
+<p id="p1" class="text-sm font-mono bg-google-bg p-3 rounded mb-4 flex-grow">
 Create a 40-minute English lesson plan for A2 students.
 </p>
-<button class="btn-pill btn-heavy w-full py-2 bg-google-blue text-white shadow">
+<button onclick="copyToClipboard('p1')"
+class="btn-pill btn-heavy border border-google-border py-2">
 Kopyala
 </button>
 </div>
 
-<div class="card-rounded p-6 bg-white dark:bg-dark-surface transition-all hover:-translate-y-1 hover:shadow-xl shadow-lg">
-<h3 class="font-semibold mb-2">Quiz</h3>
-<p class="text-sm font-mono bg-google-bg p-3 rounded-lg mb-4">
+<div class="bg-white p-6 card-rounded card-float border border-google-border flex flex-col">
+<h3 class="font-medium mb-2">Quiz</h3>
+<p id="p2" class="text-sm font-mono bg-google-bg p-3 rounded mb-4 flex-grow">
 Generate reading comprehension questions.
 </p>
-<button class="btn-pill btn-heavy w-full py-2 bg-google-blue text-white shadow">
+<button onclick="copyToClipboard('p2')"
+class="btn-pill btn-heavy border border-google-border py-2">
 Kopyala
 </button>
 </div>
 
-<div class="card-rounded p-6 bg-white dark:bg-dark-surface transition-all hover:-translate-y-1 hover:shadow-xl shadow-lg">
-<h3 class="font-semibold mb-2">Speaking</h3>
-<p class="text-sm font-mono bg-google-bg p-3 rounded-lg mb-4">
+<div class="bg-white p-6 card-rounded card-float border border-google-border flex flex-col">
+<h3 class="font-medium mb-2">Speaking</h3>
+<p id="p3" class="text-sm font-mono bg-google-bg p-3 rounded mb-4 flex-grow">
 Act as a waiter and practice ordering food.
 </p>
-<button class="btn-pill btn-heavy w-full py-2 bg-google-blue text-white shadow">
+<button onclick="copyToClipboard('p3')"
+class="btn-pill btn-heavy border border-google-border py-2">
 Kopyala
 </button>
 </div>
+
 </div>
 </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="py-12 bg-google-bg text-center">
+<footer class="py-12 text-center border-t border-google-border bg-google-bg">
 <p class="text-sm text-google-subtext">© 2025 Berkan'dan İpuçları</p>
 </footer>
 
 <script>
-lucide.createIcons()
+lucide.createIcons();
+function copyToClipboard(id){
+navigator.clipboard.writeText(document.getElementById(id).innerText);
+}
 </script>
 
 </body>
