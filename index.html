@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 <head>
@@ -61,6 +62,7 @@
                         'soft-hover': '0 4px 20px 0 rgba(0,0,0,0.1), 0 7px 10px -5px rgba(249,115,22,0.5)',
                         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
                         'glass-hover': '0 12px 40px 0 rgba(31, 38, 135, 0.45)',
+                        'glow': '0 0 15px rgba(249,115,22,0.5)',
                     },
                     backdropBlur: {
                         xs: '2px',
@@ -143,15 +145,15 @@
         /* Enhanced button styles */
         .btn-enhanced {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 15px rgba(249,115,22,0.3);
         }
         .btn-enhanced:hover {
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 20px rgba(249,115,22,0.5);
         }
         .btn-enhanced:active {
             transform: translateY(0) scale(1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 15px rgba(249,115,22,0.3);
         }
 
         /* Card hover effects */
@@ -160,7 +162,7 @@
         }
         .card-hover:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04), 0 0 15px rgba(249,115,22,0.3);
         }
 
         /* Section transitions */
@@ -213,7 +215,7 @@
 
         /* Accessibility improvements */
         :focus {
-            outline: 2px solid #0ea5e9;
+            outline: 2px solid #f97316;
             outline-offset: 2px;
         }
 
@@ -263,6 +265,23 @@
             padding: 2rem;
             margin-bottom: 2rem;
             border-radius: 1rem;
+            background: rgba(249,115,22,0.05);
+        }
+
+        .game-ui-progress {
+            background: linear-gradient(to right, #fdba74, #fb923c);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .game-badge {
+            background: #f97316;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(249,115,22,0.5);
         }
     </style>
 </head>
@@ -321,6 +340,7 @@
 
     <section class="py-16 px-4 sm:px-6 lg:px-8 modular-section" aria-labelledby="video-heading">
         <div class="max-w-5xl mx-auto">
+            <div class="game-badge mb-4">Son Video!</div>
             <div class="glass glass-hover p-6 card-rounded shadow-glass card-hover">
                 <div class="aspect-video w-full rounded-3xl overflow-hidden bg-black relative shadow-md">
                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player - Son Video: İngilizce Nasıl Çalışılmaz?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -338,8 +358,18 @@
         </div>
     </section>
 
-    <!-- Other sections moved to separate pages: roadmap.html, materials.html, prompts.html, tools.html, links.html, faq.html -->
-    <!-- For example, in roadmap.html, copy the nav and footer, and place the roadmap content there. Similarly for others. -->
+    <!-- Example for roadmap.html -->
+    <!-- Create a new file roadmap.html with the following content -->
+    <!-- <html> ... copy the head and nav from above -->
+    <!-- Then the roadmap section as modular-section with game-ui-progress for each level -->
+    <!-- <section class="modular-section"> -->
+    <!-- <div class="game-badge">Level 1: Başlangıç</div> -->
+    <!-- <div class="game-ui-progress" style="width: 33%;"></div> -->
+    <!-- Similar for other levels -->
+    <!-- </section> -->
+    <!-- Add footer -->
+
+    <!-- Similarly for other pages like materials.html, prompts.html, etc., make them modular with gaming elements like badges, progress, glows -->
 
     <footer class="py-16 text-center border-t border-neutral-200/20 dark:border-neutral-700/20 bg-neutral-50/50 dark:bg-neutral-900/50" role="contentinfo">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -421,4 +451,70 @@
     </script>
 </body>
 </html>
+
+<!-- roadmap.html example -->
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <!-- Copy head from index.html -->
+</head>
+<body>
+    <!-- Copy nav from index.html -->
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-50/50 dark:bg-neutral-900/50 modular-section" aria-labelledby="roadmap-heading">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 id="roadmap-heading" class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white energetic-text">ÖĞRENME YOL HARİTASI - LEVEL UP!</h2>
+                <p class="text-lg text-neutral-600 dark:text-neutral-400">Sıfırdan zirveye giden yolculuk. Her adımda yeni keşifler sizi bekliyor!</p>
+            </div>
+
+            <div class="relative glass glass-hover p-8 rounded-3xl shadow-glass" role="region" aria-label="Öğrenme yol haritası zaman çizelgesi">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-neutral-200/50 dark:bg-neutral-700/50 rounded-full backdrop-blur-xs"></div>
+                
+                <div class="relative flex items-center justify-between mb-16 timeline-item card-hover tooltip">
+                    <div class="w-5/12 text-right pr-12">
+                        <div class="game-badge mb-2">Level 1</div>
+                        <h3 class="font-bold text-xl text-primary-500">Başlangıç (A1-A2)</h3>
+                        <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin ve maceraya başlayın!</p>
+                        <div class="game-ui-progress mt-2" style="width: 33%;"></div>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot icon-hover"></div>
+                    <div class="w-5/12 pl-12"></div>
+                    <span class="tooltiptext">Temel seviyeden başlayın ve hızlı ilerleyin!</span>
+                </div>
+
+                <div class="relative flex items-center justify-between mb-16 timeline-item card-hover tooltip">
+                    <div class="w-5/12"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot icon-hover"></div>
+                    <div class="w-5/12 pl-12 text-left">
+                        <div class="game-badge mb-2">Level 2</div>
+                        <h3 class="font-bold text-xl text-primary-500">Gelişme (B1-B2)</h3>
+                        <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Speaking partneri promptlarını kullanın. Quizlet setlerimi çalışın ve konuşma becerilerinizi geliştirin!</p>
+                        <div class="game-ui-progress mt-2" style="width: 66%;"></div>
+                    </div>
+                    <span class="tooltiptext">Pratik yapın ve akıcı konuşun!</span>
+                </div>
+
+                <div class="relative flex items-center justify-between timeline-item card-hover tooltip">
+                    <div class="w-5/12 text-right pr-12">
+                        <div class="game-badge mb-2">Level 3</div>
+                        <h3 class="font-bold text-xl text-primary-500">Ustalık (C1+)</h3>
+                        <p class="text-base text-neutral-600 dark:text-neutral-400 mt-2">Akademik makale yazımı ve IELTS hazırlık promptlarına geçin. Zirveye ulaşın!</p>
+                        <div class="game-ui-progress mt-2" style="width: 100%;"></div>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-500 rounded-full ring-4 ring-white/50 dark:ring-neutral-900/50 shadow-glass timeline-dot icon-hover"></div>
+                    <div class="w-5/12 pl-12"></div>
+                    <span class="tooltiptext">Uzmanlaşın ve sertifikalar alın!</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Copy footer from index.html -->
+    <!-- Copy script from index.html -->
+
+</body>
+</html>
+
+<!-- For other pages like materials.html, prompts.html, etc., follow the same structure: copy head, nav, footer, script, and insert the specific content in a modular-section with gaming elements like badges, progress bars, glows. -->
 ```
