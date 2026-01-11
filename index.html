@@ -161,7 +161,7 @@
         [lang="en"] .lang-en { display: block; }
     </style>
 </head>
-<body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans" lang="tr">
+<body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
 
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-300/40 dark:bg-primary-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob"></div>
@@ -308,7 +308,8 @@
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-tr">Instagram Gönderileri</h3>
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-en">Instagram Posts</h3>
                         <!-- Placeholder for Instagram feed. In real scenario, use Instagram Embed or API -->
-                        <p class="text-slate-600 dark:text-slate-400">Instagram akışı buraya eklenecek. (Üçüncü taraf widget kullanın)</p>
+                        <p class="text-slate-600 dark:text-slate-400 lang-tr">Instagram akışı buraya eklenecek. (Üçüncü taraf widget kullanın)</p>
+                        <p class="text-slate-600 dark:text-slate-400 lang-en">Instagram feed to be added here. (Use third-party widget)</p>
                     </div>
                 </div>
             </div>
@@ -649,7 +650,6 @@
     <script>
         lucide.createIcons();
         const html = document.documentElement;
-        const body = document.body;
         const toggleBtn = document.getElementById('theme-toggle');
         const langToggle = document.getElementById('lang-toggle');
 
@@ -671,19 +671,19 @@
         toggleBtn.addEventListener('click', toggleTheme);
 
         function toggleLanguage() {
-            if (body.getAttribute('lang') === 'tr') {
-                body.setAttribute('lang', 'en');
+            if (html.getAttribute('lang') === 'tr') {
+                html.setAttribute('lang', 'en');
                 localStorage.lang = 'en';
             } else {
-                body.setAttribute('lang', 'tr');
+                html.setAttribute('lang', 'tr');
                 localStorage.lang = 'tr';
             }
         }
 
         if (localStorage.lang === 'en') {
-            body.setAttribute('lang', 'en');
+            html.setAttribute('lang', 'en');
         } else {
-            body.setAttribute('lang', 'tr');
+            html.setAttribute('lang', 'tr');
         }
         langToggle.addEventListener('click', toggleLanguage);
 
@@ -701,3 +701,4 @@
     </script>
 </body>
 </html>
+```
