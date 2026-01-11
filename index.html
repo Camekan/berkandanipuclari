@@ -90,7 +90,6 @@
         .premium-box {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid #cbd5e1;
             box-shadow: 
                 0 4px 6px -1px rgba(0, 0, 0, 0.05),
@@ -156,27 +155,30 @@
             left: 0.5rem;
             top: 0;
             transform: none;
-            margin-bottom: 1rem;
         }
         .timeline-content {
             margin-left: 4rem;
+            margin-top: 1rem;
         }
         @media (min-width: 768px) {
             .timeline-dot {
                 left: 50%;
                 transform: translateX(-50%);
             }
+            .timeline-content {
+                margin-top: 0;
+                width: 45%;
+                padding: 0 1rem;
+            }
             .timeline-item:nth-child(odd) .timeline-content {
-                padding-right: 2rem;
-                text-align: right;
                 margin-left: 0;
                 margin-right: auto;
+                text-align: left;
             }
             .timeline-item:nth-child(even) .timeline-content {
-                padding-left: 2rem;
-                text-align: left;
-                margin-right: 0;
                 margin-left: auto;
+                margin-right: 0;
+                text-align: left;
             }
         }
     </style>
@@ -534,5 +536,38 @@
     </div>
 
     <script>
-        lucide.create
-```
+        lucide.createIcons();
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        toggleBtn.addEventListener('click', toggleTheme);
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const cleanText = text.replace(/^"|"$/g, '');
+            navigator.clipboard.writeText(cleanText).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-40', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-40', 'opacity-0');
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+</html>
