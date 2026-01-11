@@ -5,31 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berkan'dan İpuçları | English & AI</title>
     
-    <!-- Meta Tags for SEO and Social Sharing -->
     <meta name="description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
     <meta name="keywords" content="İngilizce öğrenme, AI ile İngilizce, ders materyalleri, promptlar, yol haritası">
     <meta name="author" content="Berkan">
     <meta property="og:title" content="Berkan'dan İpuçları | English & AI">
     <meta property="og:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
-    <meta property="og:image" content="https://example.com/og-image.jpg"> <!-- Replace with actual image URL -->
-    <meta property="og:url" content="https://example.com"> <!-- Replace with actual URL -->
-    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://example.com/og-image.jpg"> <meta property="og:url" content="https://example.com"> <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Berkan'dan İpuçları | English & AI">
     <meta name="twitter:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin.">
-    <meta name="twitter:image" content="https://example.com/twitter-image.jpg"> <!-- Replace with actual image URL -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="twitter:image" content="https://example.com/twitter-image.jpg"> <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- AddThis for Share Buttons -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX"></script> <!-- Replace with your AddThis pubid -->
-
-    <script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX"></script> <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -155,10 +147,23 @@
         .delay-200 { animation-delay: 0.2s; }
         .delay-2000 { animation-delay: 2s; }
 
-        /* Language Toggle Styles */
-        .lang-en { display: none; }
-        [lang="en"] .lang-tr { display: none; }
-        [lang="en"] .lang-en { display: inline-block; }
+        /* --- UPDATED LANGUAGE SWITCHING LOGIC --- */
+        
+        /* 1. Default State (Turkish / No Lang Attribute) */
+        /* If html does NOT have lang="en", hide English elements. */
+        :root:not([lang="en"]) .lang-en { 
+            display: none !important; 
+        }
+
+        /* 2. English State */
+        /* If html HAS lang="en", hide Turkish elements. */
+        :root[lang="en"] .lang-tr { 
+            display: none !important; 
+        }
+        
+        /* Note: We do NOT force 'display: inline-block' anymore. 
+           We simply stop hiding the active language, allowing elements 
+           to revert to their natural layout (block, flex, etc.). */
     </style>
 </head>
 <body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
@@ -285,7 +290,6 @@
             </div>
         </section>
 
-        <!-- Social Media Feeds Section -->
         <section id="social-feeds" class="py-24 px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
@@ -295,7 +299,6 @@
                     <p class="text-lg font-medium text-slate-600 dark:text-slate-400 lang-en">Latest updates from YouTube and Instagram.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8">
-                    <!-- YouTube Feed -->
                     <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-tr">YouTube Videoları</h3>
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-en">YouTube Videos</h3>
@@ -303,11 +306,9 @@
                             <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=user_uploads&list=berkandanipuclar%C4%B1" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>
-                    <!-- Instagram Feed (Using third-party embed or placeholder) -->
                     <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-tr">Instagram Gönderileri</h3>
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-en">Instagram Posts</h3>
-                        <!-- Placeholder for Instagram feed. In real scenario, use Instagram Embed or API -->
                         <p class="text-slate-600 dark:text-slate-400 lang-tr">Instagram akışı buraya eklenecek. (Üçüncü taraf widget kullanın)</p>
                         <p class="text-slate-600 dark:text-slate-400 lang-en">Instagram feed to be added here. (Use third-party widget)</p>
                     </div>
@@ -399,7 +400,7 @@
                 
                 <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
                     <div class="flex items-center justify-between mb-8">
-                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-tr">Berkan's Archive</h3>
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-tr">Berkan'ın Arşivi</h3>
                         <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-en">Berkan's Archive</h3>
                         <span class="px-4 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-black rounded-full lang-tr">50+ DOSYA</span>
                         <span class="px-4 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-black rounded-full lang-en">50+ FILES</span>
@@ -410,7 +411,7 @@
                                 <i data-lucide="file-text" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-900 dark:text-white lang-tr">Lesson Plans.pdf</h4>
+                                <h4 class="font-bold text-slate-900 dark:text-white lang-tr">Ders Planları.pdf</h4>
                                 <h4 class="font-bold text-slate-900 dark:text-white lang-en">Lesson Plans.pdf</h4>
                                 <p class="text-xs font-semibold text-slate-500 lang-tr">2.4 MB • PDF</p>
                                 <p class="text-xs font-semibold text-slate-500 lang-en">2.4 MB • PDF</p>
@@ -422,7 +423,7 @@
                                 <i data-lucide="image" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-900 dark:text-white lang-tr">Flashcards.png</h4>
+                                <h4 class="font-bold text-slate-900 dark:text-white lang-tr">Kelime Kartları.png</h4>
                                 <h4 class="font-bold text-slate-900 dark:text-white lang-en">Flashcards.png</h4>
                                 <p class="text-xs font-semibold text-slate-500 lang-tr">5.1 MB • PNG</p>
                                 <p class="text-xs font-semibold text-slate-500 lang-en">5.1 MB • PNG</p>
@@ -628,7 +629,6 @@
                     <i data-lucide="instagram" class="w-5 h-5"></i>
                 </a>
             </div>
-            <!-- AddThis Share Buttons -->
             <div class="addthis_inline_share_toolbox mt-8"></div>
         </div>
     </footer>
@@ -695,4 +695,3 @@
     </script>
 </body>
 </html>
-```
