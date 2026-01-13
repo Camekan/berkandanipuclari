@@ -1,472 +1,846 @@
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZXGHW6B7G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9ZXGHW6B7G');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berkan'dan İpuçları | English & AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <meta name="description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
+    <meta name="keywords" content="İngilizce öğrenme, AI ile İngilizce, ders materyalleri, promptlar, yol haritası">
+    <meta name="author" content="Berkan">
+    <meta property="og:title" content="Berkan'dan İpuçları | English & AI">
+    <meta property="og:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
+    <meta property="og:image" content="https://imgur.com/a/c6kUNMS">
+    <meta property="og:url" content="https://example.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Berkan'dan İpuçları | English & AI">
+    <meta name="twitter:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin.">
+    <meta name="twitter:image" content="https://imgur.com/a/c6kUNMS">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc',
+                            400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1',
+                            800: '#075985', 900: '#0c4a6e', 950: '#082f49',
+                        },
+                        dark: {
+                            bg: '#020617',
+                            surface: '#0f172a',
+                            border: '#1e293b',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        * { font-family: 'Inter', sans-serif; }
-        .font-heading { font-family: 'Outfit', sans-serif; }
-        html { scroll-behavior: smooth; }
-        
-        :root:not([lang="en"]) .lang-en { display: none !important; }
-        :root[lang="en"] .lang-tr { display: none !important; }
-        
+        html { -webkit-tap-highlight-color: transparent; }
+        body { font-weight: 500; }
+
+        .animate-blob, .premium-box {
+            will-change: transform; 
+            transform: translateZ(0); 
+        }
+
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { 
+            background: #94a3b8; 
+            border-radius: 6px; 
+            border: 3px solid #f1f5f9; 
+        }
+        .dark ::-webkit-scrollbar-track { background: #020617; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; border-color: #020617; }
+
+        .bg-aurora {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        .dark .bg-aurora {
+            background-color: #020617;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+        }
+
         .premium-box {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
-            border: 1px solid #cbd5e1;
-            transition: all 0.3s;
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #cbd5e1; 
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(0,0,0,0.02); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .dark .premium-box {
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
+
         .premium-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-6px);
+            border-color: #38bdf8; 
+            box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04),
+                0 0 0 2px rgba(56, 189, 248, 0.2); 
         }
+        .dark .premium-box:hover {
+            border-color: #38bdf8;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        .btn-3d {
+            transition: all 0.1s;
+            border-bottom-width: 4px;
+            border-bottom-color: rgba(0,0,0,0.2);
+            font-weight: 700;
+            letter-spacing: 0.025em;
+        }
+        .btn-3d:active {
+            transform: translateY(3px);
+            border-bottom-width: 1px;
+            margin-bottom: 3px; 
+        }
+
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
         
-        .chatbot-window {
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-2000 { animation-delay: 2s; }
+
+        :root:not([lang="en"]) .lang-en { 
+            display: none !important; 
+        }
+        :root[lang="en"] .lang-tr { 
+            display: none !important; 
+        }
+
+        .audio-playing {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        .mobile-menu {
             display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #cbd5e1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+        .dark .mobile-menu {
+            background: rgba(15, 23, 42, 0.98);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .dark .mobile-menu a {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.1;
+            }
+            .logo-text {
+                font-size: 0.9rem !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 140px;
+            }
+        }
+
+        /* NEW: Search Modal */
+        #search-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 60;
+            align-items: start;
+            justify-content: center;
+            padding-top: 5rem;
+        }
+        #search-modal.active {
+            display: flex;
+        }
+
+        /* NEW: Chatbot */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+        }
+        .chatbot-window {
             position: fixed;
             bottom: 100px;
             right: 24px;
             width: 380px;
             max-width: calc(100vw - 48px);
             height: 500px;
-            z-index: 1000;
+            z-index: 99;
+            display: none;
+            flex-direction: column;
         }
-        .chatbot-window.active { display: flex; }
-        
+        .chatbot-window.active {
+            display: flex;
+        }
         .chat-messages {
             overflow-y: auto;
             scroll-behavior: smooth;
         }
-        
+
+        /* NEW: Filter buttons */
         .filter-btn.active {
             background: #0ea5e9 !important;
             color: white !important;
+            border-color: #0ea5e9 !important;
         }
-        
-        @media (max-width: 640px) {
-            .hero-title { font-size: 2.5rem !important; }
+        .dark .filter-btn.active {
+            background: #38bdf8 !important;
+            color: #020617 !important;
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors">
+<body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-300/40 dark:bg-primary-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300/40 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob delay-2000"></div>
+    </div>
+
+    <nav class="fixed w-full z-50 premium-box border-b-0 rounded-none top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="bg-blue-600 text-white p-2.5 rounded-xl">
-                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+            <a href="#" class="flex items-center gap-2 group z-50">
+                <div class="bg-gradient-to-br from-primary-600 to-primary-700 text-white p-2.5 rounded-xl shadow-lg shadow-primary-500/30 group-hover:rotate-12 transition-transform duration-300">
+                    <i data-lucide="sparkles" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 </div>
-                <span class="font-heading font-bold text-xl lang-tr">Berkan'dan İpuçları</span>
-                <span class="font-heading font-bold text-xl lang-en">Berkan's Tips</span>
+                <span class="font-heading font-extrabold text-sm sm:text-xl tracking-tight text-slate-900 dark:text-white lang-tr logo-text">Berkan'dan İpuçları</span>
+                <span class="font-heading font-extrabold text-sm sm:text-xl tracking-tight text-slate-900 dark:text-white lang-en logo-text">Berkan's Tips</span>
             </a>
 
-            <div class="hidden md:flex gap-6">
-                <a href="#downloads" class="font-bold hover:text-blue-600 lang-tr">Materyaller</a>
-                <a href="#downloads" class="font-bold hover:text-blue-600 lang-en">Materials</a>
-                <a href="#blog" class="font-bold hover:text-blue-600">Blog</a>
-                <a href="#comments" class="font-bold hover:text-blue-600 lang-tr">Yorumlar</a>
-                <a href="#comments" class="font-bold hover:text-blue-600 lang-en">Comments</a>
+            <div class="hidden md:flex items-center gap-2 p-1.5 bg-white/80 dark:bg-white/5 rounded-full border border-slate-200 dark:border-white/5 backdrop-blur-md shadow-sm">
+                <a href="#materials" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Materyaller</a>
+                <a href="#materials" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Materials</a>
+                <a href="#downloads" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">İndirilenler</a>
+                <a href="#downloads" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Downloads</a>
+                <a href="#blog" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">Blog</a>
+                <a href="#roadmap" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Yol Haritası</a>
+                <a href="#roadmap" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Roadmap</a>
+                <a href="#prompts" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Promptlar</a>
+                <a href="#prompts" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Prompts</a>
+                <a href="#tools" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Araçlar</a>
+                <a href="#tools" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Tools</a>
             </div>
 
-            <div class="flex items-center gap-3">
-                <button onclick="toggleSearch()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                    <i data-lucide="search" class="w-5 h-5"></i>
+            <div class="flex items-center gap-2 z-50">
+                <button onclick="toggleSearch()" class="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                    <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 </button>
-                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                    <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <button id="theme-toggle" class="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden"></i>
                 </button>
-                <button id="lang-toggle" class="px-3 py-2 rounded-lg font-bold hover:bg-slate-100 dark:hover:bg-slate-800">
+                <button id="lang-toggle" class="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d text-xs sm:text-sm font-bold">
                     <span class="lang-tr">EN</span>
                     <span class="lang-en">TR</span>
                 </button>
+                <button id="mobile-menu-toggle" class="md:hidden p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                    <i data-lucide="menu" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                </button>
+                <a href="https://www.youtube.com/@berkandanipucları" target="_blank" class="hidden sm:flex bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 shadow-xl shadow-slate-900/20 btn-3d">
+                    <i data-lucide="youtube" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                    <span class="lang-tr">Abone Ol</span>
+                    <span class="lang-en">Subscribe</span>
+                </a>
             </div>
+        </div>
+        
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#materials" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Materyaller</a>
+            <a href="#materials" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Materials</a>
+            <a href="#downloads" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">İndirilenler</a>
+            <a href="#downloads" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Downloads</a>
+            <a href="#blog" class="text-slate-700 dark:text-slate-300 font-bold">Blog</a>
+            <a href="#roadmap" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Yol Haritası</a>
+            <a href="#roadmap" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Roadmap</a>
+            <a href="#prompts" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Promptlar</a>
+            <a href="#prompts" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Prompts</a>
+            <a href="#tools" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Araçlar</a>
+            <a href="#tools" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Tools</a>
         </div>
     </nav>
 
-    <!-- Search Modal -->
-    <div id="search-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center px-4">
-        <div class="bg-white dark:bg-slate-800 w-full max-w-2xl p-6 rounded-3xl">
-            <div class="flex items-center gap-4 mb-4">
+    <!-- NEW: Search Modal -->
+    <div id="search-modal" class="px-4">
+        <div class="premium-box w-full max-w-2xl p-6 rounded-3xl">
+            <div class="flex items-center gap-4 mb-6">
                 <i data-lucide="search" class="w-6 h-6 text-slate-400"></i>
                 <input 
                     type="text" 
                     id="search-input" 
-                    placeholder="Ara / Search..."
-                    class="flex-grow bg-transparent outline-none text-xl font-bold"
+                    placeholder="Ara... (Search...)"
+                    class="flex-grow bg-transparent border-none outline-none text-xl font-bold text-slate-900 dark:text-white placeholder-slate-400"
                     oninput="performSearch(this.value)"
                 >
-                <button onclick="toggleSearch()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg">
+                <button onclick="toggleSearch()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
-            <div id="search-results" class="space-y-2 max-h-96 overflow-y-auto"></div>
+            <div id="search-results" class="space-y-3 max-h-96 overflow-y-auto">
+                <p class="text-slate-500 text-sm font-medium lang-tr">Aramaya başlamak için yazmaya başlayın...</p>
+                <p class="text-slate-500 text-sm font-medium lang-en">Start typing to search...</p>
+            </div>
         </div>
     </div>
 
-    <main class="pt-20">
-        <!-- Hero Section -->
-        <section class="pt-20 pb-16 px-6 text-center max-w-5xl mx-auto">
-            <h1 class="hero-title font-heading text-6xl md:text-8xl font-black mb-8 lang-tr">
+    <main class="relative z-10">
+        <section class="pt-32 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6 text-center max-w-5xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider mb-6 sm:mb-8 animate-float lang-tr">
+                <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+                Yeni Nesil Öğrenme
+            </div>
+            <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider mb-6 sm:mb-8 animate-float lang-en">
+                <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+                Next Generation Learning
+            </div>
+            
+            <h1 class="hero-title font-heading text-5xl sm:text-6xl md:text-8xl font-black mb-6 sm:mb-8 leading-tight tracking-tight text-slate-900 dark:text-white lang-tr">
                 İngilizceyi <br>
-                <span class="text-blue-600">Süperleştir.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-400 dark:to-indigo-400">Süperleştir.</span>
             </h1>
-            <h1 class="hero-title font-heading text-6xl md:text-8xl font-black mb-8 lang-en">
+            <h1 class="hero-title font-heading text-5xl sm:text-6xl md:text-8xl font-black mb-6 sm:mb-8 leading-tight tracking-tight text-slate-900 dark:text-white lang-en">
                 Supercharge <br>
-                <span class="text-blue-600">English.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-400 dark:to-indigo-400">English.</span>
             </h1>
             
-            <p class="text-xl text-slate-600 dark:text-slate-400 mb-12 lang-tr">
-                Yapay zeka destekli materyaller ve rehberlikle İngilizce öğrenmeyi hızlandır.
+            <p class="text-lg sm:text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 lang-tr">
+                Klasik yöntemleri unut. <span class="text-slate-900 dark:text-white font-extrabold border-b-2 border-primary-500">Yapay zeka</span> ve benim hazırladığım özel materyallerle hedefine ışık hızında ulaş.
             </p>
-            <p class="text-xl text-slate-600 dark:text-slate-400 mb-12 lang-en">
-                Accelerate English learning with AI-powered materials and guidance.
+            <p class="text-lg sm:text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 lang-en">
+                Forget classic methods. Reach your goal at light speed with <span class="text-slate-900 dark:text-white font-extrabold border-b-2 border-primary-500">AI</span> and my special materials.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#downloads" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3">
-                    <i data-lucide="download" class="w-6 h-6"></i>
-                    <span class="lang-tr">Materyalleri İndir</span>
-                    <span class="lang-en">Download Materials</span>
+            <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
+                <a href="#materials" class="group bg-primary-600 hover:bg-primary-500 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-primary-500/30 btn-3d lang-tr">
+                    <i data-lucide="folder-open" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                    Öğretmen Kasası
                 </a>
-            </div>
-        </section>
+                <a href="#materials" class="group bg-primary-600 hover:bg-primary-500 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-primary-500/30 btn-3d lang-en">
+                    <i data-lucide="folder-open" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                    Teacher's Vault
+                </a>
+                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg btn-3d lang-tr">
+                    <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                    Yol Haritası
+                </a>
+                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-8 sm:px-10 py-4 
+    <section id="downloads" class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="font-heading text-4xl font-black mb-4 lang-tr">Materyalleri İndir</h2>
+            <h2 class="font-heading text-4xl font-black mb-4 lang-en">Download Materials</h2>
+        </div>
 
-        <!-- Downloads Section with Filters -->
-        <section id="downloads" class="py-24 px-6 bg-white dark:bg-slate-800">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="font-heading text-4xl font-black mb-4 lang-tr">Materyalleri İndir</h2>
-                    <h2 class="font-heading text-4xl font-black mb-4 lang-en">Download Materials</h2>
-                </div>
-
-                <!-- Filters -->
-                <div class="flex flex-wrap justify-center gap-3 mb-8">
-                    <button onclick="filterMaterials('all')" class="filter-btn active px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700">
-                        <span class="lang-tr">Tümü</span>
-                        <span class="lang-en">All</span>
-                    </button>
-                    <button onclick="filterMaterials('beginner')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700">A1-A2</button>
-                    <button onclick="filterMaterials('intermediate')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700">B1-B2</button>
-                    <button onclick="filterMaterials('advanced')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700">C1-C2</button>
-                    <button onclick="filterMaterials('teacher')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700">
-                        <span class="lang-tr">Öğretmen</span>
-                        <span class="lang-en">Teacher</span>
-                    </button>
-                </div>
-
-                <!-- Materials Grid -->
-                <div id="materials-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-            </div>
-        </section>
-
-        <!-- Blog Section -->
-        <section id="blog" class="py-24 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="font-heading text-4xl font-black mb-4">Blog</h2>
-                    <p class="text-slate-600 dark:text-slate-400 lang-tr">İngilizce öğrenme ipuçları ve stratejiler</p>
-                    <p class="text-slate-600 dark:text-slate-400 lang-en">English learning tips and strategies</p>
-                </div>
-
-                <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </div>
-        </section>
-
-        <!-- Comments Section -->
-        <section id="comments" class="py-24 px-6 bg-white dark:bg-slate-800">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="font-heading text-4xl font-black mb-12 text-center lang-tr">Yorumlar</h2>
-                <h2 class="font-heading text-4xl font-black mb-12 text-center lang-en">Comments</h2>
-
-                <!-- Comment Form -->
-                <div class="premium-box p-8 rounded-3xl mb-8">
-                    <h3 class="font-bold text-xl mb-4 lang-tr">Yorum Yap</h3>
-                    <h3 class="font-bold text-xl mb-4 lang-en">Leave a Comment</h3>
-                    <input 
-                        type="text" 
-                        id="comment-name" 
-                        placeholder="İsminiz / Your Name"
-                        class="w-full p-4 rounded-xl bg-slate-100 dark:bg-slate-700 mb-4 font-bold outline-none"
-                    >
-                    <textarea 
-                        id="comment-text" 
-                        placeholder="Yorumunuz / Your Comment"
-                        class="w-full p-4 rounded-xl bg-slate-100 dark:bg-slate-700 mb-4 font-medium outline-none h-32"
-                    ></textarea>
-                    <button onclick="addComment()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold">
-                        <span class="lang-tr">Gönder</span>
-                        <span class="lang-en">Submit</span>
-                    </button>
-                </div>
-
-                <!-- Comments List -->
-                <div id="comments-list" class="space-y-4"></div>
-            </div>
-        </section>
-    </main>
-
-    <!-- AI Chatbot -->
-    <div class="chatbot-widget">
-        <button onclick="toggleChatbot()" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl">
-            <i data-lucide="message-circle" class="w-6 h-6"></i>
-        </button>
-    </div>
-
-    <div id="chatbot-window" class="chatbot-window premium-box rounded-3xl flex flex-col">
-        <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-            <h3 class="font-bold lang-tr">AI Asistan</h3>
-            <h3 class="font-bold lang-en">AI Assistant</h3>
-            <button onclick="toggleChatbot()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg">
-                <i data-lucide="x" class="w-5 h-5"></i>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <button onclick="filterDownloads('all')" class="filter-btn active px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
+                <span class="lang-tr">Tümü</span><span class="lang-en">All</span>
+            </button>
+            <button onclick="filterDownloads('beginner')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">A1-A2</button>
+            <button onclick="filterDownloads('intermediate')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">B1-B2</button>
+            <button onclick="filterDownloads('advanced')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">C1-C2</button>
+            <button onclick="filterDownloads('teacher')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
+                <span class="lang-tr">Öğretmen</span><span class="lang-en">Teacher</span>
             </button>
         </div>
-        <div id="chat-messages" class="chat-messages flex-grow p-4 space-y-3"></div>
-        <div class="p-4 border-t border-slate-200 dark:border-slate-700">
-            <div class="flex gap-2">
-                <input 
-                    type="text" 
-                    id="chat-input" 
-                    placeholder="Mesajınızı yazın..."
-                    class="flex-grow p-3 rounded-xl bg-slate-100 dark:bg-slate-700 outline-none"
-                    onkeypress="if(event.key==='Enter') sendMessage()"
-                >
-                <button onclick="sendMessage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-xl">
-                    <i data-lucide="send" class="w-5 h-5"></i>
-                </button>
-            </div>
+
+        <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+</section>
+
+<section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="font-heading text-4xl font-black mb-4">Blog</h2>
+            <p class="text-slate-600 dark:text-slate-400 lang-tr">İngilizce öğrenme ipuçları</p>
+            <p class="text-slate-600 dark:text-slate-400 lang-en">English learning tips</p>
+        </div>
+        <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </div>
+</section>
+
+<section id="comments" class="py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="font-heading text-4xl font-black mb-12 text-center lang-tr">Yorumlar</h2>
+        <h2 class="font-heading text-4xl font-black mb-12 text-center lang-en">Comments</h2>
+
+        <div class="premium-box p-8 rounded-3xl mb-8">
+            <h3 class="font-bold text-xl mb-4 lang-tr">Yorum Yap</h3>
+            <h3 class="font-bold text-xl mb-4 lang-en">Leave a Comment</h3>
+            <input type="text" id="comment-name" placeholder="İsminiz / Your Name" class="w-full p-4 rounded-xl bg-slate-100 dark:bg-slate-700 mb-4 font-bold outline-none">
+            <textarea id="comment-text" placeholder="Yorumunuz / Your Comment" class="w-full p-4 rounded-xl bg-slate-100 dark:bg-slate-700 mb-4 font-medium outline-none h-32"></textarea>
+            <button onclick="addComment()" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-xl font-bold btn-3d">
+                <span class="lang-tr">Gönder</span><span class="lang-en">Submit</span>
+            </button>
+        </div>
+
+        <div id="comments-list" class="space-y-4"></div>
+    </div>
+</section>
+
+<div class="chatbot-widget">
+    <button onclick="toggleChatbot()" class="bg-primary-600 hover:bg-primary-700 text-white p-4 rounded-full shadow-2xl btn-3d">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </button>
+</div>
+
+<div id="chatbot-window" class="chatbot-window premium-box rounded-3xl">
+    <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+        <div>
+            <h3 class="font-bold lang-tr">AI Asistan</h3>
+            <h3 class="font-bold lang-en">AI Assistant</h3>
+        </div>
+        <button onclick="toggleChatbot()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+    <div id="chat-messages" class="chat-messages flex-grow p-4 space-y-3 overflow-y-auto"></div>
+    <div class="p-4 border-t border-slate-200 dark:border-slate-700">
+        <div class="flex gap-2">
+            <input type="text" id="chat-input" placeholder="Mesajınızı yazın..." class="flex-grow p-3 rounded-xl bg-slate-100 dark:bg-slate-700 outline-none font-medium">
+            <button onclick="sendMessage()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 rounded-xl btn-3d">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
         </div>
     </div>
+</div>
 
-    <script>
-        lucide.createIcons();
-        
-        // Theme System with Auto-Detection
+<script>
+// All your original JavaScript code stays here, then add these NEW functions:
+
+// === AUTO DARK MODE DETECTION ===
+function initThemeWithAutoDetection() {
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+    const hour = new Date().getHours();
+
+    if (savedTheme) {
+        if (savedTheme === 'dark') html.classList.add('dark');
+        else html.classList.remove('dark');
+    } else if (hour >= 20 || hour < 7) {
+        html.classList.add('dark');
+    }
+}
+
+// Update your existing theme toggle
+const themeToggleBtn = document.getElementById('theme-toggle');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function() {
         const html = document.documentElement;
-        const themeToggle = document.getElementById('theme-toggle');
-        
-        function initTheme() {
-            const hour = new Date().getHours();
-            const savedTheme = localStorage.theme;
-            
-            if (savedTheme) {
-                html.classList.toggle('dark', savedTheme === 'dark');
-            } else if (hour >= 20 || hour < 7) {
-                html.classList.add('dark');
-            }
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
-        });
-        
-        // Language Toggle
-        const langToggle = document.getElementById('lang-toggle');
-        langToggle.addEventListener('click', () => {
-            const current = html.getAttribute('lang') || 'tr';
-            html.setAttribute('lang', current === 'tr' ? 'en' : 'tr');
-            localStorage.lang = current === 'tr' ? 'en' : 'tr';
-        });
-        
-        if (localStorage.lang) {
-            html.setAttribute('lang', localStorage.lang);
-        }
-        
-        // Search Modal
-        function toggleSearch() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('hidden');
-            if (!modal.classList.contains('hidden')) {
-                document.getElementById('search-input').focus();
-            }
-        }
-        
-        function performSearch(query) {
-            const results = document.getElementById('search-results');
-            if (query.length < 2) {
-                results.innerHTML = '<p class="text-slate-500 text-sm">Aramaya devam edin...</p>';
-                return;
-            }
-            
-            // Mock search results
-            results.innerHTML = `
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 cursor-pointer">
-                    <h4 class="font-bold mb-1">6. Sınıf Full Rehber</h4>
-                    <p class="text-sm text-slate-600 dark:text-slate-400">A1-A2 Level Material</p>
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+}
+
+// === SEARCH FUNCTIONALITY ===
+function toggleSearch() {
+    const modal = document.getElementById('search-modal');
+    modal.classList.toggle('active');
+    if (modal.classList.contains('active')) {
+        const input = document.getElementById('search-input');
+        if (input) input.focus();
+    } else {
+        const input = document.getElementById('search-input');
+        if (input) input.value = '';
+        const resultsEl = document.getElementById('search-results');
+        if (resultsEl) resultsEl.innerHTML = '<p class="text-slate-500 text-sm font-medium lang-tr">Aramaya başlamak için yazmaya başlayın...</p><p class="text-slate-500 text-sm font-medium lang-en">Start typing to search...</p>';
+    }
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+}
+
+const searchableContent = [
+    { title: '6. Sınıf Full Rehber', titleEn: '6th Grade Full Guide', type: 'material', link: '#downloads', level: 'A1-A2' },
+    { title: 'Öğretmen Kasam', titleEn: 'Teacher Vault', type: 'material', link: '#downloads', level: 'Teacher' },
+    { title: 'Yol Haritası', titleEn: 'Roadmap', type: 'section', link: '#roadmap' },
+    { title: 'Promptlar', titleEn: 'Prompts', type: 'section', link: '#prompts' },
+    { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog' },
+    { title: 'AI ile İngilizce Öğrenme', titleEn: 'Learn English with AI', type: 'blog', link: '#blog' }
+];
+
+function performSearch(query) {
+    const results = document.getElementById('search-results');
+    const lang = document.documentElement.getAttribute('lang') || 'tr';
+
+    if (!results) return;
+
+    if (query.length < 2) {
+        results.innerHTML = lang === 'tr' 
+            ? '<p class="text-slate-500 text-sm font-medium">Aramaya başlamak için yazmaya başlayın...</p>'
+            : '<p class="text-slate-500 text-sm font-medium">Start typing to search...</p>';
+        return;
+    }
+
+    const filtered = searchableContent.filter(item => {
+        const searchIn = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
+        return searchIn.includes(query.toLowerCase());
+    });
+
+    if (filtered.length === 0) {
+        results.innerHTML = lang === 'tr'
+            ? '<p class="text-slate-500 text-sm font-medium">Sonuç bulunamadı.</p>'
+            : '<p class="text-slate-500 text-sm font-medium">No results found.</p>';
+        return;
+    }
+
+    results.innerHTML = filtered.map(item => `
+        <a href="${item.link}" onclick="toggleSearch()" class="block p-4 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 cursor-pointer transition-colors">
+            <h4 class="font-bold mb-1">${lang === 'tr' ? item.title : item.titleEn}</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-400">${item.type} ${item.level || ''}</p>
+        </a>
+    `).join('');
+}
+
+// === BLOG SECTION ===
+const blogPosts = [
+    {
+        id: 1,
+        title: 'AI ile İngilizce Nasıl Öğrenilir?',
+        titleEn: 'How to Learn English with AI?',
+        excerpt: 'Yapay zekanın gücünü kullanarak İngilizce öğrenmeyi nasıl hızlandırabilirsiniz?',
+        excerptEn: 'How can you accelerate English learning using the power of AI?',
+        date: '13 Ocak 2026',
+        dateEn: 'January 13, 2026',
+        content: 'ChatGPT ve Claude gibi AI araçları ile konuşma pratiği yapabilir, writing düzeltmeleri alabilir ve kişiselleştirilmiş ders planları oluşturabilirsiniz...',
+        contentEn: 'With AI tools like ChatGPT and Claude, you can practice conversations, get writing corrections, and create personalized lesson plans...'
+    },
+    {
+        id: 2,
+        title: '10 Dakikada Kelime Öğrenme Teknikleri',
+        titleEn: 'Word Learning Techniques in 10 Minutes',
+        excerpt: 'Günde sadece 10 dakika ayırarak kelime dağarcığınızı nasıl genişletebilirsiniz?',
+        excerptEn: 'How can you expand your vocabulary by dedicating just 10 minutes a day?',
+        date: '10 Ocak 2026',
+        dateEn: 'January 10, 2026',
+        content: 'Spaced repetition tekniği ve Quizlet kullanarak etkili kelime öğrenme yöntemleri...',
+        contentEn: 'Effective vocabulary learning methods using spaced repetition and Quizlet...'
+    },
+    {
+        id: 3,
+        title: 'Speaking Pratiği için 5 Altın İpucu',
+        titleEn: '5 Golden Tips for Speaking Practice',
+        excerpt: 'Konuşma becerinizi geliştirmek için mutlaka denemeniz gereken 5 yöntem.',
+        excerptEn: '5 methods you must try to improve your speaking skills.',
+        date: '5 Ocak 2026',
+        dateEn: 'January 5, 2026',
+        content: 'Shadowing tekniği, AI conversation partners ve daha fazlası...',
+        contentEn: 'Shadowing technique, AI conversation partners and more...'
+    }
+];
+
+function renderBlog() {
+    const lang = document.documentElement.getAttribute('lang') || 'tr';
+    const blogSection = document.getElementById('blog-posts');
+    if (!blogSection) return;
+
+    blogSection.innerHTML = blogPosts.map(post => `
+        <article class="premium-box p-6 rounded-3xl cursor-pointer hover:scale-105 transition-transform" onclick="openBlogPost(${post.id})">
+            <div class="h-48 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl mb-4"></div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">${lang === 'tr' ? post.date : post.dateEn}</p>
+            <h3 class="font-heading font-bold text-xl mb-3">${lang === 'tr' ? post.title : post.titleEn}</h3>
+            <p class="text-slate-600 dark:text-slate-400 mb-4">${lang === 'tr' ? post.excerpt : post.excerptEn}</p>
+            <button class="text-primary-600 dark:text-primary-400 font-bold hover:underline">
+                ${lang === 'tr' ? 'Devamını Oku →' : 'Read More →'}
+            </button>
+        </article>
+    `).join('');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+}
+
+function openBlogPost(id) {
+    const post = blogPosts.find(p => p.id === id);
+    const lang = document.documentElement.getAttribute('lang') || 'tr';
+    if (!post) return;
+    alert(`${lang === 'tr' ? post.title : post.titleEn}\n\n${lang === 'tr' ? post.content : post.contentEn}`);
+}
+
+// === COMMENTS SECTION WITH MULTILINGUAL PROFANITY FILTER ===
+const badWordsTR = ['kötü', 'aptal', 'salak', 'ahmak', 'gerizekalı'];
+const badWordsEN = ['bad', 'stupid', 'idiot', 'fool', 'dumb'];
+const allBadWords = [...badWordsTR, ...badWordsEN];
+
+let comments = [];
+
+function filterProfanity(text) {
+    let filtered = text;
+    allBadWords.forEach(word => {
+        const regex = new RegExp(word, 'gi');
+        filtered = filtered.replace(regex, '*'.repeat(word.length));
+    });
+    return filtered;
+}
+
+function addComment() {
+    const name = document.getElementById('comment-name').value.trim();
+    const text = document.getElementById('comment-text').value.trim();
+    const lang = document.documentElement.getAttribute('lang') || 'tr';
+
+    if (!name || !text) {
+        alert(lang === 'tr' ? 'Lütfen tüm alanları doldurun!' : 'Please fill all fields!');
+        return;
+    }
+
+    const filteredName = filterProfanity(name);
+    const filteredText = filterProfanity(text);
+
+    comments.unshift({
+        name: filteredName,
+        text: filteredText,
+        date: new Date().toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US')
+    });
+
+    document.getElementById('comment-name').value = '';
+    document.getElementById('comment-text').value = '';
+    renderComments();
+
+    alert(lang === 'tr' ? 'Yorumunuz eklendi!' : 'Your comment has been added!');
+}
+
+function renderComments() {
+    const container = document.getElementById('comments-list');
+    if (!container) return;
+
+    if (comments.length === 0) {
+        const lang = document.documentElement.getAttribute('lang') || 'tr';
+        container.innerHTML = `<p class="text-center text-slate-500">${lang === 'tr' ? 'Henüz yorum yok. İlk yorumu siz yapın!' : 'No comments yet. Be the first to comment!'}</p>`;
+        return;
+    }
+
+    container.innerHTML = comments.map(c => `
+        <div class="premium-box p-6 rounded-3xl">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    ${c.name[0].toUpperCase()}
                 </div>
-            `;
-        }
-        
-        // Materials System
-        const materials = [
-            { id: 1, title: '6. Sınıf Full Rehber.docx', level: 'beginner', size: '2.4 MB', type: 'docx' },
-            { id: 2, title: 'Öğretmen Kasam.zip', level: 'teacher', size: '45.2 MB', type: 'zip' },
-            { id: 3, title: 'Grammar Basics.pdf', level: 'beginner', size: '1.8 MB', type: 'pdf' },
-            { id: 4, title: 'IELTS Preparation.pdf', level: 'advanced', size: '3.2 MB', type: 'pdf' },
-            { id: 5, title: 'Speaking Practice B1.docx', level: 'intermediate', size: '1.5 MB', type: 'docx' }
-        ];
-        
-        function renderMaterials(filter = 'all') {
-            const grid = document.getElementById('materials-grid');
-            const filtered = filter === 'all' ? materials : materials.filter(m => m.level === filter);
-            
-            grid.innerHTML = filtered.map(m => `
-                <div class="premium-box p-6 rounded-3xl">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-                            <i data-lucide="file-text" class="w-6 h-6 text-blue-600"></i>
-                        </div>
-                        <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold">${m.size}</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">${m.title}</h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">${m.level.toUpperCase()}</p>
-                    <button onclick="downloadMaterial(${m.id})" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                        <span class="lang-tr">İndir</span>
-                        <span class="lang-en">Download</span>
-                    </button>
+                <div>
+                    <p class="font-bold text-slate-900 dark:text-white">${c.name}</p>
+                    <p class="text-sm text-slate-500">${c.date}</p>
                 </div>
-            `).join('');
-            
-            lucide.createIcons();
-        }
-        
-        function filterMaterials(filter) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderMaterials(filter);
-        }
-        
-        function downloadMaterial(id) {
-            alert('Download started! (This is a demo)');
-        }
-        
-        // Blog System
-        const blogPosts = [
-            { title: 'AI ile İngilizce Nasıl Öğrenilir?', titleEn: 'How to Learn English with AI?', date: '13 Ocak 2026', excerpt: 'Yapay zekanın gücünü kullanarak...' },
-            { title: '10 Dakikada Kelime Öğrenme', titleEn: 'Learn Words in 10 Minutes', date: '10 Ocak 2026', excerpt: 'Etkili kelime öğrenme teknikleri...' },
-            { title: 'Speaking Pratiği İçin 5 İpucu', titleEn: '5 Tips for Speaking Practice', date: '5 Ocak 2026', excerpt: 'Konuşma becerinizi geliştirin...' }
-        ];
-        
-        function renderBlog() {
-            const container = document.getElementById('blog-posts');
-            container.innerHTML = blogPosts.map(post => `
-                <article class="premium-box p-6 rounded-3xl cursor-pointer">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-4"></div>
-                    <p class="text-sm text-slate-500 mb-2">${post.date}</p>
-                    <h3 class="font-heading font-bold text-xl mb-3 lang-tr">${post.title}</h3>
-                    <h3 class="font-heading font-bold text-xl mb-3 lang-en">${post.titleEn}</h3>
-                    <p class="text-slate-600 dark:text-slate-400 mb-4">${post.excerpt}</p>
-                    <button class="text-blue-600 font-bold hover:underline lang-tr">Devamını Oku →</button>
-                    <button class="text-blue-600 font-bold hover:underline lang-en">Read More →</button>
-                </article>
-            `).join('');
-            lucide.createIcons();
-        }
-        
-        // Comments System with Profanity Filter
-        const badWords = ['bad', 'word', 'kötü', 'kelime']; // Add more
-        let comments = [];
-        
-        function filterProfanity(text) {
-            let filtered = text;
-            badWords.forEach(word => {
-                const regex = new RegExp(word, 'gi');
-                filtered = filtered.replace(regex, '*'.repeat(word.length));
-            });
-            return filtered;
-        }
-        
-        function addComment() {
-            const name = document.getElementById('comment-name').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
-            
-            if (!name || !text) {
-                alert('Lütfen tüm alanları doldurun / Please fill all fields');
-                return;
-            }
-            
-            const filteredText = filterProfanity(text);
-            comments.unshift({ name: filterProfanity(name), text: filteredText, date: new Date().toLocaleDateString() });
-            
-            document.getElementById('comment-name').value = '';
-            document.getElementById('comment-text').value = '';
-            renderComments();
-        }
-        
-        function renderComments() {
-            const container = document.getElementById('comments-list');
-            container.innerHTML = comments.map(c => `
-                <div class="premium-box p-6 rounded-3xl">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
-                            ${c.name[0].toUpperCase()}
-                        </div>
-                        <div>
-                            <p class="font-bold">${c.name}</p>
-                            <p class="text-sm text-slate-500">${c.date}</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 dark:text-slate-300">${c.text}</p>
-                </div>
-            `).join('');
-        }
-        
-        // AI Chatbot
-        function toggleChatbot() {
-            document.getElementById('chatbot-window').classList.toggle('active');
-            lucide.createIcons();
-        }
-        
-        async function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            const messagesDiv = document.getElementById('chat-messages');
+            </div>
+            <p class="text-slate-700 dark:text-slate-300">${c.text}</p>
+        </div>
+    `).join('');
+}
+
+// === AI CHATBOT ===
+function toggleChatbot() {
+    const windowEl = document.getElementById('chatbot-window');
+    if (!windowEl) return;
+    windowEl.classList.toggle('active');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    if (!input) return;
+    const message = input.value.trim();
+    if (!message) return;
+
+    const messagesDiv = document.getElementById('chat-messages');
+    const lang = document.documentElement.getAttribute('lang') || 'tr';
+
+    if (messagesDiv) {
+        messagesDiv.innerHTML += `
+            <div class="flex justify-end mb-3">
+                <div class="bg-primary-600 text-white px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%] font-medium">${message}</div>
+            </div>
+        `;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    input.value = '';
+
+    // Simple responses (replace with Claude API)
+    setTimeout(() => {
+        const responses = {
+            tr: [
+                'Merhaba! Size nasıl yardımcı olabilirim?',
+                'İngilizce öğrenme konusunda soru sormak isterseniz buradayım!',
+                'Materyaller hakkında bilgi almak için "materyaller" yazabilirsiniz.',
+                'Daha fazla bilgi için blog bölümünü ziyaret edebilirsiniz.'
+            ],
+            en: [
+                'Hello! How can I help you?',
+                'I\\'m here if you want to ask about English learning!',
+                'You can type "materials" to get info about materials.',
+                'Visit the blog section for more information.'
+            ]
+        };
+
+        const randomResponse = responses[lang][Math.floor(Math.random() * responses[lang].length)];
+
+        if (messagesDiv) {
             messagesDiv.innerHTML += `
-                <div class="flex justify-end">
-                    <div class="bg-blue-600 text-white px-4 py-2 rounded-2xl max-w-[80%]">${message}</div>
+                <div class="flex mb-3">
+                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${randomResponse}</div>
                 </div>
             `;
-            
-            input.value = '';
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            
-            // Simple AI response (you can integrate Claude API here)
-            setTimeout(() => {
-                const responses = {
-                    tr: 'Merhaba! Size nasıl yardımcı olabilirim?',
-                    en: 'Hello! How can I help you?'
-                };
-                const lang = html.getAttribute('lang') || 'tr';
-                
-                messagesDiv.innerHTML += `
-                    <div class="flex">
-                        <div class="bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-2xl max-w-[80%]">${responses[lang]}</div>
-                    </div>
-                `;
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }, 1000);
         }
-        
-        // Initialize
-        initTheme();
-        renderMaterials();
-        renderBlog();
-        renderComments();
-    </script>
-</body>
-</html>
+    }, 800);
+}
+
+// Enter key support for chatbot
+document.addEventListener('DOMContentLoaded', function() {
+    const chatInput = document.getElementById('chat-input');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+});
+
+// === DOWNLOADS SECTION WITH FILTERS ===
+const downloadMaterials = [
+    { id: 1, title: '6. Sınıf Full Rehber.docx', level: 'beginner', size: '2.4 MB', type: 'docx', url: 'https://your-drive-link-here.com/file1' },
+    { id: 2, title: 'Öğretmen Kasam-20260113T004914Z-3-001.zip', level: 'teacher', size: '45.2 MB', type: 'zip', url: 'https://your-drive-link-here.com/file2' },
+    { id: 3, title: 'Grammar Basics A1-A2.pdf', level: 'beginner', size: '1.8 MB', type: 'pdf', url: 'https://your-drive-link-here.com/file3' },
+    { id: 4, title: 'IELTS Preparation C1.pdf', level: 'advanced', size: '3.2 MB', type: 'pdf', url: 'https://your-drive-link-here.com/file4' },
+    { id: 5, title: 'Speaking Practice B1-B2.docx', level: 'intermediate', size: '1.5 MB', type: 'docx', url: 'https://your-drive-link-here.com/file5' }
+];
+
+function renderDownloads(filter = 'all') {
+    const grid = document.getElementById('downloads-grid');
+    if (!grid) return;
+
+    const lang = document.documentElement.getAttribute('lang') || 'tr';
+    const filtered = filter === 'all' ? downloadMaterials : downloadMaterials.filter(m => m.level === filter);
+
+    grid.innerHTML = filtered.map(m => `
+        <div class="premium-box p-6 rounded-3xl">
+            <div class="flex items-start justify-between mb-4">
+                <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
+                    <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase">${m.size}</span>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">${m.title}</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 uppercase font-bold">${m.level}</p>
+            <button onclick="downloadFile(${m.id})" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 btn-3d">
+                <i data-lucide="download" class="w-5 h-5"></i>
+                ${lang === 'tr' ? 'İndir' : 'Download'}
+            </button>
+        </div>
+    `).join('');
+
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+}
+
+function filterDownloads(level, evt) {
+    // support both event from inline onclick and programmatic
+    const allBtns = document.querySelectorAll('.filter-btn');
+    allBtns.forEach(btn => btn.classList.remove('active'));
+    if (evt && evt.target) evt.target.classList.add('active');
+    renderDownloads(level);
+}
+
+function downloadFile(id) {
+    const file = downloadMaterials.find(m => m.id === id);
+    if (file && file.url) {
+        window.open(file.url, '_blank');
+    } else if (file) {
+        const lang = document.documentElement.getAttribute('lang') || 'tr';
+        alert(lang === 'tr' 
+            ? `${file.title} indiriliyor... (Demo - gerçek link ekleyin)` 
+            : `Downloading ${file.title}... (Demo - add real link)`);
+    }
+}
+
+// === INITIALIZE EVERYTHING ===
+document.addEventListener('DOMContentLoaded', function() {
+    initThemeWithAutoDetection();
+    renderBlog();
+    renderComments();
+    renderDownloads();
+});
+
+// Update language toggle to re-render content
+const langToggleBtn = document.getElementById('lang-toggle');
+if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', function() {
+        setTimeout(() => {
+            renderBlog();
+            renderComments();
+            renderDownloads();
+        }, 100);
+    });
+}
+</script>
