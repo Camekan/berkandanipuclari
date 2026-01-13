@@ -10,13 +10,8 @@ mobileMenuToggle.addEventListener('click', () => {
 });
 
 function toggleTheme() {
-    if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        localStorage.theme = 'light';
-    } else {
-        html.classList.add('dark');
-        localStorage.theme = 'dark';
-    }
+    html.classList.toggle('dark');
+    localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
 }
 
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -36,10 +31,14 @@ function toggleLanguage() {
         document.title = "Berkan'dan İpuçları | English & AI";
         localStorage.lang = 'tr';
     }
+    // Re-render dynamic content after language change
+    renderBlog();
+    renderComments();
+    renderDownloads();
 }
 
 if (localStorage.lang === 'en') {
-    toggleLanguage(); // Apply immediately if stored as en
+    toggleLanguage();
 }
 langToggle.addEventListener('click', toggleLanguage);
 
@@ -61,58 +60,46 @@ let currentId = null;
 
 function toggleAudio(id) {
     const audio = document.getElementById('audio-' + id);
+    if (!audio) {
+        console.warn(`Audio file for ID ${id} is missing.`);
+        return; // Safeguard for missing files
+    }
     const icon = document.getElementById('icon-' + id);
     const btn = document.getElementById('btn-' + id);
 
-    // 1. If clicking the SAME audio that is playing:
     if (currentAudio === audio && !audio.paused) {
         audio.pause();
-        // Fix: Always re-fetch the current icon because Lucide replaces it
         const currentIcon = document.getElementById('icon-' + id);
         if (currentIcon) currentIcon.setAttribute('data-lucide', 'play-circle');
         btn.classList.remove('audio-playing');
         currentAudio = null;
         currentId = null;
-    } 
-    // 2. If clicking a NEW audio or starting stopped audio:
-    else {
-        // Stop the previous one if it exists
+    } else {
         if (currentAudio && currentAudio !== audio) {
             currentAudio.pause();
-            currentAudio.currentTime = 0; // Reset previous
-            
-            // Fix: Find the OLD icon using the stored ID
+            currentAudio.currentTime = 0;
             const oldIcon = document.getElementById('icon-' + currentId);
             const oldBtn = document.getElementById('btn-' + currentId);
-            
             if (oldIcon) oldIcon.setAttribute('data-lucide', 'play-circle');
             if (oldBtn) oldBtn.classList.remove('audio-playing');
         }
 
-        // Play the new one
-        audio.play();
-        icon.setAttribute('data-lucide', 'pause-circle'); // Change icon to Pause
-        btn.classList.add('audio-playing'); // Add pulse animation
+        audio.play().catch(error => console.error(`Error playing audio ${id}:`, error)); // Handle play errors (e.g., missing file)
+        icon.setAttribute('data-lucide', 'pause-circle');
+        btn.classList.add('audio-playing');
 
-        // Update globals
         currentAudio = audio;
         currentId = id;
     }
     
-    // Refresh icons (Lucide needs this to re-render the SVG when attribute changes)
     lucide.createIcons();
 
-    // Reset icon when audio finishes naturally
     audio.onended = function() {
-        // Fix: Must find the FRESH icon element because the old one was replaced by Lucide
         const freshIcon = document.getElementById('icon-' + id);
         const freshBtn = document.getElementById('btn-' + id);
-        
         if (freshIcon) freshIcon.setAttribute('data-lucide', 'play-circle');
         if (freshBtn) freshBtn.classList.remove('audio-playing');
-        
         lucide.createIcons();
-        
         if (currentAudio === audio) {
             currentAudio = null;
             currentId = null;
