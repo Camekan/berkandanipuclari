@@ -13,8 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berkan'dan İpuçları | English & AI</title>
     
-    <meta name="description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
-    <meta name="keywords" content="İngilizce öğrenme, AI ile İngilizce, ders materyalleri, promptlar, yol haritası">
+    <meta name="description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin.">
     <meta name="author" content="Berkan">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +22,6 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         tailwind.config = {
@@ -43,7 +41,7 @@
     <style>
         html { -webkit-tap-highlight-color: transparent; }
         
-        /* STRICT LANGUAGE TOGGLE LOGIC */
+        /* Language Toggle Logic */
         :root:not([lang="en"]) .lang-en { display: none !important; }
         :root[lang="en"] .lang-tr { display: none !important; }
 
@@ -57,6 +55,10 @@
         .dark .premium-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); }
         .premium-box:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); }
         
+        /* Active Link Style for Scrollspy */
+        .nav-link.active { color: #0284c7; /* primary-600 */ }
+        .dark .nav-link.active { color: #38bdf8; /* primary-400 */ }
+
         .mobile-menu { display: none; position: fixed; top: 80px; left: 0; right: 0; background: rgba(255,255,255,0.98); z-index: 40; border-bottom: 1px solid #ddd; }
         .dark .mobile-menu { background: rgba(15,23,42,0.98); border-bottom: 1px solid #333; }
         .mobile-menu.active { display: block; }
@@ -70,23 +72,22 @@
         .chatbot-window { display: none; position: fixed; bottom: 100px; right: 24px; width: 350px; height: 500px; z-index: 99; flex-direction: column; }
         .chatbot-window.active { display: flex; }
         
-        /* Audio Player Animation */
         .audio-playing { animation: pulse-ring 2s infinite; }
         @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); } 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); } }
     </style>
 </head>
-<body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
+<body class="bg-blue-50/50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
 
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-300/40 dark:bg-primary-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob"></div>
-        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300/40 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob delay-2000"></div>
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-300/40 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300/40 dark:bg-purple-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob delay-2000"></div>
     </div>
 
     <div class="music-widget">
         <button onclick="toggleBgMusic()" class="bg-indigo-600 text-white p-4 rounded-full shadow-xl hover:scale-110 transition-transform btn-3d flex items-center justify-center">
             <i id="music-icon" data-lucide="music" class="w-6 h-6"></i>
         </button>
-        <div id="youtube-player" style="display:none;"></div>
+        <audio id="bg-music" loop src="chill.mp3"></audio>
     </div>
 
     <nav class="fixed w-full z-50 premium-box border-b-0 rounded-none top-0">
@@ -97,18 +98,18 @@
                 <span class="font-heading font-black text-xl lang-en">Berkan's Tips</span>
             </a>
 
-            <div class="hidden md:flex items-center gap-1 bg-white/50 dark:bg-white/5 p-1 rounded-full border border-slate-200 dark:border-white/10">
-                <a href="#materials" class="px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
+            <div class="hidden md:flex items-center gap-1 bg-white/50 dark:bg-white/5 p-1 rounded-full border border-slate-200 dark:border-white/10" id="desktop-menu">
+                <a href="#materials" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">Materyaller</span><span class="lang-en">Materials</span>
                 </a>
-                <a href="#downloads" class="px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
+                <a href="#downloads" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">İndirilenler</span><span class="lang-en">Downloads</span>
                 </a>
-                <a href="#blog" class="px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors text-blue-600">Blog</a>
-                <a href="#roadmap" class="px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
+                <a href="#blog" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">Blog</a>
+                <a href="#roadmap" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">Yol Haritası</span><span class="lang-en">Roadmap</span>
                 </a>
-                <a href="#prompts" class="px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
+                <a href="#prompts" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">Promptlar</span><span class="lang-en">Prompts</span>
                 </a>
             </div>
@@ -124,11 +125,6 @@
                     <span class="lang-en">TR</span>
                 </button>
                 <button onclick="document.getElementById('mobile-menu').classList.toggle('active')" class="md:hidden p-2"><i data-lucide="menu"></i></button>
-                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="hidden sm:flex bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 shadow-xl shadow-slate-900/20 btn-3d">
-                    <i data-lucide="youtube" class="w-3 h-3 sm:w-4 sm:h-4"></i>
-                    <span class="lang-tr">Abone Ol</span>
-                    <span class="lang-en">Subscribe</span>
-                </a>
             </div>
         </div>
         
@@ -180,33 +176,6 @@
             </div>
         </section>
 
-        <section class="py-16 px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="premium-box p-3 rounded-[2rem] bg-white dark:bg-slate-900">
-                    <div class="bg-black rounded-[1.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 relative">
-                        <div class="aspect-video w-full">
-                            <iframe id="latest-video" class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" loading="lazy" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-8 bg-white dark:bg-dark-surface flex flex-col md:flex-row items-center justify-between gap-6">
-                            <div>
-                                <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white">
-                                    <span class="lang-tr">İngilizce Nasıl Çalışılmaz?</span>
-                                    <span class="lang-en">How Not to Study English?</span>
-                                </h3>
-                                <p class="text-slate-600 dark:text-slate-400 mt-2 font-medium">
-                                    <span class="lang-tr">Yapay zeka ile hatalarınızı analiz edip düzeltmenin yolları.</span>
-                                    <span class="lang-en">Ways to analyze and correct your mistakes with AI.</span>
-                                </p>
-                            </div>
-                            <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-4 bg-slate-100 dark:bg-slate-800 rounded-2xl text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors btn-3d border border-slate-200 dark:border-slate-700">
-                                <i data-lucide="external-link" class="w-6 h-6"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="social-feeds" class="py-24 px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
@@ -219,31 +188,8 @@
                         </button>
                         <audio id="audio-1" src="1.mp3"></audio>
                     </div>
-                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400">
-                        <span class="lang-tr">YouTube ve Instagram'dan en son güncellemeler.</span>
-                        <span class="lang-en">Latest updates from YouTube and Instagram.</span>
-                    </p>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
-                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4">YouTube</h3>
-                        <div class="aspect-video">
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=PLdjrP3ZbJABbPN1aipZwB7zf1CsjB2ZZo&si=l4_jIKknY_W-j7bP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
-                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4">Instagram</h3>
-                        <a href="https://instagram.com/berkandanipuclar%C4%B1" target="_blank" class="group relative block w-full aspect-square rounded-2xl overflow-hidden shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80" alt="Instagram" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-pink-600 mb-4 shadow-lg">
-                                    <i data-lucide="instagram" class="w-6 h-6"></i>
-                                </div>
-                                <h4 class="text-white font-bold text-2xl mb-1">@berkandanipucları</h4>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <p class="text-center text-slate-500">YouTube & Instagram Placeholders Here</p>
             </div>
         </section>
 
@@ -259,239 +205,29 @@
                         </button>
                         <audio id="audio-2" src="2.mp3"></audio>
                     </div>
-                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400">
-                        <span class="lang-tr">Sıfırdan zirveye giden stratejik plan.</span>
-                        <span class="lang-en">Strategic plan from zero to peak.</span>
-                    </p>
                 </div>
-
-                <div class="relative">
-                    <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-slate-200 dark:bg-slate-800 rounded-full"></div>
-                    <div class="relative flex flex-col md:flex-row items-center justify-between mb-24 group">
-                        <div class="md:w-5/12 order-2 md:order-1 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
-                            <span class="text-primary-600 font-black text-sm tracking-widest uppercase mb-3 block">
-                                <span class="lang-tr">Seviye 1</span><span class="lang-en">Level 1</span>
-                            </span>
-                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                                <span class="lang-tr">Başlangıç (A1-A2)</span><span class="lang-en">Beginner (A1-A2)</span>
-                            </h3>
-                            <p class="text-slate-600 dark:text-slate-400 font-medium">
-                                <span class="lang-tr">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin.</span>
-                                <span class="lang-en">Basic grammar and daily words. Finish the "Beginner" folder in Drive.</span>
-                            </p>
-                        </div>
-                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white dark:bg-dark-surface border-4 border-primary-500 rounded-full flex items-center justify-center z-10 shadow-xl order-1 md:order-2 mb-6 md:mb-0">
-                            <span class="font-heading text-xl font-black text-primary-600 dark:text-primary-400">1</span>
-                        </div>
-                        <div class="md:w-5/12 order-3"></div>
-                    </div>
-                    <div class="relative flex flex-col md:flex-row items-center justify-between mb-24 group">
-                        <div class="md:w-5/12 order-3 md:order-1"></div>
-                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white dark:bg-dark-surface border-4 border-purple-500 rounded-full flex items-center justify-center z-10 shadow-xl order-1 md:order-2 mb-6 md:mb-0">
-                            <span class="font-heading text-xl font-black text-purple-600 dark:text-purple-400">2</span>
-                        </div>
-                        <div class="md:w-5/12 order-2 md:order-3 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
-                            <span class="text-purple-600 font-black text-sm tracking-widest uppercase mb-3 block">
-                                <span class="lang-tr">Seviye 2</span><span class="lang-en">Level 2</span>
-                            </span>
-                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                                <span class="lang-tr">Gelişme (B1-B2)</span><span class="lang-en">Intermediate (B1-B2)</span>
-                            </h3>
-                            <p class="text-slate-600 dark:text-slate-400 font-medium">
-                                <span class="lang-tr">Speaking partneri promptlarını kullanın. Quizlet setlerimi çalışın.</span>
-                                <span class="lang-en">Use speaking partner prompts. Study my Quizlet sets.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="relative flex flex-col md:flex-row items-center justify-between group">
-                        <div class="md:w-5/12 order-2 md:order-1 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
-                            <span class="text-pink-600 font-black text-sm tracking-widest uppercase mb-3 block">
-                                <span class="lang-tr">Seviye 3</span><span class="lang-en">Level 3</span>
-                            </span>
-                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                                <span class="lang-tr">Ustalık (C1+)</span><span class="lang-en">Mastery (C1+)</span>
-                            </h3>
-                            <p class="text-slate-600 dark:text-slate-400 font-medium">
-                                <span class="lang-tr">Akademik makale yazımı ve IELTS hazırlık promptlarına geçin.</span>
-                                <span class="lang-en">Move to academic article writing and IELTS prep prompts.</span>
-                            </p>
-                        </div>
-                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white dark:bg-dark-surface border-4 border-pink-500 rounded-full flex items-center justify-center z-10 shadow-xl order-1 md:order-2 mb-6 md:mb-0">
-                            <span class="font-heading text-xl font-black text-pink-600 dark:text-pink-400">3</span>
-                        </div>
-                        <div class="md:w-5/12 order-3"></div>
-                    </div>
-                </div>
+                <div class="text-center text-slate-500">Roadmap Content...</div>
             </div>
         </section>
 
         <section id="materials" class="py-24 px-6 bg-white/60 dark:bg-white/5 backdrop-blur-md border-y border-slate-200 dark:border-slate-800">
             <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                    <div class="inline-block p-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl mb-8">
-                        <i data-lucide="archive" class="w-10 h-10"></i>
-                    </div>
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="flex-grow">
-                            <h2 class="font-heading text-4xl md:text-5xl font-black text-slate-900 dark:text-white">
-                                <span class="lang-tr">Hazır Ders Materyalleri</span><span class="lang-en">Ready Lesson Materials</span>
-                            </h2>
-                        </div>
+                        <h2 class="font-heading text-4xl md:text-5xl font-black text-slate-900 dark:text-white">
+                            <span class="lang-tr">Materyaller</span><span class="lang-en">Materials</span>
+                        </h2>
                         <button onclick="toggleAudio('3')" class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-2.5 rounded-full hover:bg-blue-200 transition-all flex-shrink-0" id="btn-3">
                             <i id="icon-3" data-lucide="play-circle" class="w-7 h-7"></i>
                         </button>
                         <audio id="audio-3" src="3.mp3"></audio>
                     </div>
-                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
-                        <span class="lang-tr">Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun.</span>
-                        <span class="lang-en">All resources prepared during my internship and university. Tested in class, curriculum compliant.</span>
+                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400 mb-10">
+                        <span class="lang-tr">Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar.</span>
+                        <span class="lang-en">All resources prepared during my internship.</span>
                     </p>
-                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="inline-flex items-center gap-3 text-primary-700 dark:text-primary-400 font-black text-lg hover:gap-5 transition-all">
-                        <span class="lang-tr">Google Drive'a Git</span><span class="lang-en">Go to Google Drive</span> <i data-lucide="arrow-right" class="w-6 h-6"></i>
-                    </a>
-                </div>
-                
-                <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
-                    <div class="flex items-center justify-between mb-8">
-                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white">
-                            <span class="lang-tr">Berkan'ın Arşivi</span><span class="lang-en">Berkan's Archive</span>
-                        </h3>
-                        <span class="px-4 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-black rounded-full">
-                            <span class="lang-tr">50+ DOSYA</span><span class="lang-en">50+ FILES</span>
-                        </span>
-                    </div>
-                    <div class="space-y-4">
-                        <a href="#" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary-400 transition-colors cursor-pointer group">
-                            <div class="p-3 bg-white dark:bg-slate-800 shadow-sm text-red-500 rounded-xl"><i data-lucide="file-text" class="w-6 h-6"></i></div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 dark:text-white">
-                                    <span class="lang-tr">Ders Planları.pdf</span><span class="lang-en">Lesson Plans.pdf</span>
-                                </h4>
-                                <p class="text-xs font-semibold text-slate-500">2.4 MB • PDF</p>
-                            </div>
-                            <i data-lucide="download" class="w-5 h-5 text-slate-400 ml-auto group-hover:text-primary-600"></i>
-                        </a>
-                        <a href="#" class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary-400 transition-colors cursor-pointer group">
-                            <div class="p-3 bg-white dark:bg-slate-800 shadow-sm text-blue-500 rounded-xl"><i data-lucide="image" class="w-6 h-6"></i></div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 dark:text-white">
-                                    <span class="lang-tr">Kelime Kartları.png</span><span class="lang-en">Flashcards.png</span>
-                                </h4>
-                                <p class="text-xs font-semibold text-slate-500">5.1 MB • PNG</p>
-                            </div>
-                            <i data-lucide="download" class="w-5 h-5 text-slate-400 ml-auto group-hover:text-primary-600"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tools" class="py-24 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <div class="flex items-center justify-center gap-4 mb-4">
-                        <h2 class="font-heading text-3xl font-black text-slate-900 dark:text-white">
-                            <span class="lang-tr">Önerdiğim Araçlar</span><span class="lang-en">Recommended Tools</span>
-                        </h2>
-                        <button onclick="toggleAudio('4')" class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 p-2.5 rounded-full hover:bg-green-200 transition-all flex-shrink-0" id="btn-4">
-                            <i id="icon-4" data-lucide="play-circle" class="w-7 h-7"></i>
-                        </button>
-                        <audio id="audio-4" src="4.mp3"></audio>
-                    </div>
-                    <p class="font-medium text-slate-600 dark:text-slate-400">
-                        <span class="lang-tr">Öğrenmeyi eğlenceli kılan dijital asistanlar.</span><span class="lang-en">Digital assistants that make learning fun.</span>
-                    </p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
-                        <div class="w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center text-green-600 dark:text-green-400 font-black text-3xl shadow-sm border border-green-100 dark:border-green-900 group-hover:scale-110 transition-transform">C</div>
-                        <div>
-                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">ChatGPT</h3>
-                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                                <span class="lang-tr">AI Asistan</span><span class="lang-en">AI Assistant</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
-                        <div class="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-3xl shadow-sm border border-blue-100 dark:border-blue-900 group-hover:scale-110 transition-transform">Q</div>
-                        <div>
-                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">Quizlet</h3>
-                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                                <span class="lang-tr">Kelime Kartları</span><span class="lang-en">Flashcards</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
-                        <div class="w-20 h-20 bg-purple-50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-600 dark:text-purple-400 font-black text-3xl shadow-sm border border-purple-100 dark:border-purple-900 group-hover:scale-110 transition-transform">D</div>
-                        <div>
-                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">DeepL</h3>
-                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                                <span class="lang-tr">Çeviri</span><span class="lang-en">Translation</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
-                        <div class="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center text-red-600 dark:text-red-400 font-black text-3xl shadow-sm border border-red-100 dark:border-red-900 group-hover:scale-110 transition-transform">Y</div>
-                        <div>
-                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">YouTube</h3>
-                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide">Video</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="useful-links" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <div class="flex items-center justify-center gap-4 mb-4">
-                        <h2 class="font-heading text-3xl font-black text-slate-900 dark:text-white">
-                            <span class="lang-tr">Faydalı Linkler</span><span class="lang-en">Useful Links</span>
-                        </h2>
-                        <button onclick="toggleAudio('8')" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-full hover:bg-indigo-200 transition-all flex-shrink-0" id="btn-8">
-                            <i id="icon-8" data-lucide="play-circle" class="w-7 h-7"></i>
-                        </button>
-                        <audio id="audio-8" src="8.mp3"></audio>
-                    </div>
-                    <p class="font-medium text-slate-600 dark:text-slate-400">
-                        <span class="lang-tr">İngilizce gelişiminize katkı sağlayacak harika kaynaklar.</span>
-                        <span class="lang-en">Great resources to contribute to your English development.</span>
-                    </p>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-6">
-                    <a href="https://dictionary.cambridge.org/" target="_blank" class="premium-box p-6 rounded-3xl flex items-center gap-4 hover:scale-105 transition-transform group">
-                        <div class="p-4 bg-orange-100 dark:bg-orange-900/30 text-orange-600 rounded-2xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                            <i data-lucide="book-open" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-900 dark:text-white">Cambridge Dictionary</h3>
-                            <p class="text-sm text-slate-500">
-                                <span class="lang-tr">En iyi sözlük</span><span class="lang-en">Best Dictionary</span>
-                            </p>
-                        </div>
-                    </a>
-                    <a href="https://youglish.com/" target="_blank" class="premium-box p-6 rounded-3xl flex items-center gap-4 hover:scale-105 transition-transform group">
-                        <div class="p-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-2xl group-hover:bg-red-600 group-hover:text-white transition-colors">
-                            <i data-lucide="video" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-900 dark:text-white">YouGlish</h3>
-                            <p class="text-sm text-slate-500">
-                                <span class="lang-tr">Telaffuz Rehberi</span><span class="lang-en">Pronunciation Guide</span>
-                            </p>
-                        </div>
-                    </a>
-                    <a href="https://www.bbc.co.uk/learningenglish/" target="_blank" class="premium-box p-6 rounded-3xl flex items-center gap-4 hover:scale-105 transition-transform group">
-                        <div class="p-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                            <i data-lucide="globe" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-900 dark:text-white">BBC Learning English</h3>
-                            <p class="text-sm text-slate-500">
-                                <span class="lang-tr">Haberlerle İngilizce</span><span class="lang-en">English with News</span>
-                            </p>
-                        </div>
+                    <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="inline-flex items-center gap-3 text-primary-700 dark:text-primary-400 font-black text-lg">
+                        <span class="lang-tr">Google Drive'a Git</span><span class="lang-en">Go to Google Drive</span> <i data-lucide="arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -499,143 +235,41 @@
 
         <section id="prompts" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
             <div class="max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                    <div class="flex-grow">
-                        <div class="flex items-center gap-4">
-                            <div>
-                                <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white">
-                                    <span class="lang-tr">Prompt Kütüphanesi</span><span class="lang-en">Prompt Library</span>
-                                </h2>
-                            </div>
-                            <button onclick="toggleAudio('5')" class="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 p-2.5 rounded-full hover:bg-orange-200 transition-all flex-shrink-0" id="btn-5">
-                                <i id="icon-5" data-lucide="play-circle" class="w-7 h-7"></i>
-                            </button>
-                            <audio id="audio-5" src="5.mp3"></audio>
-                        </div>
-                        <p class="font-medium text-slate-600 dark:text-slate-400 mt-2">
-                            <span class="lang-tr">AI asistanını İngilizce öğretmenine dönüştür.</span>
-                            <span class="lang-en">Turn AI assistant into an English teacher.</span>
-                        </p>
-                    </div>
+                <div class="flex items-center gap-4 mb-12">
+                    <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white">
+                        <span class="lang-tr">Prompt Kütüphanesi</span><span class="lang-en">Prompt Library</span>
+                    </h2>
+                    <button onclick="toggleAudio('5')" class="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 p-2.5 rounded-full hover:bg-orange-200 transition-all flex-shrink-0" id="btn-5">
+                        <i id="icon-5" data-lucide="play-circle" class="w-7 h-7"></i>
+                    </button>
+                    <audio id="audio-5" src="5.mp3"></audio>
                 </div>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl border border-purple-100 dark:border-purple-900"><i data-lucide="calendar" class="w-6 h-6"></i></div>
-                            <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-xs font-black rounded-full">
-                                <span class="lang-tr">PLANLAMA</span><span class="lang-en">PLANNING</span>
-                            </span>
-                        </div>
-                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3">
-                            <span class="lang-tr">Ders Planı Oluşturucu</span><span class="lang-en">Lesson Plan Creator</span>
-                        </h3>
-                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
-                            <p id="p1">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
-                        </div>
-                        <button onclick="copyToClipboard('p1')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d">
-                            <span class="lang-tr">Kopyala</span><span class="lang-en">Copy</span>
-                        </button>
+                <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                    <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3">
+                        <span class="lang-tr">Ders Planı Oluşturucu</span><span class="lang-en">Lesson Plan Creator</span>
+                    </h3>
+                    <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8">
+                        <p id="p1">"Create a 40-minute English lesson plan for A2 level students..."</p>
                     </div>
-
-                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900"><i data-lucide="pen-tool" class="w-6 h-6"></i></div>
-                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-black rounded-full">
-                                <span class="lang-tr">SINAV</span><span class="lang-en">EXAM</span>
-                            </span>
-                        </div>
-                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3">
-                            <span class="lang-tr">Quiz Hazırlayıcı</span><span class="lang-en">Quiz Preparer</span>
-                        </h3>
-                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
-                            <p id="p2">"Generate 5 multiple choice reading comprehension questions based on the text below..."</p>
-                        </div>
-                        <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d">
-                            <span class="lang-tr">Kopyala</span><span class="lang-en">Copy</span>
-                        </button>
-                    </div>
-
-                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="p-3 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-2xl border border-orange-100 dark:border-orange-900"><i data-lucide="mic" class="w-6 h-6"></i></div>
-                            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-black rounded-full">SPEAKING</span>
-                        </div>
-                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3">
-                            <span class="lang-tr">Konuşma Partneri</span><span class="lang-en">Conversation Partner</span>
-                        </h3>
-                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
-                            <p id="p3">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."</p>
-                        </div>
-                        <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d">
-                            <span class="lang-tr">Kopyala</span><span class="lang-en">Copy</span>
-                        </button>
-                    </div>
+                    <button onclick="copyToClipboard('p1')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm shadow-lg">
+                        <span class="lang-tr">Kopyala</span><span class="lang-en">Copy</span>
+                    </button>
                 </div>
             </div>
         </section>
         
         <section id="downloads" class="py-24 px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="flex items-center justify-center gap-4 mb-4">
-                        <h2 class="font-heading text-4xl font-black">
-                            <span class="lang-tr">Materyalleri İndir</span><span class="lang-en">Download Materials</span>
-                        </h2>
-                        <button onclick="toggleAudio('9')" class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-2.5 rounded-full hover:bg-blue-200 transition-all flex-shrink-0" id="btn-9">
-                            <i id="icon-9" data-lucide="play-circle" class="w-7 h-7"></i>
-                        </button>
-                        <audio id="audio-9" src="9.mp3"></audio>
-                    </div>
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <h2 class="font-heading text-4xl font-black">
+                        <span class="lang-tr">Materyalleri İndir</span><span class="lang-en">Download Materials</span>
+                    </h2>
+                    <button onclick="toggleAudio('9')" class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-2.5 rounded-full hover:bg-blue-200 transition-all flex-shrink-0" id="btn-9">
+                        <i id="icon-9" data-lucide="play-circle" class="w-7 h-7"></i>
+                    </button>
+                    <audio id="audio-9" src="9.mp3"></audio>
                 </div>
-                
-                <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="premium-box p-6 rounded-3xl">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
-                                <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
-                            </div>
-                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">2.4 MB</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
-                            <span class="lang-tr">6. Sınıf Full Rehber</span><span class="lang-en">6th Grade Guide</span>
-                        </h3>
-                        <a href="#" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
-                            <i data-lucide="download" class="w-5 h-5"></i> 
-                            <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
-                        </a>
-                    </div>
-                    <div class="premium-box p-6 rounded-3xl">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
-                                <i data-lucide="briefcase" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
-                            </div>
-                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">45 MB</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
-                            <span class="lang-tr">Teacher Vault</span><span class="lang-en">Teacher Vault</span>
-                        </h3>
-                        <a href="#" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
-                            <i data-lucide="download" class="w-5 h-5"></i> 
-                            <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
-                        </a>
-                    </div>
-                    <div class="premium-box p-6 rounded-3xl">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
-                                <i data-lucide="mic" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
-                            </div>
-                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">1.2 MB</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
-                            <span class="lang-tr">B1 Speaking</span><span class="lang-en">B1 Speaking</span>
-                        </h3>
-                        <a href="#" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
-                            <i data-lucide="download" class="w-5 h-5"></i> 
-                            <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
-                        </a>
-                    </div>
-                </div>
+                <p class="text-center text-slate-500">Download Cards Here...</p>
             </div>
         </section>
 
@@ -650,24 +284,11 @@
                         <audio id="audio-10" src="10.mp3"></audio>
                     </div>
                     <p class="text-xl text-slate-600 dark:text-slate-400 mb-8">
-                        <span class="lang-tr">En son yazılarım (Latest Posts)</span>
+                        <span class="lang-tr">En son yazılarım</span>
                         <span class="lang-en">Latest Posts</span>
                     </p>
                 </div>
-
-                <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                    <div class="col-span-full text-center py-10">
-                        <div class="inline-block w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                        <p class="mt-2 text-slate-500">Yükleniyor...</p>
-                    </div>
                 </div>
-                
-                <div class="text-center">
-                    <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl transition-transform hover:scale-105 shadow-lg">
-                        <span class="lang-tr">Tümünü Gör</span><span class="lang-en">View All</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
         </section>
 
         <section id="comments" class="py-24 px-6">
@@ -676,100 +297,29 @@
                     <h2 class="font-heading text-4xl font-black text-center">
                         <span class="lang-tr">Yorumlar</span><span class="lang-en">Comments</span>
                     </h2>
-                    <button onclick="toggleAudio('11')" class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 p-2.5 rounded-full hover:bg-gray-200 transition-all flex-shrink-0" id="btn-11">
-                        <i id="icon-11" data-lucide="play-circle" class="w-7 h-7"></i>
-                    </button>
-                    <audio id="audio-11" src="11.mp3"></audio>
                 </div>
                 
                 <div class="premium-box p-8 rounded-3xl mb-8 bg-white dark:bg-slate-800">
                     <div id="disqus_thread"></div>
                     <script>
+                        /**
+                        * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                        * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                        /*
                         var disqus_config = function () {
-                            this.page.url = window.location.href;  
-                            this.page.identifier = window.location.pathname; 
+                        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                         };
-                        (function() { 
+                        */
+                        (function() { // DON'T EDIT BELOW THIS LINE
                         var d = document, s = d.createElement('script');
-                        s.src = 'https://berkandanipuclari.disqus.com/embed.js'; 
+                        s.src = 'https://berkandanipuclari.disqus.com/embed.js';
                         s.setAttribute('data-timestamp', +new Date());
                         (d.head || d.body).appendChild(s);
                         })();
                     </script>
                     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                </div>
-            </div>
-        </section>
-
-        <section id="faq" class="py-24 px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="flex items-center justify-center gap-4 mb-12">
-                    <h2 class="font-heading text-3xl font-black text-slate-900 dark:text-white">
-                        <span class="lang-tr">Sıkça Sorulan Sorular</span><span class="lang-en">FAQ</span>
-                    </h2>
-                    <button onclick="toggleAudio('6')" class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-2.5 rounded-full hover:bg-red-200 transition-all flex-shrink-0" id="btn-6">
-                        <i id="icon-6" data-lucide="play-circle" class="w-7 h-7"></i>
-                    </button>
-                    <audio id="audio-6" src="6.mp3"></audio>
-                </div>
-                
-                <div class="space-y-4">
-                    <details class="group premium-box p-6 rounded-3xl bg-white dark:bg-dark-surface cursor-pointer" open>
-                        <summary class="flex justify-between items-center font-bold text-lg text-slate-900 dark:text-white select-none">
-                            <span class="lang-tr">Materyaller ücretsiz mi?</span>
-                            <span class="lang-en">Are materials free?</span>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
-                        </summary>
-                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">
-                            <span class="lang-tr">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir.</span>
-                            <span class="lang-en">Yes, all shared lesson plans and prompts are completely free.</span>
-                        </p>
-                    </details>
-                    <details class="group premium-box p-6 rounded-3xl bg-white dark:bg-dark-surface cursor-pointer">
-                        <summary class="flex justify-between items-center font-bold text-lg text-slate-900 dark:text-white select-none">
-                            <span class="lang-tr">Özel ders veriyor musunuz?</span>
-                            <span class="lang-en">Do you give private lessons?</span>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
-                        </summary>
-                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">
-                            <span class="lang-tr">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri için kontenjan açabiliyorum.</span>
-                            <span class="lang-en">Currently, due to my internship workload, I can only open slots for online group lessons.</span>
-                        </p>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 px-6">
-            <div class="max-w-4xl mx-auto premium-box p-10 md:p-16 rounded-[3rem] bg-white dark:bg-dark-surface text-center relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-purple-500/5"></div>
-                <div class="relative z-10">
-                    <div class="inline-flex p-4 bg-slate-50 dark:bg-slate-800 rounded-full shadow-sm mb-6 border border-slate-100 dark:border-slate-700">
-                        <i data-lucide="mail" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
                     </div>
-
-                    <div class="flex items-center justify-center gap-4 mb-4">
-                        <h2 class="font-heading text-3xl md:text-4xl font-black text-slate-900 dark:text-white">
-                            <span class="lang-tr">İpuçlarını Kaçırma</span><span class="lang-en">Don't Miss Tips</span>
-                        </h2>
-                        <button onclick="toggleAudio('7')" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-full hover:bg-indigo-200 transition-all flex-shrink-0" id="btn-7">
-                            <i id="icon-7" data-lucide="play-circle" class="w-8 h-8"></i>
-                        </button>
-                        <audio id="audio-7" src="7.mp3"></audio>
-                    </div>
-
-                    <p class="font-medium text-slate-600 dark:text-slate-400 mb-10 max-w-lg mx-auto">
-                        <span class="lang-tr">Yeni bir ders materyali veya AI ipucu paylaştığımda haberdar olmak için katıl.</span>
-                        <span class="lang-en">Join to be notified when I share new lesson materials or AI tips.</span>
-                    </p>
-                    
-                    <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-                        <input type="email" required class="px-6 py-4 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:outline-none w-full font-bold placeholder-slate-400" placeholder="Email">
-                        <button type="button" class="px-8 py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors shadow-lg btn-3d">
-                            <span class="lang-tr">Kaydol</span><span class="lang-en">Sign Up</span>
-                        </button>
-                    </form>
-                </div>
             </div>
         </section>
     </main>
@@ -782,15 +332,6 @@
             <p class="text-sm font-bold text-slate-400 mb-8">
                 <span class="lang-tr">© 2026. Tüm hakları saklıdır.</span><span class="lang-en">© 2026. All rights reserved.</span>
             </p>
-            <div class="flex justify-center gap-4">
-                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-3 bg-white dark:bg-slate-800 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-all shadow-sm border border-slate-200 dark:border-slate-700">
-                    <i data-lucide="youtube" class="w-5 h-5"></i>
-                </a>
-                <a href="https://instagram.com/berkandanipuclar%C4%B1" target="_blank" class="p-3 bg-white dark:bg-slate-800 rounded-full hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:text-pink-600 transition-all shadow-sm border border-slate-200 dark:border-slate-700">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
-                </a>
-            </div>
-            <div class="addthis_inline_share_toolbox mt-8"></div>
         </div>
     </footer>
 
@@ -799,130 +340,96 @@
             <i data-lucide="message-circle" class="w-6 h-6"></i>
         </button>
     </div>
-
     <div id="chatbot-window" class="chatbot-window premium-box rounded-3xl">
         <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-            <h3 class="font-bold">
-                <span class="lang-tr">AI Asistan</span><span class="lang-en">AI Assistant</span>
-            </h3>
-            <button onclick="toggleChatbot()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
+            <h3 class="font-bold">AI Asistan</h3>
+            <button onclick="toggleChatbot()"><i data-lucide="x"></i></button>
         </div>
         <div id="chat-messages" class="chat-messages flex-grow p-4 space-y-3 overflow-y-auto"></div>
-        <div class="p-4 border-t border-slate-200 dark:border-slate-700">
-            <div class="flex gap-2">
-                <input type="text" id="chat-input" placeholder="..." class="flex-grow p-3 rounded-xl bg-slate-100 dark:bg-slate-700 outline-none font-medium">
-                <button onclick="sendMessage()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 rounded-xl btn-3d">
-                    <i data-lucide="send" class="w-5 h-5"></i>
-                </button>
-            </div>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-700 flex gap-2">
+            <input type="text" id="chat-input" placeholder="..." class="flex-grow p-3 rounded-xl bg-slate-100 dark:bg-slate-700 outline-none">
+            <button onclick="sendMessage()" class="bg-primary-600 text-white px-4 rounded-xl"><i data-lucide="send"></i></button>
         </div>
+    </div>
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 premium-box px-6 py-4 rounded-2xl shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-3 bg-white dark:bg-slate-800">
+        <div class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 p-1.5 rounded-full"><i data-lucide="check" class="w-4 h-4"></i></div>
+        <span class="font-bold text-slate-900 dark:text-white"><span class="lang-tr">Kopyalandı!</span><span class="lang-en">Copied!</span></span>
     </div>
 
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 premium-box px-6 py-4 rounded-2xl shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-3 bg-white dark:bg-slate-800">
-        <div class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 p-1.5 rounded-full">
-            <i data-lucide="check" class="w-4 h-4"></i>
-        </div>
-        <span class="font-bold text-slate-900 dark:text-white">
-            <span class="lang-tr">Panoya kopyalandı!</span><span class="lang-en">Copied!</span>
-        </span>
-    </div>
+    <script id="dsq-count-scr" src="//berkandanipuclari.disqus.com/count.js" async></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize Icons
             lucide.createIcons();
             
-            // Check LocalStorage for Theme
-            if (localStorage.getItem('theme') === 'dark' || 
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            /* Theme & Lang Init */
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
             }
-
-            // Check LocalStorage for Language
             const currentLang = localStorage.getItem('lang') || 'tr';
             document.documentElement.lang = currentLang;
-            updateLanguageDisplay(currentLang);
         });
 
-        /* --- THEME TOGGLE --- */
-        const themeBtn = document.getElementById('theme-toggle');
-        themeBtn.addEventListener('click', () => {
+        /* --- 1. SCROLLSPY (Links change color) --- */
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current) && current !== '') {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        /* --- 2. THEME & LANGUAGE --- */
+        document.getElementById('theme-toggle').addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
         });
 
-        /* --- LANGUAGE TOGGLE --- */
-        const langBtn = document.getElementById('lang-toggle');
-        function updateLanguageDisplay(lang) {
-            document.documentElement.lang = lang;
-        }
-
-        langBtn.addEventListener('click', () => {
-            const current = document.documentElement.lang;
-            const newLang = current === 'tr' ? 'en' : 'tr';
-            updateLanguageDisplay(newLang);
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            const newLang = document.documentElement.lang === 'tr' ? 'en' : 'tr';
+            document.documentElement.lang = newLang;
             localStorage.setItem('lang', newLang);
         });
 
-        /* --- YOUTUBE MUSIC PLAYER --- */
-        // IMPORTANT: CHANGE THE VIDEO ID HERE
-        const YOUTUBE_VIDEO_ID = 'jfKfPfyJRdk'; // <-- PASTE YOUR YOUTUBE VIDEO ID HERE
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: YOUTUBE_VIDEO_ID,
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': YOUTUBE_VIDEO_ID // Required for loop to work
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Player is ready
-        }
-
+        /* --- 3. BACKGROUND MUSIC (Looping MP3) --- */
         let isMusicPlaying = false;
         window.toggleBgMusic = function() {
-            const musicIcon = document.getElementById('music-icon');
-            const musicBtn = document.querySelector('.music-widget button');
+            const audio = document.getElementById('bg-music');
+            const icon = document.getElementById('music-icon');
+            const btn = document.querySelector('.music-widget button');
 
             if (isMusicPlaying) {
-                player.pauseVideo();
-                musicIcon.setAttribute('data-lucide', 'music');
-                musicBtn.classList.remove('audio-playing');
+                audio.pause();
+                // To change icon, we change the attribute THEN run createIcons again
+                icon.setAttribute('data-lucide', 'music');
+                btn.classList.remove('audio-playing');
             } else {
-                player.playVideo();
-                musicIcon.setAttribute('data-lucide', 'pause');
-                musicBtn.classList.add('audio-playing');
+                audio.play().catch(e => console.log("Interaction required"));
+                icon.setAttribute('data-lucide', 'pause');
+                btn.classList.add('audio-playing');
             }
             isMusicPlaying = !isMusicPlaying;
-            lucide.createIcons();
+            lucide.createIcons(); // IMPORTANT: This updates the icon visually
         };
 
-        /* --- AUDIO BUTTONS (Small play circles) --- */
+        /* --- 4. SMALL AUDIO ICONS (Fix: Play/Pause swap) --- */
         let currentAudio = null;
-        let currentBtn = null;
+        let currentIconId = null;
 
         window.toggleAudio = function(id) {
             const audio = document.getElementById(`audio-${id}`);
-            const btn = document.getElementById(`btn-${id}`);
             const icon = document.getElementById(`icon-${id}`);
             
             // If clicking the same playing audio, pause it
@@ -931,122 +438,69 @@
                 icon.setAttribute('data-lucide', 'play-circle');
                 currentAudio = null;
             } else {
-                // Stop any currently playing audio
+                // Stop previous
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0;
-                    document.querySelectorAll('[id^="icon-"]').forEach(i => i.setAttribute('data-lucide', 'play-circle'));
+                    document.getElementById(currentIconId).setAttribute('data-lucide', 'play-circle');
                 }
-
-                // Play new audio
+                // Play new
                 audio.play();
                 icon.setAttribute('data-lucide', 'pause-circle');
                 currentAudio = audio;
-                currentBtn = `icon-${id}`;
+                currentIconId = `icon-${id}`;
                 
                 audio.onended = () => {
                     icon.setAttribute('data-lucide', 'play-circle');
-                    currentAudio = null;
+                    lucide.createIcons(); // Update icon when song ends
                 };
             }
-            lucide.createIcons();
+            lucide.createIcons(); // Update icons immediately after click
         };
 
-        /* --- SEARCH MODAL --- */
-        window.toggleSearch = function() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('active');
-            if (modal.classList.contains('active')) {
-                document.getElementById('search-input').focus();
-            }
+        /* --- 5. SEARCH & COPY --- */
+        window.toggleSearch = () => {
+            const m = document.getElementById('search-modal');
+            m.classList.toggle('active');
+            if(m.classList.contains('active')) document.getElementById('search-input').focus();
         };
 
-        window.performSearch = function(query) {
-            const resultsContainer = document.getElementById('search-results');
-            resultsContainer.innerHTML = '';
-            
-            if (query.length < 2) return;
-
-            const dummyData = [
-                { title: "Simple Present Tense", link: "#materials" },
-                { title: "IELTS Speaking Tips", link: "#blog" },
-                { title: "ChatGPT Prompts for English", link: "#prompts" },
-                { title: "Daily Routine Vocabulary", link: "#downloads" }
-            ];
-
-            const filtered = dummyData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-
-            filtered.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl cursor-pointer';
-                div.innerHTML = `<a href="${item.link}" class="font-bold text-slate-700 dark:text-slate-300 block">${item.title}</a>`;
-                resultsContainer.appendChild(div);
+        window.performSearch = (q) => {
+            const c = document.getElementById('search-results');
+            c.innerHTML = '';
+            if (q.length < 2) return;
+            // Fake data
+            const data = [{t:'Materials',l:'#materials'},{t:'Blog',l:'#blog'},{t:'Prompts',l:'#prompts'}];
+            data.filter(i => i.t.toLowerCase().includes(q.toLowerCase())).forEach(i => {
+                c.innerHTML += `<div class="p-3 hover:bg-slate-100 rounded-xl"><a href="${i.l}" class="font-bold">${i.t}</a></div>`;
             });
         };
 
-        /* --- COPY TO CLIPBOARD --- */
-        window.copyToClipboard = function(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            const cleanText = text.replace(/^"|"$/g, '');
-            
-            navigator.clipboard.writeText(cleanText).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.remove('opacity-0', 'translate-y-40');
-                
-                setTimeout(() => {
-                    toast.classList.add('opacity-0', 'translate-y-40');
-                }, 3000);
+        window.copyToClipboard = (id) => {
+            const txt = document.getElementById(id).innerText.replace(/^"|"$/g, '');
+            navigator.clipboard.writeText(txt).then(() => {
+                const t = document.getElementById('toast');
+                t.classList.remove('opacity-0', 'translate-y-40');
+                setTimeout(() => t.classList.add('opacity-0', 'translate-y-40'), 3000);
             });
         };
 
-        /* --- CHATBOT WIDGET --- */
-        window.toggleChatbot = function() {
-            const chatWindow = document.getElementById('chatbot-window');
-            chatWindow.classList.toggle('active');
-        };
-
-        window.sendMessage = function() {
-            const input = document.getElementById('chat-input');
-            const msg = input.value;
-            if (!msg) return;
-
-            const chatContainer = document.getElementById('chat-messages');
-
-            // Add User Message
-            const userDiv = document.createElement('div');
-            userDiv.className = 'bg-primary-600 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[80%] text-sm';
-            userDiv.innerText = msg;
-            chatContainer.appendChild(userDiv);
-
-            input.value = '';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // Simulate AI Reply
+        /* --- 6. CHATBOT --- */
+        window.toggleChatbot = () => document.getElementById('chatbot-window').classList.toggle('active');
+        window.sendMessage = () => {
+            const inp = document.getElementById('chat-input');
+            const c = document.getElementById('chat-messages');
+            if(!inp.value) return;
+            
+            c.innerHTML += `<div class="bg-primary-600 text-white p-3 rounded-xl ml-auto max-w-[80%]">${inp.value}</div>`;
+            inp.value = '';
+            c.scrollTop = c.scrollHeight;
+            
             setTimeout(() => {
-                const botDiv = document.createElement('div');
-                botDiv.className = 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white p-3 rounded-xl rounded-tl-none mr-auto max-w-[80%] text-sm';
-                
-                if (msg.toLowerCase().includes('hello') || msg.toLowerCase().includes('merhaba')) {
-                    botDiv.innerText = "Hello! How can I help you with your English today? / Merhaba! İngilizceniz konusunda size nasıl yardımcı olabilirim?";
-                } else {
-                    botDiv.innerText = "I am a demo AI. Please check the 'Prompts' section to use ChatGPT for real learning! / Ben demo bir AI'ım. Gerçek öğrenme için 'Promptlar' kısmına bakınız.";
-                }
-                
-                chatContainer.appendChild(botDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                c.innerHTML += `<div class="bg-slate-100 dark:bg-slate-700 p-3 rounded-xl mr-auto max-w-[80%]">I am a demo.</div>`;
+                c.scrollTop = c.scrollHeight;
             }, 1000);
         };
-
-        /* --- SMOOTH SCROLL --- */
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                document.getElementById('mobile-menu').classList.remove('active');
-            });
-        });
     </script>
 </body>
 </html>
