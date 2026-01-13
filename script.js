@@ -260,7 +260,6 @@ async function sendMessage() {
 
     try {
         // CALL YOUR WORKER
-        // Added 'Accept' header to ensure worker knows we want JSON
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
             headers: { 
@@ -273,8 +272,9 @@ async function sendMessage() {
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const data = await response.json();
-        // Handle different response keys your backend might send
-        const reply = data.reply || data.response || data.text || "Sorry, I received an empty response from the server.";
+        
+        // This is where we catch the "reply" key sent from the worker
+        const reply = data.reply || data.response || "Sorry, I received an empty response from the server.";
 
         // Remove loading
         document.getElementById(loadingId).remove();
@@ -293,7 +293,7 @@ async function sendMessage() {
         document.getElementById(loadingId).remove();
         container.innerHTML += `
             <div class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] mb-3 text-xs font-bold">
-                Connection Error: ${error.message}. Check console for details.
+                Connection Error: ${error.message}. Please check your internet or try again later.
             </div>
         `;
     }
