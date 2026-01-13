@@ -2,7 +2,7 @@
 lucide.createIcons();
 const html = document.documentElement;
 
-// === SEARCH FUNCTIONALITY (FIXED) ===
+// === SEARCH FUNCTIONALITY ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
@@ -18,24 +18,9 @@ function toggleSearch() {
     lucide.createIcons();
 }
 
-// Added 'keywords' field so you can find items by typing 'materyal', 'pdf', etc.
 const searchableContent = [
-    { 
-        title: '6. Sınıf Full Rehber', 
-        titleEn: '6th Grade Full Guide', 
-        type: 'material', 
-        link: '#downloads', 
-        level: 'A1-A2',
-        keywords: 'materyal download indir pdf book kitap'
-    },
-    { 
-        title: 'Öğretmen Kasam', 
-        titleEn: 'Teacher Vault', 
-        type: 'material', 
-        link: '#downloads', 
-        level: 'Teacher',
-        keywords: 'materyal ders planı lesson plan'
-    },
+    { title: '6. Sınıf Full Rehber', titleEn: '6th Grade Full Guide', type: 'material', link: '#downloads', level: 'A1-A2', keywords: 'materyal download indir pdf book kitap' },
+    { title: 'Öğretmen Kasam', titleEn: 'Teacher Vault', type: 'material', link: '#downloads', level: 'Teacher', keywords: 'materyal ders planı lesson plan' },
     { title: 'Yol Haritası', titleEn: 'Roadmap', type: 'section', link: '#roadmap', keywords: 'plan program level seviye' },
     { title: 'Promptlar', titleEn: 'Prompts', type: 'section', link: '#prompts', keywords: 'ai chatgpt komut' },
     { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog', keywords: 'yazı makale article' },
@@ -55,10 +40,8 @@ function performSearch(query) {
     }
     
     const lowerQuery = query.toLowerCase();
-
     const filtered = searchableContent.filter(item => {
         const title = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
-        // Check Title AND Keywords
         return title.includes(lowerQuery) || (item.keywords && item.keywords.includes(lowerQuery));
     });
     
@@ -312,9 +295,6 @@ function toggleChatbot() {
     document.getElementById('chatbot-window').classList.toggle('active');
 }
 
-// IMPORTANT: REPLACE THIS WITH YOUR REAL API KEY IF YOU WANT IT TO WORK
-const API_KEY = "YOUR_API_KEY_HERE"; 
-
 async function sendMessage() {
     const input = document.getElementById('chat-input');
     const msg = input.value.trim();
@@ -331,44 +311,35 @@ async function sendMessage() {
     input.value = '';
     div.scrollTop = div.scrollHeight;
     
-    // 2. Simulate AI Response (or use Real API if key is set)
-    if (API_KEY === "YOUR_API_KEY_HERE") {
-        // Mock Response (Default)
-        setTimeout(() => {
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            const responses = lang === 'tr' 
-                ? ["Merhaba! Nasıl yardımcı olabilirim?", "Bana İngilizce hakkında soru sorabilirsin."]
-                : ["Hello! How can I help?", "Ask me anything about English."];
-            const reply = responses[Math.floor(Math.random() * responses.length)];
-            
-            div.innerHTML += `
-                <div class="flex mb-3">
-                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${reply}</div>
-                </div>
-            `;
-            div.scrollTop = div.scrollHeight;
-        }, 1000);
-    } else {
-        // Real API Call (Gemini Example)
-        try {
-            const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + API_KEY, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: msg }] }] })
-            });
-            const data = await response.json();
-            const aiResponse = data.candidates[0].content.parts[0].text;
-            
-            div.innerHTML += `
-                <div class="flex mb-3">
-                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${aiResponse}</div>
-                </div>
-            `;
-            div.scrollTop = div.scrollHeight;
-        } catch (error) {
-            div.innerHTML += `<div class="text-red-500 text-xs">API Error: ${error.message}</div>`;
+    // 2. Call Cloudflare Backend
+    try {
+        const backendUrl = "https://berkan-ai-backend.lanselam.workers.dev/"; 
+        
+        const response = await fetch(backendUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg })
+        });
+
+        const data = await response.json();
+        
+        if (data.error) throw new Error(data.error);
+
+        // Get the AI text
+        let aiResponse = "Hata: Cevap alınamadı.";
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]) {
+             aiResponse = data.candidates[0].content.parts[0].text;
         }
+
+        div.innerHTML += `
+            <div class="flex mb-3">
+                <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${aiResponse}</div>
+            </div>
+        `;
+    } catch (error) {
+        div.innerHTML += `<div class="text-red-500 text-xs">Connection Error: ${error.message}</div>`;
     }
+    div.scrollTop = div.scrollHeight;
 }
 
 // === COPY CLIPBOARD ===
