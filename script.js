@@ -2,7 +2,7 @@
 lucide.createIcons();
 const html = document.documentElement;
 
-// === SEARCH FUNCTIONALITY ===
+// === SEARCH FUNCTIONALITY (FIXED) ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
@@ -18,13 +18,29 @@ function toggleSearch() {
     lucide.createIcons();
 }
 
+// Added 'keywords' field so you can find items by typing 'materyal', 'pdf', etc.
 const searchableContent = [
-    { title: '6. Sınıf Full Rehber', titleEn: '6th Grade Full Guide', type: 'material', link: '#downloads', level: 'A1-A2' },
-    { title: 'Öğretmen Kasam', titleEn: 'Teacher Vault', type: 'material', link: '#downloads', level: 'Teacher' },
-    { title: 'Yol Haritası', titleEn: 'Roadmap', type: 'section', link: '#roadmap' },
-    { title: 'Promptlar', titleEn: 'Prompts', type: 'section', link: '#prompts' },
-    { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog' },
-    { title: 'AI ile İngilizce Öğrenme', titleEn: 'Learn English with AI', type: 'blog', link: '#blog' }
+    { 
+        title: '6. Sınıf Full Rehber', 
+        titleEn: '6th Grade Full Guide', 
+        type: 'material', 
+        link: '#downloads', 
+        level: 'A1-A2',
+        keywords: 'materyal download indir pdf book kitap'
+    },
+    { 
+        title: 'Öğretmen Kasam', 
+        titleEn: 'Teacher Vault', 
+        type: 'material', 
+        link: '#downloads', 
+        level: 'Teacher',
+        keywords: 'materyal ders planı lesson plan'
+    },
+    { title: 'Yol Haritası', titleEn: 'Roadmap', type: 'section', link: '#roadmap', keywords: 'plan program level seviye' },
+    { title: 'Promptlar', titleEn: 'Prompts', type: 'section', link: '#prompts', keywords: 'ai chatgpt komut' },
+    { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog', keywords: 'yazı makale article' },
+    { title: 'Faydalı Linkler', titleEn: 'Useful Links', type: 'section', link: '#useful-links', keywords: 'link kaynak resource dictionary' },
+    { title: 'AI ile İngilizce Öğrenme', titleEn: 'Learn English with AI', type: 'blog', link: '#blog', keywords: 'yapay zeka' }
 ];
 
 function performSearch(query) {
@@ -38,9 +54,12 @@ function performSearch(query) {
         return;
     }
     
+    const lowerQuery = query.toLowerCase();
+
     const filtered = searchableContent.filter(item => {
-        const searchIn = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
-        return searchIn.includes(query.toLowerCase());
+        const title = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
+        // Check Title AND Keywords
+        return title.includes(lowerQuery) || (item.keywords && item.keywords.includes(lowerQuery));
     });
     
     if (filtered.length === 0) {
@@ -225,8 +244,28 @@ function renderComments() {
 
 // === DOWNLOADS ===
 const downloadMaterials = [
-    { id: 1, title: '6. Sınıf Full Rehber', level: 'beginner', size: '2.4 MB', url: '#' },
-    { id: 2, title: 'Teacher Vault', level: 'teacher', size: '45 MB', url: '#' }
+    { 
+        id: 1, 
+        title: '6. Sınıf Full Rehber', 
+        level: 'beginner', 
+        size: '2.4 MB', 
+        // PASTE YOUR REAL GOOGLE DRIVE LINKS HERE
+        url: 'https://drive.google.com/your-real-link-1' 
+    },
+    { 
+        id: 2, 
+        title: 'Teacher Vault', 
+        level: 'teacher', 
+        size: '45 MB', 
+        url: 'https://drive.google.com/your-real-link-2' 
+    },
+    { 
+        id: 3, 
+        title: 'B1 Speaking', 
+        level: 'intermediate', 
+        size: '1.2 MB', 
+        url: 'https://drive.google.com/your-real-link-3' 
+    }
 ];
 
 function renderDownloads(filter = 'all') {
@@ -238,12 +277,21 @@ function renderDownloads(filter = 'all') {
 
     grid.innerHTML = filtered.map(m => `
         <div class="premium-box p-6 rounded-3xl">
+            <div class="flex items-start justify-between mb-4">
+                <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
+                    <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">${m.size}</span>
+            </div>
             <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">${m.title}</h3>
-            <button class="w-full bg-primary-600 text-white py-3 rounded-xl font-bold btn-3d">
+            <button onclick="downloadFile(${m.id})" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                <i data-lucide="download" class="w-5 h-5"></i>
                 ${lang === 'tr' ? 'İndir' : 'Download'}
             </button>
         </div>
     `).join('');
+    
+    lucide.createIcons();
 }
 
 function filterDownloads(level) {
@@ -252,24 +300,75 @@ function filterDownloads(level) {
     renderDownloads(level);
 }
 
-// === CHATBOT ===
+function downloadFile(id) {
+    const file = downloadMaterials.find(m => m.id === id);
+    if (file && file.url) {
+        window.open(file.url, '_blank');
+    }
+}
+
+// === CHATBOT & API ===
 function toggleChatbot() {
     document.getElementById('chatbot-window').classList.toggle('active');
 }
 
-function sendMessage() {
+// IMPORTANT: REPLACE THIS WITH YOUR REAL API KEY IF YOU WANT IT TO WORK
+const API_KEY = "YOUR_API_KEY_HERE"; 
+
+async function sendMessage() {
     const input = document.getElementById('chat-input');
     const msg = input.value.trim();
     if(!msg) return;
     
     const div = document.getElementById('chat-messages');
-    div.innerHTML += `<div class="flex justify-end mb-3"><div class="bg-primary-600 text-white px-4 py-2 rounded-2xl">${msg}</div></div>`;
-    input.value = '';
     
-    setTimeout(() => {
-        div.innerHTML += `<div class="flex mb-3"><div class="bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-2xl">I'm an AI assistant. How can I help?</div></div>`;
-        div.scrollTop = div.scrollHeight;
-    }, 1000);
+    // 1. Show User Message
+    div.innerHTML += `
+        <div class="flex justify-end mb-3">
+            <div class="bg-primary-600 text-white px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%] font-medium">${msg}</div>
+        </div>
+    `;
+    input.value = '';
+    div.scrollTop = div.scrollHeight;
+    
+    // 2. Simulate AI Response (or use Real API if key is set)
+    if (API_KEY === "YOUR_API_KEY_HERE") {
+        // Mock Response (Default)
+        setTimeout(() => {
+            const lang = document.documentElement.getAttribute('lang') || 'tr';
+            const responses = lang === 'tr' 
+                ? ["Merhaba! Nasıl yardımcı olabilirim?", "Bana İngilizce hakkında soru sorabilirsin."]
+                : ["Hello! How can I help?", "Ask me anything about English."];
+            const reply = responses[Math.floor(Math.random() * responses.length)];
+            
+            div.innerHTML += `
+                <div class="flex mb-3">
+                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${reply}</div>
+                </div>
+            `;
+            div.scrollTop = div.scrollHeight;
+        }, 1000);
+    } else {
+        // Real API Call (Gemini Example)
+        try {
+            const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + API_KEY, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: msg }] }] })
+            });
+            const data = await response.json();
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            
+            div.innerHTML += `
+                <div class="flex mb-3">
+                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${aiResponse}</div>
+                </div>
+            `;
+            div.scrollTop = div.scrollHeight;
+        } catch (error) {
+            div.innerHTML += `<div class="text-red-500 text-xs">API Error: ${error.message}</div>`;
+        }
+    }
 }
 
 // === COPY CLIPBOARD ===
@@ -305,24 +404,18 @@ function toggleAudio(id) {
     const icon = document.getElementById('icon-' + id);
     const btn = document.getElementById('btn-' + id);
 
-    // 1. If clicking the SAME audio that is playing:
     if (currentAudio === audio && !audio.paused) {
         audio.pause();
-        // Fix: Always re-fetch the current icon because Lucide replaces it
         const currentIcon = document.getElementById('icon-' + id);
         if (currentIcon) currentIcon.setAttribute('data-lucide', 'play-circle');
         btn.classList.remove('audio-playing');
         currentAudio = null;
         currentId = null;
-    } 
-    // 2. If clicking a NEW audio or starting stopped audio:
-    else {
-        // Stop the previous one if it exists
+    } else {
         if (currentAudio && currentAudio !== audio) {
             currentAudio.pause();
-            currentAudio.currentTime = 0; // Reset previous
+            currentAudio.currentTime = 0; 
             
-            // Fix: Find the OLD icon using the stored ID
             const oldIcon = document.getElementById('icon-' + currentId);
             const oldBtn = document.getElementById('btn-' + currentId);
             
@@ -330,22 +423,17 @@ function toggleAudio(id) {
             if (oldBtn) oldBtn.classList.remove('audio-playing');
         }
 
-        // Play the new one
         audio.play();
-        icon.setAttribute('data-lucide', 'pause-circle'); // Change icon to Pause
-        btn.classList.add('audio-playing'); // Add pulse animation
+        icon.setAttribute('data-lucide', 'pause-circle'); 
+        btn.classList.add('audio-playing'); 
 
-        // Update globals
         currentAudio = audio;
         currentId = id;
     }
     
-    // Refresh icons (Lucide needs this to re-render the SVG when attribute changes)
     lucide.createIcons();
 
-    // Reset icon when audio finishes naturally
     audio.onended = function() {
-        // Fix: Must find the FRESH icon element because the old one was replaced by Lucide
         const freshIcon = document.getElementById('icon-' + id);
         const freshBtn = document.getElementById('btn-' + id);
         
