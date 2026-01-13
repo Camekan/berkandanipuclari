@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initLanguage();
     tryAutoplayMusic(); // Try to start music
+    initScrollSpy(); // NEW SCROLLSPY
 });
 
 // === 1. MUSIC & AUDIO LOGIC ===
@@ -89,6 +90,8 @@ function toggleAudio(id) {
                 const otherId = a.id.replace('audio-', '');
                 const otherIcon = document.getElementById('icon-' + otherId);
                 if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
+                const otherBtn = document.getElementById('btn-' + otherId);
+                if(otherBtn) otherBtn.classList.remove('animate-pulse', 'bg-indigo-100');
             } 
         });
         
@@ -257,17 +260,21 @@ async function sendMessage() {
 
     try {
         // CALL YOUR WORKER
-        // Assuming your worker accepts POST to root or /chat with JSON body { message: "..." }
+        // Added 'Accept' header to ensure worker knows we want JSON
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json' 
+            },
             body: JSON.stringify({ message: msg })
         });
 
-        if (!response.ok) throw new Error("API Error");
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const data = await response.json();
-        const reply = data.reply || data.response || "Sorry, I couldn't get a response.";
+        // Handle different response keys your backend might send
+        const reply = data.reply || data.response || data.text || "Sorry, I received an empty response from the server.";
 
         // Remove loading
         document.getElementById(loadingId).remove();
@@ -282,11 +289,11 @@ async function sendMessage() {
         `;
 
     } catch (error) {
-        console.error(error);
+        console.error("Chatbot Error:", error);
         document.getElementById(loadingId).remove();
         container.innerHTML += `
             <div class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] mb-3 text-xs font-bold">
-                Error connecting to AI. Please try again later.
+                Connection Error: ${error.message}. Check console for details.
             </div>
         `;
     }
@@ -295,7 +302,7 @@ async function sendMessage() {
     container.scrollTop = container.scrollHeight;
 }
 
-// === 6. UI UTILS ===
+// === 6. UI UTILS & SCROLLSPY (FIXED) ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
@@ -345,23 +352,31 @@ function copyToClipboard(elementId) {
     });
 }
 
-// Scrollspy
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    let current = '';
+// --- NEW 100% ACCURATE SCROLLSPY ---
+function initScrollSpy() {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3 // Trigger when 30% of the section is visible
+    };
 
-    sections.forEach(section => {
-        const top = section.offsetTop;
-        if (pageYOffset >= (top - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Logic: if intersecting, add active.
+            if (entry.isIntersecting) {
+                // Remove all active classes first
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                
+                // Add active to current
+                const id = entry.target.getAttribute('id');
+                const link = document.querySelector(`.nav-link[href="#${id}"]`);
+                if (link) link.classList.add('active');
+            }
+        });
+    }, observerOptions);
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').includes(current) && current !== '') {
-            link.classList.add('active');
-        }
+    // Observe all main sections
+    document.querySelectorAll('section[id]').forEach((section) => {
+        observer.observe(section);
     });
-});
+}
