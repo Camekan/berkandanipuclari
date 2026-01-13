@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLatestVideo();
     initTheme();
     initLanguage();
-    tryAutoplayMusic(); // Try to start music
-    initScrollSpy(); // NEW SCROLLSPY
+    tryAutoplayMusic(); 
+    initScrollSpy(); 
 });
 
 // === 1. MUSIC & AUDIO LOGIC ===
@@ -34,8 +34,7 @@ function tryAutoplayMusic() {
             isMusicPlaying = true;
             updateMusicUI(true);
         }).catch(error => {
-            // Autoplay was prevented. 
-            // Add a one-time click listener to the document to start music on first interaction
+            // Autoplay blocked by browser. Wait for first click.
             const startMusicOnInteraction = () => {
                 bgMusic.play();
                 isMusicPlaying = true;
@@ -86,7 +85,7 @@ function toggleAudio(id) {
             if (a.id !== 'bg-music' && a !== audio) { 
                 a.pause(); 
                 a.currentTime = 0; 
-                // Reset other icons (simplified)
+                // Reset other icons
                 const otherId = a.id.replace('audio-', '');
                 const otherIcon = document.getElementById('icon-' + otherId);
                 if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
@@ -116,7 +115,7 @@ function toggleAudio(id) {
 function initTheme() {
     const html = document.documentElement;
     const hour = new Date().getHours();
-    // Auto dark mode if user hasn't set preference, based on time (7PM - 7AM)
+    // Auto dark mode if user hasn't set preference (7PM - 7AM)
     const isNight = hour >= 19 || hour < 7;
     
     const savedTheme = localStorage.getItem('theme');
@@ -143,10 +142,9 @@ function initLanguage() {
     };
 }
 
-// === 3. BLOGGER FEED (DYNAMIC JSONP) ===
+// === 3. BLOGGER FEED ===
 function fetchBloggerPosts() {
     const script = document.createElement('script');
-    // max-results=3 to show only 3 posts
     script.src = `${BLOGGER_URL}/feeds/posts/default?alt=json-in-script&max-results=3&callback=displayBloggerPosts`;
     document.body.appendChild(script);
 }
@@ -166,13 +164,11 @@ window.displayBloggerPosts = function(data) {
         const dateObj = new Date(post.published.$t);
         const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
         
-        // Try to find a thumbnail, fallback to Unsplash
         let img = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80';
         if (post.media$thumbnail) {
-            img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/'); // Get higher res
+            img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/');
         }
 
-        // Extract snippet text
         const contentDiv = document.createElement('div');
         contentDiv.innerHTML = post.content ? post.content.$t : post.summary.$t;
         const snippet = contentDiv.innerText.substring(0, 100) + '...';
@@ -202,7 +198,6 @@ window.displayBloggerPosts = function(data) {
 // === 4. YOUTUBE (BACKEND FETCH) ===
 async function fetchLatestVideo() {
     try {
-        // Fetch from your worker
         const response = await fetch(BACKEND_URL); 
         const data = await response.json();
         
@@ -214,7 +209,6 @@ async function fetchLatestVideo() {
         }
     } catch (e) {
         console.error("Video fetch error:", e);
-        // Fallback to a playlist or default video if fetch fails
         const iframe = document.getElementById('latest-video');
         if(iframe && !iframe.src) {
             iframe.src = "https://www.youtube.com/embed/videoseries?list=PLdjrP3ZbJABbPN1aipZwB7zf1CsjB2ZZo";
@@ -259,7 +253,7 @@ async function sendMessage() {
     container.scrollTop = container.scrollHeight;
 
     try {
-        // CALL YOUR WORKER
+        // CALL WORKER
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
             headers: { 
@@ -273,14 +267,17 @@ async function sendMessage() {
 
         const data = await response.json();
         
-        // This is where we catch the "reply" key sent from the worker
+        // CATCH THE REPLY (This now works because Worker sends { reply: "..." })
         const reply = data.reply || data.response || "Sorry, I received an empty response from the server.";
 
         // Remove loading
         document.getElementById(loadingId).remove();
 
         // Render Markdown Response
-        const htmlReply = marked.parse(reply);
+        let htmlReply = reply;
+        if(typeof marked !== 'undefined') {
+            htmlReply = marked.parse(reply);
+        }
         
         container.innerHTML += `
             <div class="bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] shadow-sm mb-3 prose prose-sm dark:prose-invert">
@@ -317,7 +314,6 @@ function performSearch(query) {
     
     if (query.length < 2) return;
 
-    // Static Search Data (Can be expanded)
     const data = [
         { t: "Ders Planı (Lesson Plan)", l: "#prompts" },
         { t: "Quiz Hazırlayıcı", l: "#prompts" },
@@ -352,19 +348,18 @@ function copyToClipboard(elementId) {
     });
 }
 
-// --- NEW 100% ACCURATE SCROLLSPY ---
+// --- NEW SCROLLSPY (INTERSECTION OBSERVER) ---
 function initScrollSpy() {
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.3 // Trigger when 30% of the section is visible
+        rootMargin: '-50% 0px -50% 0px', // Trigger exactly when section is in middle of screen
+        threshold: 0
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            // Logic: if intersecting, add active.
             if (entry.isIntersecting) {
-                // Remove all active classes first
+                // Remove active from all
                 document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
                 
                 // Add active to current
@@ -375,7 +370,6 @@ function initScrollSpy() {
         });
     }, observerOptions);
 
-    // Observe all main sections
     document.querySelectorAll('section[id]').forEach((section) => {
         observer.observe(section);
     });
