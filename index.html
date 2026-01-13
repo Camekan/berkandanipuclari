@@ -70,11 +70,22 @@
         html { -webkit-tap-highlight-color: transparent; }
         body { font-weight: 500; }
 
-        .animate-blob, .premium-box { will-change: transform; transform: translateZ(0); }
+        /* Language Toggle Logic */
+        :root:not([lang="en"]) .lang-en { display: none !important; }
+        :root[lang="en"] .lang-tr { display: none !important; }
+
+        .animate-blob, .premium-box {
+            will-change: transform; 
+            transform: translateZ(0); 
+        }
 
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 6px; border: 3px solid #f1f5f9; }
+        ::-webkit-scrollbar-thumb { 
+            background: #94a3b8; 
+            border-radius: 6px; 
+            border: 3px solid #f1f5f9; 
+        }
         .dark ::-webkit-scrollbar-track { background: #020617; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; border-color: #020617; }
 
@@ -97,7 +108,9 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid #cbd5e1; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0,0,0,0.02); 
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(0,0,0,0.02); 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -110,7 +123,10 @@
         .premium-box:hover {
             transform: translateY(-6px);
             border-color: #38bdf8; 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(56, 189, 248, 0.2); 
+            box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04),
+                0 0 0 2px rgba(56, 189, 248, 0.2); 
         }
         .dark .premium-box:hover {
             border-color: #38bdf8;
@@ -133,15 +149,23 @@
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
         
-        /* Language Toggle */
-        :root:not([lang="en"]) .lang-en { display: none !important; }
-        :root[lang="en"] .lang-tr { display: none !important; }
+        /* Audio Player Animation */
+        .audio-playing {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
 
         /* Mobile Menu */
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 80px; left: 0; right: 0;
+            top: 80px;
+            left: 0;
+            right: 0;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid #cbd5e1;
@@ -155,27 +179,49 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .mobile-menu.active { display: block; }
-        .mobile-menu a { display: block; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
         .dark .mobile-menu a { border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2.5rem !important; line-height: 1.1; }
+            .logo-text { font-size: 0.9rem !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+        }
 
         /* Search Modal */
         #search-modal {
             display: none;
-            position: fixed; inset: 0;
+            position: fixed;
+            inset: 0;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             z-index: 60;
-            align-items: start; justify-content: center;
+            align-items: start;
+            justify-content: center;
             padding-top: 5rem;
         }
         #search-modal.active { display: flex; }
 
         /* Chatbot */
-        .chatbot-widget { position: fixed; bottom: 24px; right: 24px; z-index: 100; }
+        .chatbot-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+        }
         .chatbot-window {
-            position: fixed; bottom: 100px; right: 24px;
-            width: 380px; max-width: calc(100vw - 48px); height: 500px;
-            z-index: 99; display: none; flex-direction: column;
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 380px;
+            max-width: calc(100vw - 48px);
+            height: 500px;
+            z-index: 99;
+            display: none;
+            flex-direction: column;
             background: white;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
@@ -185,9 +231,14 @@
 
         /* Filter buttons */
         .filter-btn.active {
-            background: #0ea5e9 !important; color: white !important; border-color: #0ea5e9 !important;
+            background: #0ea5e9 !important;
+            color: white !important;
+            border-color: #0ea5e9 !important;
         }
-        .dark .filter-btn.active { background: #38bdf8 !important; color: #020617 !important; }
+        .dark .filter-btn.active {
+            background: #38bdf8 !important;
+            color: #020617 !important;
+        }
     </style>
 </head>
 <body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
@@ -210,13 +261,15 @@
             <div class="hidden md:flex items-center gap-2 p-1.5 bg-white/80 dark:bg-white/5 rounded-full border border-slate-200 dark:border-white/5 backdrop-blur-md shadow-sm">
                 <a href="#materials" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Materyaller</a>
                 <a href="#materials" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Materials</a>
+                
                 <a href="#downloads" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">İndirilenler</a>
                 <a href="#downloads" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Downloads</a>
                 
-                <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">Blog</a>
+                <a href="#blog" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">Blog</a>
                 
                 <a href="#roadmap" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Yol Haritası</a>
                 <a href="#roadmap" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Roadmap</a>
+                
                 <a href="#prompts" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Promptlar</a>
                 <a href="#prompts" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Prompts</a>
             </div>
@@ -249,7 +302,7 @@
             <a href="#materials" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Materials</a>
             <a href="#downloads" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">İndirilenler</a>
             <a href="#downloads" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Downloads</a>
-            <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="text-slate-700 dark:text-slate-300 font-bold">Blog</a>
+            <a href="#blog" class="text-slate-700 dark:text-slate-300 font-bold">Blog</a>
             <a href="#roadmap" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Yol Haritası</a>
             <a href="#roadmap" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Roadmap</a>
             <a href="#prompts" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Promptlar</a>
@@ -673,7 +726,7 @@
                         <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Ders Planı Oluşturucu</h3>
                         <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Lesson Plan Creator</h3>
                         <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
-                            "Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'..."
+                            <p id="p1">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
                         </div>
                         <button onclick="copyToClipboard('p1')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
                             Kopyala
@@ -681,7 +734,6 @@
                         <button onclick="copyToClipboard('p1')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
                             Copy
                         </button>
-                        <p id="p1" class="hidden">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
                     </div>
 
                     <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
@@ -695,7 +747,7 @@
                         <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Quiz Hazırlayıcı</h3>
                         <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Quiz Preparer</h3>
                         <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
-                            "Generate 5 multiple choice reading comprehension questions based on the text below..."
+                            <p id="p2">"Generate 5 multiple choice reading comprehension questions based on the text below..."</p>
                         </div>
                         <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
                             Kopyala
@@ -703,7 +755,6 @@
                         <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
                             Copy
                         </button>
-                        <p id="p2" class="hidden">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
                     </div>
 
                     <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
@@ -717,7 +768,7 @@
                         <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Konuşma Partneri</h3>
                         <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Conversation Partner</h3>
                         <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
-                            "Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."
+                            <p id="p3">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."</p>
                         </div>
                         <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
                             Kopyala
@@ -725,7 +776,6 @@
                         <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
                             Copy
                         </button>
-                        <p id="p3" class="hidden">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
                     </div>
                 </div>
             </div>
@@ -738,19 +788,58 @@
                     <h2 class="font-heading text-4xl font-black mb-4 lang-en">Download Materials</h2>
                 </div>
                 
-                <div class="flex flex-wrap justify-center gap-3 mb-8">
-                    <button onclick="filterDownloads('all')" class="filter-btn active px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
-                        <span class="lang-tr">Tümü</span><span class="lang-en">All</span>
-                    </button>
-                    <button onclick="filterDownloads('beginner')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">A1-A2</button>
-                    <button onclick="filterDownloads('intermediate')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">B1-B2</button>
-                    <button onclick="filterDownloads('advanced')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">C1-C2</button>
-                    <button onclick="filterDownloads('teacher')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
-                        <span class="lang-tr">Öğretmen</span><span class="lang-en">Teacher</span>
-                    </button>
+                <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="premium-box p-6 rounded-3xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
+                                <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">2.4 MB</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
+                            <span class="lang-tr">6. Sınıf Full Rehber</span>
+                            <span class="lang-en">6th Grade Full Guide</span>
+                        </h3>
+                        <button class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-5 h-5"></i> 
+                            <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
+                        </button>
+                    </div>
+
+                    <div class="premium-box p-6 rounded-3xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
+                                <i data-lucide="briefcase" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">45 MB</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
+                            <span class="lang-tr">Teacher Vault</span>
+                            <span class="lang-en">Teacher Vault</span>
+                        </h3>
+                        <button class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-5 h-5"></i> 
+                            <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
+                        </button>
+                    </div>
+
+                    <div class="premium-box p-6 rounded-3xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
+                                <i data-lucide="mic" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">1.2 MB</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
+                            <span class="lang-tr">B1 Speaking</span>
+                            <span class="lang-en">B1 Speaking</span>
+                        </h3>
+                        <button class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-5 h-5"></i> 
+                            <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
+                        </button>
+                    </div>
                 </div>
-                
-                <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
         </section>
 
@@ -759,7 +848,8 @@
                 <div class="text-center mb-12">
                     <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white mb-4">Blog</h2>
                     <p class="text-xl text-slate-600 dark:text-slate-400 mb-8">
-                        En son yazılarım (Latest Posts)
+                        <span class="lang-tr">En son yazılarım (Latest Posts)</span>
+                        <span class="lang-en">Latest Posts</span>
                     </p>
                 </div>
 
@@ -772,7 +862,7 @@
                 
                 <div class="text-center">
                     <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl transition-transform hover:scale-105 shadow-lg">
-                        Tümünü Gör / View All <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <span class="lang-tr">Tümünü Gör</span><span class="lang-en">View All</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
@@ -783,17 +873,22 @@
                 <h2 class="font-heading text-4xl font-black mb-12 text-center lang-tr">Yorumlar</h2>
                 <h2 class="font-heading text-4xl font-black mb-12 text-center lang-en">Comments</h2>
                 
-                <div class="premium-box p-8 rounded-3xl mb-8">
-                    <h3 class="font-bold text-xl mb-4 lang-tr">Yorum Yap</h3>
-                    <h3 class="font-bold text-xl mb-4 lang-en">Leave a Comment</h3>
-                    <input type="text" id="comment-name" placeholder="İsminiz / Your Name" class="w-full p-4 rounded-xl bg-slate-100 dark:bg-slate-700 mb-4 font-bold outline-none">
-                    <textarea id="comment-text" placeholder="Yorumunuz / Your Comment" class="w-full p-4 rounded-xl bg-slate-100 dark:bg-slate-700 mb-4 font-medium outline-none h-32"></textarea>
-                    <button onclick="addComment()" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-xl font-bold btn-3d">
-                        <span class="lang-tr">Gönder</span><span class="lang-en">Submit</span>
-                    </button>
+                <div class="premium-box p-8 rounded-3xl mb-8 bg-white dark:bg-slate-800">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        var disqus_config = function () {
+                            this.page.url = window.location.href;  
+                            this.page.identifier = window.location.pathname; 
+                        };
+                        (function() { 
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://berkandanipuclari.disqus.com/embed.js'; 
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                 </div>
-                
-                <div id="comments-list" class="space-y-4"></div>
             </div>
         </section>
 
