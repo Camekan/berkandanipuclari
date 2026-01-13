@@ -9,12 +9,19 @@ const BACKEND_URL = "https://berkan-ai-backend.lanselam.workers.dev"; // Your wo
 document.addEventListener('DOMContentLoaded', () => {
     if(typeof lucide !== 'undefined') lucide.createIcons();
     
+    // Auto-Run Functions
     fetchBloggerPosts();
     fetchLatestVideo();
     initTheme();
     initLanguage();
     tryAutoplayMusic(); 
     initScrollSpy(); 
+    
+    // Set a generic welcome message
+    const initialMsg = document.querySelector('#chat-messages div');
+    if(initialMsg) {
+        initialMsg.innerText = "Hello! I am Berkan's AI Assistant. How can I help you with your English today?";
+    }
 });
 
 // === 1. MUSIC & AUDIO LOGIC ===
@@ -25,6 +32,7 @@ function tryAutoplayMusic() {
     if (!bgMusic) return;
 
     const playPromise = bgMusic.play();
+    
     if (playPromise !== undefined) {
         playPromise.then(_ => {
             isMusicPlaying = true;
@@ -201,14 +209,10 @@ async function fetchLatestVideo() {
         }
     } catch (e) {
         console.error("Video fetch error:", e);
-        const iframe = document.getElementById('latest-video');
-        if(iframe && !iframe.src) {
-            iframe.src = "https://www.youtube.com/embed/videoseries?list=PLdjrP3ZbJABbPN1aipZwB7zf1CsjB2ZZo";
-        }
     }
 }
 
-// === 5. CHATBOT (CONNECTED TO WORKER) ===
+// === 5. CHATBOT ===
 function toggleChatbot() {
     document.getElementById('chatbot-window').classList.toggle('active');
 }
@@ -231,7 +235,6 @@ async function sendMessage() {
     `;
     container.scrollTop = container.scrollHeight;
 
-    // Loading Bubble
     const loadingId = 'loading-' + Date.now();
     container.innerHTML += `
         <div id="${loadingId}" class="bg-slate-100 dark:bg-slate-700 text-slate-500 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] shadow-sm mb-3 flex gap-1">
@@ -271,11 +274,10 @@ async function sendMessage() {
         `;
 
     } catch (error) {
-        console.error("Chatbot Error:", error);
         document.getElementById(loadingId).remove();
         container.innerHTML += `
             <div class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] mb-3 text-xs font-bold">
-                Connection Error: ${error.message}. Please check your internet or try again later.
+                Error: ${error.message}. Try again later.
             </div>
         `;
     }
