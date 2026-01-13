@@ -16,9 +16,6 @@ function toggleLanguage() {
     
     html.setAttribute('lang', newLang);
     localStorage.lang = newLang;
-    
-    // Update button text if needed
-    console.log("Language switched to:", newLang);
 }
 
 // Apply saved language on load
@@ -76,6 +73,7 @@ window.displayBloggerPosts = function(data) {
         const title = post.title.$t;
         const dateObj = new Date(post.published.$t);
         const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const timeStr = dateObj.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
         
         // Find Link
         const link = post.link.find(l => l.rel === 'alternate').href;
@@ -99,6 +97,7 @@ window.displayBloggerPosts = function(data) {
                 </div>
                 <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3">
                     <i data-lucide="calendar" class="w-3 h-3"></i> ${dateStr}
+                    <i data-lucide="clock" class="w-3 h-3 ml-2"></i> ${timeStr}
                 </div>
                 <h3 class="font-heading font-bold text-xl mb-2 text-slate-900 dark:text-white leading-tight">${title}</h3>
                 <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mb-4">${excerpt}</p>
