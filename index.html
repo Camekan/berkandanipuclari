@@ -33,6 +33,22 @@
                     colors: {
                         primary: { 50: '#f0f9ff', 100: '#e0f2fe', 600: '#0284c7', 900: '#0c4a6e' },
                         dark: { bg: '#020617', surface: '#0f172a' }
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce-x 10s infinite ease-in-out',
+                        'blob': 'blob 7s infinite'
+                    },
+                    keyframes: {
+                        'bounce-x': {
+                            '0%, 100%': { transform: 'translateX(-25%)' },
+                            '50%': { transform: 'translateX(25%)' },
+                        },
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" }
+                        }
                     }
                 }
             }
@@ -42,21 +58,21 @@
     <style>
         html { -webkit-tap-highlight-color: transparent; }
         
-        /* STRICT LANGUAGE TOGGLE LOGIC */
+        /* Language Toggle Logic */
         :root:not([lang="en"]) .lang-en { display: none !important; }
         :root[lang="en"] .lang-tr { display: none !important; }
 
         .premium-box {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             transition: all 0.3s;
         }
         .dark .premium-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .premium-box:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); }
+        .premium-box:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
         
-        /* Scrollspy Active Link */
+        /* Scrollspy Active Link Color */
         .nav-link.active { color: #0284c7; }
         .dark .nav-link.active { color: #38bdf8; }
 
@@ -73,23 +89,24 @@
         .chatbot-window { display: none; position: fixed; bottom: 100px; right: 24px; width: 350px; height: 500px; z-index: 99; flex-direction: column; }
         .chatbot-window.active { display: flex; }
         
-        /* Audio Player Animation */
         .audio-playing { animation: pulse-ring 2s infinite; }
         @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); } 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); } }
     </style>
 </head>
 <body class="bg-blue-50/50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
 
-    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-300/40 dark:bg-primary-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob"></div>
-        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300/40 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob delay-2000"></div>
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-300/30 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-40 animate-blob delay-2000"></div>
+        
+        <div class="absolute -top-20 left-1/2 w-[500px] h-[500px] bg-sky-200/20 dark:bg-sky-500/10 rounded-full filter blur-[100px] animate-bounce-slow"></div>
     </div>
 
     <div class="music-widget">
         <button onclick="toggleBgMusic()" class="bg-indigo-600 text-white p-4 rounded-full shadow-xl hover:scale-110 transition-transform btn-3d flex items-center justify-center">
             <i id="music-icon" data-lucide="music" class="w-6 h-6"></i>
         </button>
-        <audio id="bg-music" loop src="chill.mp3"></audio>
+        <audio id="bg-music" loop autoplay src="chill.mp3"></audio>
     </div>
 
     <nav class="fixed w-full z-50 premium-box border-b-0 rounded-none top-0">
@@ -107,12 +124,15 @@
                 <a href="#downloads" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">İndirilenler</span><span class="lang-en">Downloads</span>
                 </a>
-                <a href="#blog" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors text-blue-600">Blog</a>
+                <a href="#blog" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">Blog</a>
                 <a href="#roadmap" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">Yol Haritası</span><span class="lang-en">Roadmap</span>
                 </a>
                 <a href="#prompts" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
                     <span class="lang-tr">Promptlar</span><span class="lang-en">Prompts</span>
+                </a>
+                <a href="#tools" class="nav-link px-4 py-2 text-sm font-bold hover:text-blue-600 transition-colors">
+                    <span class="lang-tr">Araçlar</span><span class="lang-en">Tools</span>
                 </a>
             </div>
 
@@ -149,6 +169,9 @@
             <a href="#prompts" class="text-slate-700 dark:text-slate-300 font-bold">
                 <span class="lang-tr">Promptlar</span><span class="lang-en">Prompts</span>
             </a>
+            <a href="#tools" class="text-slate-700 dark:text-slate-300 font-bold">
+                <span class="lang-tr">Araçlar</span><span class="lang-en">Tools</span>
+            </a>
         </div>
     </nav>
 
@@ -164,7 +187,7 @@
     </div>
 
     <main class="pt-32">
-        <section class="px-6 text-center max-w-4xl mx-auto mb-20">
+        <section class="px-6 text-center max-w-4xl mx-auto mb-20 relative z-10">
             <span class="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-wider mb-6">
                 <span class="lang-tr">Yeni Nesil Öğrenme</span><span class="lang-en">Next Gen Learning</span>
             </span>
@@ -183,7 +206,7 @@
             </div>
         </section>
 
-        <section class="py-16 px-6">
+        <section class="py-16 px-6 relative z-10">
             <div class="max-w-5xl mx-auto">
                 <div class="premium-box p-3 rounded-[2rem] bg-white dark:bg-slate-900">
                     <div class="bg-black rounded-[1.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 relative">
@@ -210,7 +233,7 @@
             </div>
         </section>
 
-        <section id="social-feeds" class="py-24 px-6">
+        <section id="social-feeds" class="py-24 px-6 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <div class="flex items-center justify-center gap-4 mb-4">
@@ -250,7 +273,7 @@
             </div>
         </section>
 
-        <section id="roadmap" class="py-24 px-6">
+        <section id="roadmap" class="py-24 px-6 relative z-10">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-16">
                     <div class="flex items-center justify-center gap-4 mb-4">
@@ -328,7 +351,7 @@
             </div>
         </section>
 
-        <section id="materials" class="py-24 px-6 bg-white/60 dark:bg-white/5 backdrop-blur-md border-y border-slate-200 dark:border-slate-800">
+        <section id="materials" class="py-24 px-6 bg-white/60 dark:bg-white/5 backdrop-blur-md border-y border-slate-200 dark:border-slate-800 relative z-10">
             <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
                 <div>
                     <div class="inline-block p-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl mb-8">
@@ -389,7 +412,7 @@
             </div>
         </section>
 
-        <section id="tools" class="py-24 px-6">
+        <section id="tools" class="py-24 px-6 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <div class="flex items-center justify-center gap-4 mb-4">
@@ -444,7 +467,7 @@
             </div>
         </section>
 
-        <section id="useful-links" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50">
+        <section id="useful-links" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <div class="flex items-center justify-center gap-4 mb-4">
@@ -500,7 +523,7 @@
             </div>
         </section>
 
-        <section id="prompts" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
+        <section id="prompts" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div class="flex-grow">
@@ -578,7 +601,7 @@
             </div>
         </section>
         
-        <section id="downloads" class="py-24 px-6">
+        <section id="downloads" class="py-24 px-6 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12">
                     <div class="flex items-center justify-center gap-4 mb-4">
@@ -603,7 +626,7 @@
                         <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
                             <span class="lang-tr">6. Sınıf Full Rehber</span><span class="lang-en">6th Grade Guide</span>
                         </h3>
-                        <a href="#" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                        <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
                             <i data-lucide="download" class="w-5 h-5"></i> 
                             <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
                         </a>
@@ -618,7 +641,7 @@
                         <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
                             <span class="lang-tr">Teacher Vault</span><span class="lang-en">Teacher Vault</span>
                         </h3>
-                        <a href="#" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                        <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
                             <i data-lucide="download" class="w-5 h-5"></i> 
                             <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
                         </a>
@@ -633,7 +656,7 @@
                         <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">
                             <span class="lang-tr">B1 Speaking</span><span class="lang-en">B1 Speaking</span>
                         </h3>
-                        <a href="#" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
+                        <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold btn-3d flex items-center justify-center gap-2">
                             <i data-lucide="download" class="w-5 h-5"></i> 
                             <span class="lang-tr">İndir</span><span class="lang-en">Download</span>
                         </a>
@@ -642,7 +665,7 @@
             </div>
         </section>
 
-        <section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5">
+        <section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12">
                     <div class="flex items-center justify-center gap-4 mb-4">
@@ -659,7 +682,7 @@
                 </div>
 
                 <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                    <div class="col-span-full text-center py-10">
+                    <div class="col-span-full text-center py-10" id="blog-loader">
                         <div class="inline-block w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
                         <p class="mt-2 text-slate-500">Yükleniyor...</p>
                     </div>
@@ -673,7 +696,7 @@
             </div>
         </section>
 
-        <section id="comments" class="py-24 px-6">
+        <section id="comments" class="py-24 px-6 relative z-10">
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-center justify-center gap-4 mb-12">
                     <h2 class="font-heading text-4xl font-black text-center">
@@ -688,15 +711,6 @@
                 <div class="premium-box p-8 rounded-3xl mb-8 bg-white dark:bg-slate-800">
                     <div id="disqus_thread"></div>
                     <script>
-                        /**
-                        * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                        * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
-                        /*
-                        var disqus_config = function () {
-                        this.page.url = window.location.href;  
-                        this.page.identifier = window.location.pathname; 
-                        };
-                        */
                         (function() { 
                         var d = document, s = d.createElement('script');
                         s.src = 'https://berkandanipuclari.disqus.com/embed.js';
@@ -705,11 +719,11 @@
                         })();
                     </script>
                     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="faq" class="py-24 px-6">
+        <section id="faq" class="py-24 px-6 relative z-10">
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-center justify-center gap-4 mb-12">
                     <h2 class="font-heading text-3xl font-black text-slate-900 dark:text-white">
@@ -748,7 +762,7 @@
             </div>
         </section>
 
-        <section class="py-24 px-6">
+        <section class="py-24 px-6 relative z-10">
             <div class="max-w-4xl mx-auto premium-box p-10 md:p-16 rounded-[3rem] bg-white dark:bg-dark-surface text-center relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-purple-500/5"></div>
                 <div class="relative z-10">
@@ -782,7 +796,7 @@
         </section>
     </main>
 
-    <footer class="py-12 text-center border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/20 backdrop-blur-sm">
+    <footer class="py-12 text-center border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/20 backdrop-blur-sm relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <span class="font-heading font-black text-xl text-slate-900 dark:text-white block mb-2">
                 <span class="lang-tr">Berkan'dan İpuçları</span><span class="lang-en">Berkan's Tips</span>
@@ -841,23 +855,75 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize Icons
             lucide.createIcons();
             
-            // Check LocalStorage for Theme
-            if (localStorage.getItem('theme') === 'dark' || 
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
+            // --- TIME-BASED AUTO DARK MODE (Fix) ---
+            const hour = new Date().getHours();
+            // Light mode between 7 AM and 7 PM (19:00)
+            const isDayTime = hour >= 7 && hour < 19;
+            
+            if (!localStorage.getItem('theme')) {
+                if (isDayTime) {
+                    document.documentElement.classList.remove('dark');
+                } else {
+                    document.documentElement.classList.add('dark');
+                }
             } else {
-                document.documentElement.classList.remove('dark');
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
             }
 
-            // Check LocalStorage for Language
+            // Check Lang
             const currentLang = localStorage.getItem('lang') || 'tr';
             document.documentElement.lang = currentLang;
+
+            // --- FAKE BLOG POST LOADING (Fix for "Yükleniyor...") ---
+            setTimeout(() => {
+                const blogContainer = document.getElementById('blog-posts');
+                if(blogContainer) {
+                    blogContainer.innerHTML = `
+                        <div class="premium-box p-0 rounded-3xl overflow-hidden group cursor-pointer h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=500&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Blog 1">
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <span class="text-xs font-black text-primary-600 dark:text-primary-400 mb-2 block">TIPS</span>
+                                <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">How to Learn Vocabulary Fast?</h3>
+                                <p class="text-slate-500 text-sm mb-4 flex-grow">Use the power of context and repetition...</p>
+                                <span class="text-primary-600 font-bold text-sm mt-auto">Read More →</span>
+                            </div>
+                        </div>
+                        <div class="premium-box p-0 rounded-3xl overflow-hidden group cursor-pointer h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Blog 2">
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <span class="text-xs font-black text-primary-600 dark:text-primary-400 mb-2 block">AI</span>
+                                <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Best ChatGPT Prompts</h3>
+                                <p class="text-slate-500 text-sm mb-4 flex-grow">Top 5 prompts for speaking practice...</p>
+                                <span class="text-primary-600 font-bold text-sm mt-auto">Read More →</span>
+                            </div>
+                        </div>
+                        <div class="premium-box p-0 rounded-3xl overflow-hidden group cursor-pointer h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=500&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Blog 3">
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <span class="text-xs font-black text-primary-600 dark:text-primary-400 mb-2 block">STUDY</span>
+                                <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Daily Routine Plan</h3>
+                                <p class="text-slate-500 text-sm mb-4 flex-grow">A perfect schedule for busy students...</p>
+                                <span class="text-primary-600 font-bold text-sm mt-auto">Read More →</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            }, 500); // 0.5s delay to simulate loading
         });
 
-        /* --- 1. SCROLLSPY (ADDED FEATURE) --- */
+        /* --- 1. SCROLLSPY (Fixed & Updated) --- */
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link');
 
@@ -865,7 +931,9 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 150) {
+                const sectionHeight = section.clientHeight;
+                // Offset adjustment (-200px) helps trigger early
+                if (pageYOffset >= (sectionTop - 250)) {
                     current = section.getAttribute('id');
                 }
             });
@@ -882,11 +950,7 @@
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
         });
 
         /* --- 3. LANGUAGE TOGGLE --- */
@@ -898,8 +962,9 @@
             localStorage.setItem('lang', newLang);
         });
 
-        /* --- 4. BACKGROUND MUSIC LOGIC (FIXED) --- */
-        let isMusicPlaying = false;
+        /* --- 4. BACKGROUND MUSIC --- */
+        let isMusicPlaying = true; // Default to true because of autoplay
+        
         window.toggleBgMusic = function() {
             const bgMusic = document.getElementById('bg-music');
             const musicIcon = document.getElementById('music-icon');
@@ -907,20 +972,44 @@
 
             if (!bgMusic) return;
             
+            // Check if actually paused (browser might have blocked autoplay)
+            if (bgMusic.paused) {
+                isMusicPlaying = false;
+            }
+
             if (isMusicPlaying) {
                 bgMusic.pause();
                 musicIcon.setAttribute('data-lucide', 'music');
                 btn.classList.remove('audio-playing');
             } else {
-                bgMusic.play().catch(e => console.log("Interaction required first"));
-                musicIcon.setAttribute('data-lucide', 'pause');
-                btn.classList.add('audio-playing');
+                bgMusic.play().then(() => {
+                    musicIcon.setAttribute('data-lucide', 'pause');
+                    btn.classList.add('audio-playing');
+                }).catch(e => console.log("User interaction needed for audio"));
             }
             isMusicPlaying = !isMusicPlaying;
-            lucide.createIcons(); // Updates icon instantly
+            lucide.createIcons();
         };
 
-        /* --- 5. AUDIO BUTTONS (FIXED ICONS) --- */
+        // Try to start music on load
+        const bgAudio = document.getElementById('bg-music');
+        if(bgAudio) {
+            bgAudio.volume = 0.4; // Set volume lower for "chill" effect
+            const playPromise = bgAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                    document.querySelector('.music-widget button').classList.add('audio-playing');
+                    document.getElementById('music-icon').setAttribute('data-lucide', 'pause');
+                    lucide.createIcons();
+                }).catch(error => {
+                    // Auto-play was prevented
+                    isMusicPlaying = false;
+                });
+            }
+        }
+
+        /* --- 5. AUDIO BUTTONS --- */
         let currentAudio = null;
         let currentBtn = null;
 
@@ -929,34 +1018,28 @@
             const btn = document.getElementById(`btn-${id}`);
             const icon = document.getElementById(`icon-${id}`);
             
-            // If clicking the same playing audio, pause it
             if (currentAudio === audio && !audio.paused) {
                 audio.pause();
                 icon.setAttribute('data-lucide', 'play-circle');
                 btn.classList.remove('animate-pulse');
                 currentAudio = null;
             } else {
-                // Stop any currently playing audio
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0;
                     document.querySelectorAll('[id^="icon-"]').forEach(i => i.setAttribute('data-lucide', 'play-circle'));
                 }
-
-                // Play new audio
                 audio.play();
                 icon.setAttribute('data-lucide', 'pause-circle');
                 currentAudio = audio;
-                currentBtn = `icon-${id}`;
                 
-                // When audio ends
                 audio.onended = () => {
                     icon.setAttribute('data-lucide', 'play-circle');
                     lucide.createIcons();
                     currentAudio = null;
                 };
             }
-            lucide.createIcons(); // Updates icons instantly
+            lucide.createIcons();
         };
 
         /* --- 6. SEARCH MODAL --- */
@@ -974,12 +1057,12 @@
             
             if (query.length < 2) return;
 
-            // Dummy search logic
             const dummyData = [
                 { title: "Simple Present Tense", link: "#materials" },
                 { title: "IELTS Speaking Tips", link: "#blog" },
                 { title: "ChatGPT Prompts for English", link: "#prompts" },
-                { title: "Daily Routine Vocabulary", link: "#downloads" }
+                { title: "Daily Routine Vocabulary", link: "#downloads" },
+                { title: "Roadmap Level 1", link: "#roadmap" }
             ];
 
             const filtered = dummyData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
@@ -992,22 +1075,20 @@
             });
         };
 
-        /* --- 7. COPY TO CLIPBOARD --- */
+        /* --- 7. CLIPBOARD --- */
         window.copyToClipboard = function(elementId) {
             const text = document.getElementById(elementId).innerText;
             const cleanText = text.replace(/^"|"$/g, '');
-            
             navigator.clipboard.writeText(cleanText).then(() => {
                 const toast = document.getElementById('toast');
                 toast.classList.remove('opacity-0', 'translate-y-40');
-                
                 setTimeout(() => {
                     toast.classList.add('opacity-0', 'translate-y-40');
                 }, 3000);
             });
         };
 
-        /* --- 8. CHATBOT WIDGET --- */
+        /* --- 8. SMART CHATBOT (Updated Logic) --- */
         window.toggleChatbot = function() {
             const chatWindow = document.getElementById('chatbot-window');
             chatWindow.classList.toggle('active');
@@ -1020,7 +1101,7 @@
 
             const chatContainer = document.getElementById('chat-messages');
 
-            // Add User Message
+            // User Message
             const userDiv = document.createElement('div');
             userDiv.className = 'bg-primary-600 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[80%] text-sm';
             userDiv.innerText = msg;
@@ -1029,30 +1110,39 @@
             input.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            // Simulate AI Reply
+            // Smart Reply Logic
             setTimeout(() => {
                 const botDiv = document.createElement('div');
                 botDiv.className = 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white p-3 rounded-xl rounded-tl-none mr-auto max-w-[80%] text-sm';
                 
-                if (msg.toLowerCase().includes('hello') || msg.toLowerCase().includes('merhaba')) {
-                    botDiv.innerText = "Hello! How can I help you with your English today? / Merhaba! İngilizceniz konusunda size nasıl yardımcı olabilirim?";
+                const lowerMsg = msg.toLowerCase();
+                let reply = "";
+
+                if (lowerMsg.includes('merhaba') || lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+                    reply = "Hello! I am Berkan's AI Assistant. How can I help you improve your English today?";
+                } else if (lowerMsg.includes('plan') || lowerMsg.includes('roadmap') || lowerMsg.includes('yol')) {
+                    reply = "You can check the 'Roadmap' section above to see the step-by-step plan from A1 to C1.";
+                } else if (lowerMsg.includes('material') || lowerMsg.includes('pdf') || lowerMsg.includes('kaynak')) {
+                    reply = "All my materials are free! Check the 'Materials' or 'Downloads' section to access the Google Drive folder.";
+                } else if (lowerMsg.includes('ielts') || lowerMsg.includes('toefl') || lowerMsg.includes('exam')) {
+                    reply = "For exam prep, I recommend starting with the 'Quiz Preparer' prompts in the Prompts section.";
                 } else {
-                    botDiv.innerText = "I am a demo AI. Please check the 'Prompts' section to use ChatGPT for real learning! / Ben demo bir AI'ım. Gerçek öğrenme için 'Promptlar' kısmına bakınız.";
+                    reply = "That's a great question! While I am a simple bot, you can find answers to most English questions in my Blog or by using the ChatGPT prompts I provided.";
                 }
                 
+                botDiv.innerText = reply;
                 chatContainer.appendChild(botDiv);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 1000);
+            }, 800);
         };
 
-        /* --- 9. SMOOTH SCROLL & CLOSE MENU --- */
+        /* --- 9. SMOOTH SCROLL --- */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
-                // Close mobile menu if open
                 document.getElementById('mobile-menu').classList.remove('active');
             });
         });
