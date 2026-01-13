@@ -1,72 +1,109 @@
 // ==========================================
-// AYARLAR
+// CONFIGURATION
 // ==========================================
 const BLOGGER_URL = "https://berkandanipuclari.blogspot.com"; 
 // ==========================================
 
-// İkonları Başlat
+// === ICONS & INIT ===
 if(typeof lucide !== 'undefined') lucide.createIcons();
+const html = document.documentElement;
 
-// ==========================================
-// 1. BLOGGER VERİSİNİ ÇEKME (JSONP YÖNTEMİ)
-// ==========================================
-function loadBloggerPosts() {
+// === 1. LANGUAGE TOGGLE (FIXED) ===
+function toggleLanguage() {
+    // Switch the attribute on the HTML tag
+    const currentLang = html.getAttribute('lang');
+    const newLang = currentLang === 'tr' ? 'en' : 'tr';
+    
+    html.setAttribute('lang', newLang);
+    localStorage.lang = newLang;
+    
+    // Update button text if needed
+    console.log("Language switched to:", newLang);
+}
+
+// Apply saved language on load
+if (localStorage.lang === 'en') {
+    html.setAttribute('lang', 'en');
+} else {
+    html.setAttribute('lang', 'tr');
+}
+
+document.getElementById('lang-toggle')?.addEventListener('click', toggleLanguage);
+
+// === 2. COPY TO CLIPBOARD (FIXED) ===
+function copyToClipboard(elementId) {
+    const textElement = document.getElementById(elementId);
+    if (!textElement) return;
+    
+    // Remove quotes if present
+    const textToCopy = textElement.innerText.replace(/^"|"$/g, '');
+    
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        // Show Toast
+        const toast = document.getElementById('toast');
+        toast.classList.remove('translate-y-40', 'opacity-0'); // Show
+        setTimeout(() => {
+            toast.classList.add('translate-y-40', 'opacity-0'); // Hide after 3s
+        }, 3000);
+    }).catch(err => console.error('Copy failed:', err));
+}
+
+// === 3. BLOGGER FEED (DYNAMIC) ===
+async function fetchBloggerPosts() {
+    const container = document.getElementById('blog-posts');
+    if (!container) return; 
+
+    // Using JSONP to avoid CORS errors
     const script = document.createElement('script');
-    // 'callback=displayBloggerPosts' parametresi, veriyi aldıktan sonra aşağıdaki fonksiyonu çalıştırır.
     script.src = `${BLOGGER_URL}/feeds/posts/default?alt=json-in-script&max-results=3&callback=displayBloggerPosts`;
-    script.onerror = function() {
-        document.getElementById('blog-posts').innerHTML = '<p class="text-center text-red-500 col-span-full">Blog verisi yüklenirken hata oluştu. (Blogger erişilemiyor)</p>';
+    script.onerror = () => {
+        container.innerHTML = '<p class="text-center text-red-500 col-span-full">Blog verisi yüklenemedi.</p>';
     };
     document.body.appendChild(script);
 }
 
-// Bu fonksiyon otomatik olarak çalışacak (Blogger'dan cevap gelince)
+// Callback function for Blogger
 window.displayBloggerPosts = function(data) {
     const container = document.getElementById('blog-posts');
     if (!container) return;
 
     if (!data.feed || !data.feed.entry || data.feed.entry.length === 0) {
-        container.innerHTML = '<p class="text-center text-slate-500 col-span-full">Henüz yazı bulunmuyor.</p>';
+        container.innerHTML = '<p class="text-center text-slate-500 col-span-full">Henüz yazı yok.</p>';
         return;
     }
 
     container.innerHTML = data.feed.entry.map(post => {
-        // Başlık
         const title = post.title.$t;
-        
-        // Tarih ve Saat (Zaman Eklendi)
         const dateObj = new Date(post.published.$t);
         const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-        const timeStr = dateObj.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-
-        // Link
+        
+        // Find Link
         const link = post.link.find(l => l.rel === 'alternate').href;
 
-        // Resim (Yüksek Kalite)
+        // Find Image (High Res)
         let img = 'https://images.unsplash.com/photo-1499750310159-52f8f6032d59?w=800&q=80';
         if (post.media$thumbnail) {
             img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/');
         }
 
-        // Kısa Özet
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = post.content ? post.content.$t : (post.summary ? post.summary.$t : '');
-        const excerpt = (tempDiv.textContent || tempDiv.innerText || '').substring(0, 100) + '...';
+        // Create Excerpt
+        const div = document.createElement('div');
+        div.innerHTML = post.content ? post.content.$t : (post.summary ? post.summary.$t : '');
+        const excerpt = (div.textContent || div.innerText || '').substring(0, 100) + '...';
 
         return `
-            <article class="premium-box p-6 rounded-3xl flex flex-col h-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:shadow-xl transition-all" onclick="window.open('${link}', '_blank')">
+            <article class="premium-box p-6 rounded-3xl flex flex-col h-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:shadow-xl transition-all group" onclick="window.open('${link}', '_blank')">
                 <div class="h-48 bg-gray-200 rounded-2xl mb-4 overflow-hidden relative">
-                    <img src="${img}" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
+                    <img src="${img}" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500">
                     <div class="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-bold">Blogger</div>
                 </div>
-                <div class="flex items-center gap-3 text-xs font-bold text-slate-400 mb-3">
-                    <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${dateStr}</span>
-                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${timeStr}</span>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3">
+                    <i data-lucide="calendar" class="w-3 h-3"></i> ${dateStr}
                 </div>
                 <h3 class="font-heading font-bold text-xl mb-2 text-slate-900 dark:text-white leading-tight">${title}</h3>
                 <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mb-4">${excerpt}</p>
                 <button class="text-blue-600 font-bold hover:underline text-left mt-auto flex items-center gap-1">
-                    Oku <i data-lucide="external-link" class="w-4 h-4"></i>
+                    <span class="lang-tr">Devamını Oku</span><span class="lang-en">Read More</span> <i data-lucide="external-link" class="w-4 h-4"></i>
                 </button>
             </article>
         `;
@@ -75,94 +112,58 @@ window.displayBloggerPosts = function(data) {
     if(typeof lucide !== 'undefined') lucide.createIcons();
 };
 
-// ==========================================
-// DİĞER FONKSİYONLAR
-// ==========================================
+// === 4. YOUTUBE AUTO UPDATE ===
+async function fetchLatestVideo() {
+    try {
+        const response = await fetch("https://berkan-ai-backend.lanselam.workers.dev/");
+        const data = await response.json();
+        if (data.videoId) {
+            const iframe = document.getElementById('latest-video');
+            if (iframe) iframe.src = `https://www.youtube.com/embed/${data.videoId}`;
+        }
+    } catch (e) { console.error(e); }
+}
 
-// Search
-const searchData = [
-    { title: '6. Sınıf Rehberi', url: '#downloads', type: 'Materyal' },
-    { title: 'Yol Haritası', url: '#roadmap', type: 'Bölüm' },
-    { title: 'Blog', url: BLOGGER_URL, type: 'Link' }
-];
-
+// === 5. SEARCH & UI ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
-    if(modal.classList.contains('active')) document.getElementById('search-input').focus();
+    if (modal.classList.contains('active')) setTimeout(() => document.getElementById('search-input').focus(), 100);
+    else document.getElementById('search-input').value = '';
 }
 
-function performSearch(query) {
-    const res = document.getElementById('search-results');
-    if(!query) { res.innerHTML = ''; return; }
-    
-    const filtered = searchData.filter(i => i.title.toLowerCase().includes(query.toLowerCase()));
-    if(filtered.length === 0) { res.innerHTML = '<p class="text-slate-500">Sonuç yok.</p>'; return; }
-    
-    res.innerHTML = filtered.map(i => `
-        <a href="${i.url}" class="block p-3 bg-slate-100 dark:bg-slate-800 rounded-xl mb-2">
-            <div class="font-bold dark:text-white">${i.title}</div>
-            <div class="text-xs text-slate-500">${i.type}</div>
-        </a>
-    `).join('');
-}
-
-// Chatbot
-async function sendMessage() {
-    const input = document.getElementById('chat-input');
-    const msg = input.value.trim();
-    if(!msg) return;
-    
-    const box = document.getElementById('chat-messages');
-    box.innerHTML += `<div class="text-right mb-2"><span class="bg-blue-600 text-white px-3 py-2 rounded-xl inline-block">${msg}</span></div>`;
-    input.value = '';
-    box.scrollTop = box.scrollHeight;
-
-    try {
-        const res = await fetch("https://berkan-ai-backend.lanselam.workers.dev/", {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: msg})
-        });
-        const data = await res.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Hata oluştu.";
-        box.innerHTML += `<div class="mb-2"><span class="bg-slate-200 dark:bg-slate-700 px-3 py-2 rounded-xl inline-block dark:text-white">${reply}</span></div>`;
-        box.scrollTop = box.scrollHeight;
-    } catch(e) { console.error(e); }
-}
-
-// İndirilenler Listesi
-function renderDownloads() {
-    const list = [
-        { title: '6. Sınıf Paketi', size: '2 MB' },
-        { title: 'Teacher Vault', size: '45 MB' },
-        { title: 'B1 Speaking', size: '1.2 MB' }
-    ];
-    document.getElementById('downloads-grid').innerHTML = list.map(i => `
-        <div class="premium-box p-6 rounded-2xl bg-white dark:bg-slate-800">
-            <div class="flex justify-between mb-4"><i data-lucide="file-text" class="text-blue-600"></i> <span class="text-xs font-bold bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">${i.size}</span></div>
-            <h3 class="font-bold text-lg mb-2 dark:text-white">${i.title}</h3>
-            <button class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700">İndir</button>
-        </div>
-    `).join('');
-    if(typeof lucide !== 'undefined') lucide.createIcons();
-}
-
-// Başlangıç
+// === INIT ===
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Blogları Yükle
-    loadBloggerPosts();
+    // Init functions
+    fetchBloggerPosts();
+    fetchLatestVideo();
     
-    // 2. İndirilenleri Yükle
-    renderDownloads();
-    
-    // 3. Tema Ayarı
-    if(localStorage.theme === 'dark') document.documentElement.classList.add('dark');
+    // Theme Init
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && new Date().getHours() >= 20)) {
+        html.classList.add('dark');
+    }
     document.getElementById('theme-toggle').onclick = () => {
-        document.documentElement.classList.toggle('dark');
-        localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
     };
-    
-    // 4. Chat Enter Tuşu
-    document.getElementById('chat-input').addEventListener('keypress', e => {
-        if(e.key === 'Enter') sendMessage();
+
+    // Chatbot Toggle
+    const chatWindow = document.getElementById('chatbot-window');
+    document.querySelectorAll('.chatbot-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => chatWindow.classList.toggle('active'));
     });
+
+    if(typeof lucide !== 'undefined') lucide.createIcons();
 });
+
+// Audio Helper
+function toggleAudio(id) {
+    const audio = document.getElementById('audio-' + id);
+    if(audio.paused) {
+        document.querySelectorAll('audio').forEach(a => { if(a !== audio) { a.pause(); a.currentTime = 0; } });
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
