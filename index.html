@@ -23,6 +23,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         tailwind.config = {
@@ -85,7 +86,7 @@
         <button onclick="toggleBgMusic()" class="bg-indigo-600 text-white p-4 rounded-full shadow-xl hover:scale-110 transition-transform btn-3d flex items-center justify-center">
             <i id="music-icon" data-lucide="music" class="w-6 h-6"></i>
         </button>
-        <audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3"></audio>
+        <div id="youtube-player" style="display:none;"></div>
     </div>
 
     <nav class="fixed w-full z-50 premium-box border-b-0 rounded-none top-0">
@@ -828,6 +829,224 @@
         </span>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Icons
+            lucide.createIcons();
+            
+            // Check LocalStorage for Theme
+            if (localStorage.getItem('theme') === 'dark' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            // Check LocalStorage for Language
+            const currentLang = localStorage.getItem('lang') || 'tr';
+            document.documentElement.lang = currentLang;
+            updateLanguageDisplay(currentLang);
+        });
+
+        /* --- THEME TOGGLE --- */
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        /* --- LANGUAGE TOGGLE --- */
+        const langBtn = document.getElementById('lang-toggle');
+        function updateLanguageDisplay(lang) {
+            document.documentElement.lang = lang;
+        }
+
+        langBtn.addEventListener('click', () => {
+            const current = document.documentElement.lang;
+            const newLang = current === 'tr' ? 'en' : 'tr';
+            updateLanguageDisplay(newLang);
+            localStorage.setItem('lang', newLang);
+        });
+
+        /* --- YOUTUBE MUSIC PLAYER --- */
+        // IMPORTANT: CHANGE THE VIDEO ID HERE
+        const YOUTUBE_VIDEO_ID = 'jfKfPfyJRdk'; // <-- PASTE YOUR YOUTUBE VIDEO ID HERE
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: YOUTUBE_VIDEO_ID,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': YOUTUBE_VIDEO_ID // Required for loop to work
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+        }
+
+        let isMusicPlaying = false;
+        window.toggleBgMusic = function() {
+            const musicIcon = document.getElementById('music-icon');
+            const musicBtn = document.querySelector('.music-widget button');
+
+            if (isMusicPlaying) {
+                player.pauseVideo();
+                musicIcon.setAttribute('data-lucide', 'music');
+                musicBtn.classList.remove('audio-playing');
+            } else {
+                player.playVideo();
+                musicIcon.setAttribute('data-lucide', 'pause');
+                musicBtn.classList.add('audio-playing');
+            }
+            isMusicPlaying = !isMusicPlaying;
+            lucide.createIcons();
+        };
+
+        /* --- AUDIO BUTTONS (Small play circles) --- */
+        let currentAudio = null;
+        let currentBtn = null;
+
+        window.toggleAudio = function(id) {
+            const audio = document.getElementById(`audio-${id}`);
+            const btn = document.getElementById(`btn-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            // If clicking the same playing audio, pause it
+            if (currentAudio === audio && !audio.paused) {
+                audio.pause();
+                icon.setAttribute('data-lucide', 'play-circle');
+                currentAudio = null;
+            } else {
+                // Stop any currently playing audio
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                    document.querySelectorAll('[id^="icon-"]').forEach(i => i.setAttribute('data-lucide', 'play-circle'));
+                }
+
+                // Play new audio
+                audio.play();
+                icon.setAttribute('data-lucide', 'pause-circle');
+                currentAudio = audio;
+                currentBtn = `icon-${id}`;
+                
+                audio.onended = () => {
+                    icon.setAttribute('data-lucide', 'play-circle');
+                    currentAudio = null;
+                };
+            }
+            lucide.createIcons();
+        };
+
+        /* --- SEARCH MODAL --- */
+        window.toggleSearch = function() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('active');
+            if (modal.classList.contains('active')) {
+                document.getElementById('search-input').focus();
+            }
+        };
+
+        window.performSearch = function(query) {
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = '';
+            
+            if (query.length < 2) return;
+
+            const dummyData = [
+                { title: "Simple Present Tense", link: "#materials" },
+                { title: "IELTS Speaking Tips", link: "#blog" },
+                { title: "ChatGPT Prompts for English", link: "#prompts" },
+                { title: "Daily Routine Vocabulary", link: "#downloads" }
+            ];
+
+            const filtered = dummyData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl cursor-pointer';
+                div.innerHTML = `<a href="${item.link}" class="font-bold text-slate-700 dark:text-slate-300 block">${item.title}</a>`;
+                resultsContainer.appendChild(div);
+            });
+        };
+
+        /* --- COPY TO CLIPBOARD --- */
+        window.copyToClipboard = function(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const cleanText = text.replace(/^"|"$/g, '');
+            
+            navigator.clipboard.writeText(cleanText).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0', 'translate-y-40');
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-40');
+                }, 3000);
+            });
+        };
+
+        /* --- CHATBOT WIDGET --- */
+        window.toggleChatbot = function() {
+            const chatWindow = document.getElementById('chatbot-window');
+            chatWindow.classList.toggle('active');
+        };
+
+        window.sendMessage = function() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value;
+            if (!msg) return;
+
+            const chatContainer = document.getElementById('chat-messages');
+
+            // Add User Message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'bg-primary-600 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[80%] text-sm';
+            userDiv.innerText = msg;
+            chatContainer.appendChild(userDiv);
+
+            input.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Simulate AI Reply
+            setTimeout(() => {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white p-3 rounded-xl rounded-tl-none mr-auto max-w-[80%] text-sm';
+                
+                if (msg.toLowerCase().includes('hello') || msg.toLowerCase().includes('merhaba')) {
+                    botDiv.innerText = "Hello! How can I help you with your English today? / Merhaba! İngilizceniz konusunda size nasıl yardımcı olabilirim?";
+                } else {
+                    botDiv.innerText = "I am a demo AI. Please check the 'Prompts' section to use ChatGPT for real learning! / Ben demo bir AI'ım. Gerçek öğrenme için 'Promptlar' kısmına bakınız.";
+                }
+                
+                chatContainer.appendChild(botDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 1000);
+        };
+
+        /* --- SMOOTH SCROLL --- */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                document.getElementById('mobile-menu').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
