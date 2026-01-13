@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 <head>
@@ -7,6 +6,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+
   gtag('config', 'G-9ZXGHW6B7G');
 </script>
     <meta charset="UTF-8">
@@ -18,22 +18,18 @@
     <meta name="author" content="Berkan">
     <meta property="og:title" content="Berkan'dan İpuçları | English & AI">
     <meta property="og:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
-    <meta property="og:image" content="https://imgur.com/a/c6kUNMS">
-    <meta property="og:url" content="https://example.com">
-    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://imgur.com/a/c6kUNMS"> <meta property="og:url" content="https://example.com"> <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Berkan'dan İpuçları | English & AI">
     <meta name="twitter:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin.">
-    <meta name="twitter:image" content="https://imgur.com/a/c6kUNMS">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="twitter:image" content="https://imgur.com/a/c6kUNMS"> <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX"></script>
-    <script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX"></script> <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -76,6 +72,7 @@
     </script>
     
     <style>
+        /* Existing styles remain the same */
         html { -webkit-tap-highlight-color: transparent; }
         body { font-weight: 500; }
 
@@ -158,6 +155,7 @@
         .delay-200 { animation-delay: 0.2s; }
         .delay-2000 { animation-delay: 2s; }
 
+        /* --- UPDATED LANGUAGE SWITCHING LOGIC --- */
         :root:not([lang="en"]) .lang-en { 
             display: none !important; 
         }
@@ -165,6 +163,7 @@
             display: none !important; 
         }
 
+        /* --- AUDIO PREVIEW STYLES --- */
         .audio-playing {
             animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
@@ -280,13 +279,13 @@
     </div>
 
     <nav class="fixed w-full z-50 premium-box border-b-0 rounded-none top-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-2 group z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group z-50">
                 <div class="bg-gradient-to-br from-primary-600 to-primary-700 text-white p-2.5 rounded-xl shadow-lg shadow-primary-500/30 group-hover:rotate-12 transition-transform duration-300">
-                    <i data-lucide="sparkles" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
                 </div>
-                <span class="font-heading font-extrabold text-sm sm:text-xl tracking-tight text-slate-900 dark:text-white lang-tr logo-text">Berkan'dan İpuçları</span>
-                <span class="font-heading font-extrabold text-sm sm:text-xl tracking-tight text-slate-900 dark:text-white lang-en logo-text">Berkan's Tips</span>
+                <span class="font-heading font-extrabold text-xl tracking-tight text-slate-900 dark:text-white lang-tr">Berkan'dan İpuçları</span>
+                <span class="font-heading font-extrabold text-xl tracking-tight text-slate-900 dark:text-white lang-en">Berkan's Tips</span>
             </a>
 
             <div class="hidden md:flex items-center gap-2 p-1.5 bg-white/80 dark:bg-white/5 rounded-full border border-slate-200 dark:border-white/5 backdrop-blur-md shadow-sm">
@@ -303,29 +302,28 @@
                 <a href="#tools" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Tools</a>
             </div>
 
-            <div class="flex items-center gap-2 z-50">
-                <button onclick="toggleSearch()" class="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
-                    <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            <div class="flex items-center gap-3 z-50">
+                <button onclick="toggleSearch()" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                    <i data-lucide="search" class="w-5 h-5"></i>
                 </button>
-                <button id="theme-toggle" class="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
-                    <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
-                    <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden"></i>
+                <button id="theme-toggle" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
                 </button>
-                <button id="lang-toggle" class="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d text-xs sm:text-sm font-bold">
+                <button id="lang-toggle" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
                     <span class="lang-tr">EN</span>
                     <span class="lang-en">TR</span>
                 </button>
-                <button id="mobile-menu-toggle" class="md:hidden p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
-                    <i data-lucide="menu" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                <button id="mobile-menu-toggle" class="md:hidden p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
-                <a href="https://www.youtube.com/@berkandanipucları" target="_blank" class="hidden sm:flex bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 shadow-xl shadow-slate-900/20 btn-3d">
-                    <i data-lucide="youtube" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 px-6 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-xl shadow-slate-900/20 btn-3d">
+                    <i data-lucide="youtube" class="w-4 h-4"></i>
                     <span class="lang-tr">Abone Ol</span>
                     <span class="lang-en">Subscribe</span>
                 </a>
             </div>
         </div>
-        
         <div id="mobile-menu" class="mobile-menu">
             <a href="#materials" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Materyaller</a>
             <a href="#materials" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Materials</a>
@@ -365,74 +363,335 @@
     </div>
 
     <main class="relative z-10">
-        <section class="pt-32 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6 text-center max-w-5xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider mb-6 sm:mb-8 animate-float lang-tr">
+        <section class="pt-40 pb-20 px-6 text-center max-w-5xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider mb-8 animate-float lang-tr">
                 <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
                 Yeni Nesil Öğrenme
             </div>
-            <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider mb-6 sm:mb-8 animate-float lang-en">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider mb-8 animate-float lang-en">
                 <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
                 Next Generation Learning
             </div>
             
-            <h1 class="hero-title font-heading text-5xl sm:text-6xl md:text-8xl font-black mb-6 sm:mb-8 leading-tight tracking-tight text-slate-900 dark:text-white lang-tr">
+            <h1 class="font-heading text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight text-slate-900 dark:text-white lang-tr">
                 İngilizceyi <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-400 dark:to-indigo-400">Süperleştir.</span>
             </h1>
-            <h1 class="hero-title font-heading text-5xl sm:text-6xl md:text-8xl font-black mb-6 sm:mb-8 leading-tight tracking-tight text-slate-900 dark:text-white lang-en">
+            <h1 class="font-heading text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight text-slate-900 dark:text-white lang-en">
                 Supercharge <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-400 dark:to-indigo-400">English.</span>
             </h1>
             
-            <p class="text-lg sm:text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 lang-tr">
+            <p class="text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed lang-tr">
                 Klasik yöntemleri unut. <span class="text-slate-900 dark:text-white font-extrabold border-b-2 border-primary-500">Yapay zeka</span> ve benim hazırladığım özel materyallerle hedefine ışık hızında ulaş.
             </p>
-            <p class="text-lg sm:text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 lang-en">
+            <p class="text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed lang-en">
                 Forget classic methods. Reach your goal at light speed with <span class="text-slate-900 dark:text-white font-extrabold border-b-2 border-primary-500">AI</span> and my special materials.
             </p>
             
-            <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
-                <a href="#materials" class="group bg-primary-600 hover:bg-primary-500 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-primary-500/30 btn-3d lang-tr">
-                    <i data-lucide="folder-open" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#materials" class="group bg-primary-600 hover:bg-primary-500 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary-500/30 btn-3d lang-tr">
+                    <i data-lucide="folder-open" class="w-6 h-6"></i>
                     Öğretmen Kasası
                 </a>
-                <a href="#materials" class="group bg-primary-600 hover:bg-primary-500 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-primary-500/30 btn-3d lang-en">
-                    <i data-lucide="folder-open" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                <a href="#materials" class="group bg-primary-600 hover:bg-primary-500 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary-500/30 btn-3d lang-en">
+                    <i data-lucide="folder-open" class="w-6 h-6"></i>
                     Teacher's Vault
                 </a>
-                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg btn-3d lang-tr">
-                    <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-lg btn-3d lang-tr">
+                    <i data-lucide="map" class="w-6 h-6"></i>
                     Yol Haritası
                 </a>
-                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg btn-3d lang-en">
-                    <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-lg btn-3d lang-en">
+                    <i data-lucide="map" class="w-6 h-6"></i>
                     Roadmap
                 </a>
             </div>
         </section>
-<section id="downloads" class="py-24 px-6">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="font-heading text-4xl font-black mb-4 lang-tr">Materyalleri İndir</h2>
-            <h2 class="font-heading text-4xl font-black mb-4 lang-en">Download Materials</h2>
-        </div>
+
+        <section class="py-16 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="premium-box p-3 rounded-[2rem] bg-white dark:bg-slate-900">
+                    <div class="bg-black rounded-[1.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 relative">
+                        <div class="aspect-video w-full">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" loading="lazy" title="Son Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-8 bg-white dark:bg-dark-surface flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2 lang-tr">
+                                    <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-lg uppercase tracking-wide">Yeni Video</span>
+                                    <span class="text-slate-500 font-semibold text-xs">12 DAKİKA</span>
+                                </div>
+                                <div class="flex items-center gap-3 mb-2 lang-en">
+                                    <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-lg uppercase tracking-wide">New Video</span>
+                                    <span class="text-slate-500 font-semibold text-xs">12 MINUTES</span>
+                                </div>
+                                <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-tr">İngilizce Nasıl Çalışılmaz?</h3>
+                                <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-en">How Not to Study English?</h3>
+                                <p class="text-slate-600 dark:text-slate-400 mt-2 font-medium lang-tr">Yapay zeka ile hatalarınızı analiz edip düzeltmenin yolları.</p>
+                                <p class="text-slate-600 dark:text-slate-400 mt-2 font-medium lang-en">Ways to analyze and correct your mistakes with AI.</p>
+                            </div>
+                            <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="p-4 bg-slate-100 dark:bg-slate-800 rounded-2xl text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors btn-3d border border-slate-200 dark:border-slate-700">
+                                <i data-lucide="external-link" class="w-6 h-6"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="materials" class="py-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="font-heading text-4xl font-black mb-4 lang-tr">Materyalleri İndir</h2>
+                    <h2 class="font-heading text-4xl font-black mb-4 lang-en">Download Materials</h2>
+                </div>
        
-        <div class="flex flex-wrap justify-center gap-3 mb-8">
-            <button onclick="filterDownloads('all')" class="filter-btn active px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
-                <span class="lang-tr">Tümü</span><span class="lang-en">All</span>
-            </button>
-            <button onclick="filterDownloads('beginner')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">A1-A2</button>
-            <button onclick="filterDownloads('intermediate')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">B1-B2</button>
-            <button onclick="filterDownloads('advanced')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">C1-C2</button>
-            <button onclick="filterDownloads('teacher')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
-                <span class="lang-tr">Öğretmen</span><span class="lang-en">Teacher</span>
-            </button>
-        </div>
+                <div class="flex flex-wrap justify-center gap-3 mb-8">
+                    <button onclick="filterDownloads('all')" class="filter-btn active px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
+                        <span class="lang-tr">Tümü</span><span class="lang-en">All</span>
+                    </button>
+                    <button onclick="filterDownloads('beginner')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">A1-A2</button>
+                    <button onclick="filterDownloads('intermediate')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">B1-B2</button>
+                    <button onclick="filterDownloads('advanced')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">C1-C2</button>
+                    <button onclick="filterDownloads('teacher')" class="filter-btn px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
+                        <span class="lang-tr">Öğretmen</span><span class="lang-en">Teacher</span>
+                    </button>
+                </div>
        
-        <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </div>
-</section>
-<section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5">
+                <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </section>
+
+        <section id="social-feeds" class="py-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <h2 class="font-heading text-4xl md:text-5xl font-black text-slate-900 dark:text-white lang-tr">Sosyal Medya Akışları</h2>
+                        <h2 class="font-heading text-4xl md:text-5xl font-black text-slate-900 dark:text-white lang-en">Social Media Feeds</h2>
+                        
+                        <button onclick="toggleAudio('1')" class="bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 p-2.5 rounded-full hover:bg-primary-200 transition-all flex-shrink-0" id="btn-1">
+                            <i id="icon-1" data-lucide="play-circle" class="w-7 h-7"></i>
+                        </button>
+                        <audio id="audio-1" src="1.mp3"></audio>
+                        </div>
+
+                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400 lang-tr">YouTube ve Instagram'dan en son güncellemeler.</p>
+                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400 lang-en">Latest updates from YouTube and Instagram.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-tr">YouTube Videoları</h3>
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-en">YouTube Videos</h3>
+                        <div class="aspect-video">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=user_uploads&list=berkandanipuclar%C4%B1" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-tr">Instagram Gönderileri</h3>
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white mb-4 lang-en">Instagram Posts</h3>
+                        <p class="text-slate-600 dark:text-slate-400 lang-tr">Instagram akışı buraya eklenecek. (Üçüncü taraf widget kullanın)</p>
+                        <p class="text-slate-600 dark:text-slate-400 lang-en">Instagram feed to be added here. (Use third-party widget)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-24 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <h2 class="font-heading text-4xl md:text-5xl font-black text-slate-900 dark:text-white lang-tr">Öğrenme Yol Haritası</h2>
+                        <h2 class="font-heading text-4xl md:text-5xl font-black text-slate-900 dark:text-white lang-en">Learning Roadmap</h2>
+
+                        <button onclick="toggleAudio('2')" class="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 p-2.5 rounded-full hover:bg-purple-200 transition-all flex-shrink-0" id="btn-2">
+                            <i id="icon-2" data-lucide="play-circle" class="w-7 h-7"></i>
+                        </button>
+                        <audio id="audio-2" src="2.mp3"></audio>
+                        </div>
+
+                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400 lang-tr">Sıfırdan zirveye giden stratejik plan.</p>
+                    <p class="text-lg font-medium text-slate-600 dark:text-slate-400 lang-en">Strategic plan from zero to peak.</p>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-slate-200 dark:bg-slate-800 rounded-full"></div>
+                    
+                    <div class="relative flex flex-col md:flex-row items-center justify-between mb-24 group">
+                        <div class="md:w-5/12 order-2 md:order-1 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                            <span class="text-primary-600 font-black text-sm tracking-widest uppercase mb-3 block lang-tr">Seviye 1</span>
+                            <span class="text-primary-600 font-black text-sm tracking-widest uppercase mb-3 block lang-en">Level 1</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-tr">Başlangıç (A1-A2)</h3>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-en">Beginner (A1-A2)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-tr">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin.</p>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-en">Basic grammar and daily words. Finish the "Beginner" folder in Drive.</p>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center font-black text-xl shadow-lg border-4 border-white dark:border-dark-bg z-10 -mt-8 md:mt-0">1</div>
+                        <div class="md:w-5/12 order-1 md:order-2 hidden md:block"></div>
+                    </div>
+
+                    <div class="relative flex flex-col md:flex-row-reverse items-center justify-between mb-24 group">
+                        <div class="md:w-5/12 order-2 md:order-2 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                            <span class="text-blue-600 font-black text-sm tracking-widest uppercase mb-3 block lang-tr">Seviye 2</span>
+                            <span class="text-blue-600 font-black text-sm tracking-widest uppercase mb-3 block lang-en">Level 2</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-tr">Orta (B1-B2)</h3>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-en">Intermediate (B1-B2)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-tr">Konuşma pratiği ve okuma. AI ile konuşma simülasyonları yapın.</p>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-en">Speaking practice and reading. Do conversation simulations with AI.</p>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-black text-xl shadow-lg border-4 border-white dark:border-dark-bg z-10 -mt-8 md:mt-0">2</div>
+                        <div class="md:w-5/12 order-1 md:order-1 hidden md:block"></div>
+                    </div>
+
+                    <div class="relative flex flex-col md:flex-row items-center justify-between mb-24 group">
+                        <div class="md:w-5/12 order-2 md:order-1 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                            <span class="text-green-600 font-black text-sm tracking-widest uppercase mb-3 block lang-tr">Seviye 3</span>
+                            <span class="text-green-600 font-black text-sm tracking-widest uppercase mb-3 block lang-en">Level 3</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-tr">İleri (C1-C2)</h3>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-en">Advanced (C1-C2)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-tr">Akıcı konuşma ve yazma. Gerçek hayat senaryoları ile pratik.</p>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-en">Fluent speaking and writing. Practice with real-life scenarios.</p>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center font-black text-xl shadow-lg border-4 border-white dark:border-dark-bg z-10 -mt-8 md:mt-0">3</div>
+                        <div class="md:w-5/12 order-1 md:order-2 hidden md:block"></div>
+                    </div>
+                </div>
+
+                <div id="tools" class="grid md:grid-cols-5 gap-6 mt-16">
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center text-green-600 dark:text-green-400 font-black text-3xl shadow-sm border border-green-100 dark:border-green-900 group-hover:scale-110 transition-transform">C</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">ChatGPT</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">AI Asistan</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">AI Assistant</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center text-orange-600 dark:text-orange-400 font-black text-3xl shadow-sm border border-orange-100 dark:border-orange-900 group-hover:scale-110 transition-transform">C</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">Claude</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">AI Asistan</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">AI Assistant</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-3xl shadow-sm border border-blue-100 dark:border-blue-900 group-hover:scale-110 transition-transform">Q</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">Quizlet</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">Kelime Kartları</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">Flashcards</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-purple-50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-600 dark:text-purple-400 font-black text-3xl shadow-sm border border-purple-100 dark:border-purple-900 group-hover:scale-110 transition-transform">D</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">DeepL</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">Çeviri</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">Translation</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center text-red-600 dark:text-red-400 font-black text-3xl shadow-sm border border-red-100 dark:border-red-900 group-hover:scale-110 transition-transform">Y</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">YouTube</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">Video</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">Video</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="prompts" class="py-24 px-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-4">
+                            <div>
+                                <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white lang-tr">Prompt Kütüphanesi</h2>
+                                <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white lang-en">Prompt Library</h2>
+                            </div>
+                            <button onclick="toggleAudio('5')" class="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 p-2.5 rounded-full hover:bg-orange-200 transition-all flex-shrink-0" id="btn-5">
+                                <i id="icon-5" data-lucide="play-circle" class="w-7 h-7"></i>
+                            </button>
+                            <audio id="audio-5" src="5.mp3"></audio>
+                            </div>
+                        <p class="font-medium text-slate-600 dark:text-slate-400 mt-2 lang-tr">AI asistanını İngilizce öğretmenine dönüştür.</p>
+                        <p class="font-medium text-slate-600 dark:text-slate-400 mt-2 lang-en">Turn AI assistant into an English teacher.</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl border border-purple-100 dark:border-purple-900">
+                                <i data-lucide="calendar" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-xs font-black rounded-full lang-tr">PLANLAMA</span>
+                            <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-xs font-black rounded-full lang-en">PLANNING</span>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Ders Planı Oluşturucu</h3>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Lesson Plan Creator</h3>
+                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
+                            "Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'..."
+                        </div>
+                        <button onclick="copyToClipboard('p1')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
+                            Kopyala
+                        </button>
+                        <button onclick="copyToClipboard('p1')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
+                            Copy
+                        </button>
+                        <p id="p1" class="hidden">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
+                    </div>
+
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900">
+                                <i data-lucide="pen-tool" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-black rounded-full lang-tr">SINAV</span>
+                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-black rounded-full lang-en">EXAM</span>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Quiz Hazırlayıcı</h3>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Quiz Preparer</h3>
+                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
+                            "Generate 5 multiple choice reading comprehension questions based on the text below..."
+                        </div>
+                        <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
+                            Kopyala
+                        </button>
+                        <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
+                            Copy
+                        </button>
+                        <p id="p2" class="hidden">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
+                    </div>
+
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-2xl border border-orange-100 dark:border-orange-900">
+                                <i data-lucide="mic" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-black rounded-full lang-tr">SPEAKING</span>
+                            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-black rounded-full lang-en">SPEAKING</span>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Konuşma Partneri</h3>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Conversation Partner</h3>
+                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
+                            "Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."
+                        </div>
+                        <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
+                            Kopyala
+                        </button>
+                        <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
+                            Copy
+                        </button>
+                        <p id="p3" class="hidden">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="font-heading text-4xl font-black mb-4">Blog</h2>
@@ -442,7 +701,43 @@
         <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </div>
 </section>
-<section id="comments" class="py-24 px-6">
+
+        <section id="faq" class="py-24 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-center gap-4 mb-12">
+                    <h2 class="font-heading text-3xl font-black text-slate-900 dark:text-white lang-tr">Sıkça Sorulan Sorular</h2>
+                    <h2 class="font-heading text-3xl font-black text-slate-900 dark:text-white lang-en">Frequently Asked Questions</h2>
+                    
+                    <button onclick="toggleAudio('6')" class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-2.5 rounded-full hover:bg-red-200 transition-all flex-shrink-0" id="btn-6">
+                        <i id="icon-6" data-lucide="play-circle" class="w-7 h-7"></i>
+                    </button>
+                    <audio id="audio-6" src="6.mp3"></audio>
+                    </div>
+                
+                <div class="space-y-4">
+                    <details class="group premium-box p-6 rounded-3xl bg-white dark:bg-dark-surface cursor-pointer" open>
+                        <summary class="flex justify-between items-center font-bold text-lg text-slate-900 dark:text-white select-none">
+                            <span class="lang-tr">Materyaller ücretsiz mi?</span>
+                            <span class="lang-en">Are the materials free?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-tr">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir.</p>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-en">Yes, all shared lesson plans and prompts are completely free.</p>
+                    </details>
+                    <details class="group premium-box p-6 rounded-3xl bg-white dark:bg-dark-surface cursor-pointer">
+                        <summary class="flex justify-between items-center font-bold text-lg text-slate-900 dark:text-white select-none">
+                            <span class="lang-tr">Özel ders veriyor musunuz?</span>
+                            <span class="lang-en">Do you give private lessons?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-tr">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri için kontenjan açabiliyorum.</p>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-en">Currently, due to my internship workload, I can only open slots for online group lessons.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="comments" class="py-24 px-6">
     <div class="max-w-4xl mx-auto">
         <h2 class="font-heading text-4xl font-black mb-12 text-center lang-tr">Yorumlar</h2>
         <h2 class="font-heading text-4xl font-black mb-12 text-center lang-en">Comments</h2>
@@ -460,7 +755,69 @@
         <div id="comments-list" class="space-y-4"></div>
     </div>
 </section>
+
+        <section class="py-24 px-6">
+            <div class="max-w-4xl mx-auto premium-box p-10 md:p-16 rounded-[3rem] bg-white dark:bg-dark-surface text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-purple-500/5"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex p-4 bg-slate-50 dark:bg-slate-800 rounded-full shadow-sm mb-6 border border-slate-100 dark:border-slate-700">
+                        <i data-lucide="mail" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <h2 class="font-heading text-3xl md:text-4xl font-black text-slate-900 dark:text-white lang-tr">İpuçlarını Kaçırma</h2>
+                        <h2 class="font-heading text-3xl md:text-4xl font-black text-slate-900 dark:text-white lang-en">Don't Miss the Tips</h2>
+                        
+                        <button onclick="toggleAudio('7')" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-full hover:bg-indigo-200 transition-all flex-shrink-0" id="btn-7">
+                            <i id="icon-7" data-lucide="play-circle" class="w-8 h-8"></i>
+                        </button>
+                        <audio id="audio-7" src="7.mp3"></audio>
+                        </div>
+
+                    <p class="font-medium text-slate-600 dark:text-slate-400 mb-10 max-w-lg mx-auto lang-tr">Yeni bir ders materyali veya AI ipucu paylaştığımda haberdar olmak için katıl.</p>
+                    <p class="font-medium text-slate-600 dark:text-slate-400 mb-10 max-w-lg mx-auto lang-en">Join to be notified when I share new lesson materials or AI tips.</p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+                        <input type="email" required class="px-6 py-4 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:outline-none w-full font-bold placeholder-slate-400 lang-tr" placeholder="E-posta adresiniz">
+                        <input type="email" required class="px-6 py-4 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:outline-none w-full font-bold placeholder-slate-400 lang-en" placeholder="Your email address">
+                        <button type="button" class="px-8 py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors shadow-lg btn-3d lang-tr">
+                            Kaydol
+                        </button>
+                        <button type="button" class="px-8 py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors shadow-lg btn-3d lang-en">
+                            Sign Up
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <footer class="py-12 text-center border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-black/20 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <span class="font-heading font-black text-xl text-slate-900 dark:text-white block mb-2 lang-tr">Berkan'dan İpuçları</span>
+            <span class="font-heading font-black text-xl text-slate-900 dark:text-white block mb-2 lang-en">Berkan's Tips</span>
+            <p class="text-sm font-bold text-slate-400 mb-8 lang-tr">© 2026. Tüm hakları saklıdır.</p>
+            <p class="text-sm font-bold text-slate-400 mb-8 lang-en">© 2026. All rights reserved.</p>
+            <div class="flex justify-center gap-4">
+                <a href="#" class="p-3 bg-white dark:bg-slate-800 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-all shadow-sm border border-slate-200 dark:border-slate-700">
+                    <i data-lucide="youtube" class="w-5 h-5"></i>
+                </a>
+                <a href="#" class="p-3 bg-white dark:bg-slate-800 rounded-full hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:text-pink-600 transition-all shadow-sm border border-slate-200 dark:border-slate-700">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+            </div>
+            <div class="addthis_inline_share_toolbox mt-8"></div>
+        </div>
+    </footer>
+
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 premium-box px-6 py-4 rounded-2xl shadow-2xl transform translate-y-40 opacity-0 transition-all duration-500 z-50 flex items-center gap-3 bg-white dark:bg-slate-800">
+        <div class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 p-1.5 rounded-full">
+            <i data-lucide="check" class="w-4 h-4"></i>
+        </div>
+        <span class="font-bold text-slate-900 dark:text-white lang-tr">Panoya kopyalandı!</span>
+        <span class="font-bold text-slate-900 dark:text-white lang-en">Copied to clipboard!</span>
+    </div>
+
 <div class="chatbot-widget">
     <button onclick="toggleChatbot()" class="bg-primary-600 hover:bg-primary-700 text-white p-4 rounded-full shadow-2xl btn-3d">
         <i data-lucide="message-circle" class="w-6 h-6"></i>
@@ -484,7 +841,124 @@
         </div>
     </div>
 </div>
+
     <script>
+        lucide.createIcons();
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
+        const langToggle = document.getElementById('lang-toggle');
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        toggleBtn.addEventListener('click', toggleTheme);
+
+        function toggleLanguage() {
+            if (html.getAttribute('lang') === 'tr') {
+                html.setAttribute('lang', 'en');
+                document.title = "Berkan's Tips | English & AI";
+                localStorage.lang = 'en';
+            } else {
+                html.setAttribute('lang', 'tr');
+                document.title = "Berkan'dan İpuçları | English & AI";
+                localStorage.lang = 'tr';
+            }
+        }
+
+        if (localStorage.lang === 'en') {
+            toggleLanguage(); // Apply immediately if stored as en
+        }
+        langToggle.addEventListener('click', toggleLanguage);
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const cleanText = text.replace(/^"|"$/g, '');
+            navigator.clipboard.writeText(cleanText).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-40', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-40', 'opacity-0');
+                }, 3000);
+            });
+        }
+
+        /* --- AUDIO PLAYER LOGIC (FIXED) --- */
+        let currentAudio = null;
+        let currentId = null;
+
+        function toggleAudio(id) {
+            const audio = document.getElementById('audio-' + id);
+            const icon = document.getElementById('icon-' + id);
+            const btn = document.getElementById('btn-' + id);
+
+            // 1. If clicking the SAME audio that is playing:
+            if (currentAudio === audio && !audio.paused) {
+                audio.pause();
+                // Fix: Always re-fetch the current icon because Lucide replaces it
+                const currentIcon = document.getElementById('icon-' + id);
+                if (currentIcon) currentIcon.setAttribute('data-lucide', 'play-circle');
+                btn.classList.remove('audio-playing');
+                currentAudio = null;
+                currentId = null;
+            } 
+            // 2. If clicking a NEW audio or starting stopped audio:
+            else {
+                // Stop the previous one if it exists
+                if (currentAudio && currentAudio !== audio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0; // Reset previous
+                    
+                    // Fix: Find the OLD icon using the stored ID
+                    const oldIcon = document.getElementById('icon-' + currentId);
+                    const oldBtn = document.getElementById('btn-' + currentId);
+                    
+                    if (oldIcon) oldIcon.setAttribute('data-lucide', 'play-circle');
+                    if (oldBtn) oldBtn.classList.remove('audio-playing');
+                }
+
+                // Play the new one
+                audio.play();
+                icon.setAttribute('data-lucide', 'pause-circle'); // Change icon to Pause
+                btn.classList.add('audio-playing'); // Add pulse animation
+
+                // Update globals
+                currentAudio = audio;
+                currentId = id;
+            }
+            
+            // Refresh icons (Lucide needs this to re-render the SVG when attribute changes)
+            lucide.createIcons();
+
+            // Reset icon when audio finishes naturally
+            audio.onended = function() {
+                // Fix: Must find the FRESH icon element because the old one was replaced by Lucide
+                const freshIcon = document.getElementById('icon-' + id);
+                const freshBtn = document.getElementById('btn-' + id);
+                
+                if (freshIcon) freshIcon.setAttribute('data-lucide', 'play-circle');
+                if (freshBtn) freshBtn.classList.remove('audio-playing');
+                
+                lucide.createIcons();
+                
+                if (currentAudio === audio) {
+                    currentAudio = null;
+                    currentId = null;
+                }
+            };
+        }
+
 // All your original JavaScript code stays here, then add these NEW functions:
 // === AUTO DARK MODE DETECTION ===
 function initThemeWithAutoDetection() {
@@ -801,7 +1275,6 @@ document.getElementById('lang-toggle').addEventListener('click', function() {
         renderDownloads();
     }, 100);
 });
-</script>
+    </script>
 </body>
 </html>
-```
