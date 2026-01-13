@@ -156,15 +156,9 @@
         .delay-2000 { animation-delay: 2s; }
 
         /* --- UPDATED LANGUAGE SWITCHING LOGIC --- */
-        
-        /* 1. Default State (Turkish / No Lang Attribute) */
-        /* If html does NOT have lang="en", hide English elements. */
         :root:not([lang="en"]) .lang-en { 
             display: none !important; 
         }
-
-        /* 2. English State */
-        /* If html HAS lang="en", hide Turkish elements. */
         :root[lang="en"] .lang-tr { 
             display: none !important; 
         }
@@ -766,10 +760,9 @@
             });
         }
 
-        /* --- AUDIO PLAYER LOGIC --- */
+        /* --- AUDIO PLAYER LOGIC (FIXED) --- */
         let currentAudio = null;
-        let currentIcon = null;
-        let currentBtn = null;
+        let currentId = null;
 
         function toggleAudio(id) {
             const audio = document.getElementById('audio-' + id);
@@ -779,9 +772,12 @@
             // 1. If clicking the SAME audio that is playing:
             if (currentAudio === audio && !audio.paused) {
                 audio.pause();
-                icon.setAttribute('data-lucide', 'play-circle');
+                // Fix: Always re-fetch the current icon because Lucide replaces it
+                const currentIcon = document.getElementById('icon-' + id);
+                if (currentIcon) currentIcon.setAttribute('data-lucide', 'play-circle');
                 btn.classList.remove('audio-playing');
                 currentAudio = null;
+                currentId = null;
             } 
             // 2. If clicking a NEW audio or starting stopped audio:
             else {
@@ -789,8 +785,13 @@
                 if (currentAudio && currentAudio !== audio) {
                     currentAudio.pause();
                     currentAudio.currentTime = 0; // Reset previous
-                    if (currentIcon) currentIcon.setAttribute('data-lucide', 'play-circle');
-                    if (currentBtn) currentBtn.classList.remove('audio-playing');
+                    
+                    // Fix: Find the OLD icon using the stored ID
+                    const oldIcon = document.getElementById('icon-' + currentId);
+                    const oldBtn = document.getElementById('btn-' + currentId);
+                    
+                    if (oldIcon) oldIcon.setAttribute('data-lucide', 'play-circle');
+                    if (oldBtn) oldBtn.classList.remove('audio-playing');
                 }
 
                 // Play the new one
@@ -798,10 +799,9 @@
                 icon.setAttribute('data-lucide', 'pause-circle'); // Change icon to Pause
                 btn.classList.add('audio-playing'); // Add pulse animation
 
-                // Update references
+                // Update globals
                 currentAudio = audio;
-                currentIcon = icon;
-                currentBtn = btn;
+                currentId = id;
             }
             
             // Refresh icons (Lucide needs this to re-render the SVG when attribute changes)
@@ -809,10 +809,19 @@
 
             // Reset icon when audio finishes naturally
             audio.onended = function() {
-                icon.setAttribute('data-lucide', 'play-circle');
-                btn.classList.remove('audio-playing');
+                // Fix: Must find the FRESH icon element because the old one was replaced by Lucide
+                const freshIcon = document.getElementById('icon-' + id);
+                const freshBtn = document.getElementById('btn-' + id);
+                
+                if (freshIcon) freshIcon.setAttribute('data-lucide', 'play-circle');
+                if (freshBtn) freshBtn.classList.remove('audio-playing');
+                
                 lucide.createIcons();
-                currentAudio = null;
+                
+                if (currentAudio === audio) {
+                    currentAudio = null;
+                    currentId = null;
+                }
             };
         }
     </script>
