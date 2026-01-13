@@ -25,16 +25,13 @@ function tryAutoplayMusic() {
     const bgMusic = document.getElementById('bg-music');
     if (!bgMusic) return;
 
-    // Try to play automatically
     const playPromise = bgMusic.play();
     
     if (playPromise !== undefined) {
         playPromise.then(_ => {
-            // Autoplay started!
             isMusicPlaying = true;
             updateMusicUI(true);
         }).catch(error => {
-            // Autoplay blocked by browser. Wait for first click.
             const startMusicOnInteraction = () => {
                 bgMusic.play();
                 isMusicPlaying = true;
@@ -80,12 +77,10 @@ function toggleAudio(id) {
     const btn = document.getElementById('btn-' + id);
 
     if (audio.paused) {
-        // Stop others
         document.querySelectorAll('audio').forEach(a => { 
             if (a.id !== 'bg-music' && a !== audio) { 
                 a.pause(); 
                 a.currentTime = 0; 
-                // Reset other icons
                 const otherId = a.id.replace('audio-', '');
                 const otherIcon = document.getElementById('icon-' + otherId);
                 if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
@@ -115,7 +110,6 @@ function toggleAudio(id) {
 function initTheme() {
     const html = document.documentElement;
     const hour = new Date().getHours();
-    // Auto dark mode if user hasn't set preference (7PM - 7AM)
     const isNight = hour >= 19 || hour < 7;
     
     const savedTheme = localStorage.getItem('theme');
@@ -195,7 +189,7 @@ window.displayBloggerPosts = function(data) {
     if(typeof lucide !== 'undefined') lucide.createIcons();
 };
 
-// === 4. YOUTUBE (BACKEND FETCH) ===
+// === 4. YOUTUBE ===
 async function fetchLatestVideo() {
     try {
         const response = await fetch(BACKEND_URL); 
@@ -216,7 +210,7 @@ async function fetchLatestVideo() {
     }
 }
 
-// === 5. CHATBOT (REAL GEMINI BACKEND) ===
+// === 5. CHATBOT ===
 function toggleChatbot() {
     document.getElementById('chatbot-window').classList.toggle('active');
 }
@@ -229,11 +223,9 @@ async function sendMessage() {
     
     if (!msg) return;
 
-    // UI Updates
     input.value = '';
     sendBtn.disabled = true;
     
-    // Add User Message
     container.innerHTML += `
         <div class="bg-primary-600 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[85%] shadow-md mb-3">
             ${msg}
@@ -241,7 +233,7 @@ async function sendMessage() {
     `;
     container.scrollTop = container.scrollHeight;
 
-    // Add Loading Bubble
+    // Loading Bubble
     const loadingId = 'loading-' + Date.now();
     container.innerHTML += `
         <div id="${loadingId}" class="bg-slate-100 dark:bg-slate-700 text-slate-500 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] shadow-sm mb-3 flex gap-1">
@@ -253,7 +245,6 @@ async function sendMessage() {
     container.scrollTop = container.scrollHeight;
 
     try {
-        // CALL WORKER
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
             headers: { 
@@ -266,14 +257,10 @@ async function sendMessage() {
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const data = await response.json();
-        
-        // CATCH THE REPLY (This now works because Worker sends { reply: "..." })
-        const reply = data.reply || data.response || "Sorry, I received an empty response from the server.";
+        const reply = data.reply || data.response || "Sorry, I received an empty response.";
 
-        // Remove loading
         document.getElementById(loadingId).remove();
 
-        // Render Markdown Response
         let htmlReply = reply;
         if(typeof marked !== 'undefined') {
             htmlReply = marked.parse(reply);
@@ -299,7 +286,7 @@ async function sendMessage() {
     container.scrollTop = container.scrollHeight;
 }
 
-// === 6. UI UTILS & SCROLLSPY (FIXED) ===
+// === 6. UI UTILS ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
@@ -348,21 +335,19 @@ function copyToClipboard(elementId) {
     });
 }
 
-// --- NEW SCROLLSPY (INTERSECTION OBSERVER) ---
+// --- ACCURATE SCROLLSPY ---
 function initScrollSpy() {
     const observerOptions = {
         root: null,
-        rootMargin: '-50% 0px -50% 0px', // Trigger exactly when section is in middle of screen
+        rootMargin: '-50% 0px -50% 0px', 
         threshold: 0
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Remove active from all
                 document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
                 
-                // Add active to current
                 const id = entry.target.getAttribute('id');
                 const link = document.querySelector(`.nav-link[href="#${id}"]`);
                 if (link) link.classList.add('active');
