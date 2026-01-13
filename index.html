@@ -153,13 +153,15 @@
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
         
-        :root:not([lang="en"]) .lang-en { 
-            display: none !important; 
-        }
-        :root[lang="en"] .lang-tr { 
-            display: none !important; 
-        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-2000 { animation-delay: 2s; }
 
+        /* Language Toggle */
+        :root:not([lang="en"]) .lang-en { display: none !important; }
+        :root[lang="en"] .lang-tr { display: none !important; }
+
+        /* Audio Player Animation */
         .audio-playing {
             animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
@@ -188,30 +190,17 @@
             background: rgba(15, 23, 42, 0.98);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .mobile-menu.active {
-            display: block;
-        }
+        .mobile-menu.active { display: block; }
         .mobile-menu a {
             display: block;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .dark .mobile-menu a {
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+        .dark .mobile-menu a { border-bottom: 1px solid rgba(255,255,255,0.05); }
 
         @media (max-width: 640px) {
-            .hero-title {
-                font-size: 2.5rem !important;
-                line-height: 1.1;
-            }
-            .logo-text {
-                font-size: 0.9rem !important;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 140px;
-            }
+            .hero-title { font-size: 2.5rem !important; line-height: 1.1; }
+            .logo-text { font-size: 0.9rem !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
         }
 
         /* Search Modal */
@@ -226,9 +215,7 @@
             justify-content: center;
             padding-top: 5rem;
         }
-        #search-modal.active {
-            display: flex;
-        }
+        #search-modal.active { display: flex; }
 
         /* Chatbot */
         .chatbot-widget {
@@ -250,16 +237,9 @@
             background: white;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        .dark .chatbot-window {
-            background: #0f172a;
-        }
-        .chatbot-window.active {
-            display: flex;
-        }
-        .chat-messages {
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
+        .dark .chatbot-window { background: #0f172a; }
+        .chatbot-window.active { display: flex; }
+        .chat-messages { overflow-y: auto; scroll-behavior: smooth; }
 
         /* Filter buttons */
         .filter-btn.active {
@@ -314,10 +294,10 @@
                     <span class="lang-tr">EN</span>
                     <span class="lang-en">TR</span>
                 </button>
-                <button id="mobile-menu-toggle" class="md:hidden p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
+                <button id="mobile-menu-toggle" onclick="document.getElementById('mobile-menu').classList.toggle('active')" class="md:hidden p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 btn-3d">
                     <i data-lucide="menu" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 </button>
-                <a href="https://www.youtube.com/@berkandanipucları" target="_blank" class="hidden sm:flex bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 shadow-xl shadow-slate-900/20 btn-3d">
+                <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank" class="hidden sm:flex bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 shadow-xl shadow-slate-900/20 btn-3d">
                     <i data-lucide="youtube" class="w-3 h-3 sm:w-4 sm:h-4"></i>
                     <span class="lang-tr">Abone Ol</span>
                     <span class="lang-en">Subscribe</span>
@@ -483,15 +463,48 @@
 
                 <div class="relative">
                     <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-slate-200 dark:bg-slate-800 rounded-full"></div>
+                    
                     <div class="relative flex flex-col md:flex-row items-center justify-between mb-24 group">
                         <div class="md:w-5/12 order-2 md:order-1 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
                             <span class="text-primary-600 font-black text-sm tracking-widest uppercase mb-3 block lang-tr">Seviye 1</span>
                             <span class="text-primary-600 font-black text-sm tracking-widest uppercase mb-3 block lang-en">Level 1</span>
                             <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-tr">Başlangıç (A1-A2)</h3>
                             <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-en">Beginner (A1-A2)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-tr">Temel gramer ve günlük kelimeler. Drive'daki "Beginner" klasörünü bitirin.</p>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-en">Basic grammar and daily words. Finish the "Beginner" folder in Drive.</p>
                         </div>
                         <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white dark:bg-dark-surface border-4 border-primary-500 rounded-full flex items-center justify-center z-10 shadow-xl order-1 md:order-2 mb-6 md:mb-0">
                             <span class="font-heading text-xl font-black text-primary-600 dark:text-primary-400">1</span>
+                        </div>
+                        <div class="md:w-5/12 order-3"></div>
+                    </div>
+
+                    <div class="relative flex flex-col md:flex-row items-center justify-between mb-24 group">
+                        <div class="md:w-5/12 order-3 md:order-1"></div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white dark:bg-dark-surface border-4 border-purple-500 rounded-full flex items-center justify-center z-10 shadow-xl order-1 md:order-2 mb-6 md:mb-0">
+                            <span class="font-heading text-xl font-black text-purple-600 dark:text-purple-400">2</span>
+                        </div>
+                        <div class="md:w-5/12 order-2 md:order-3 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                            <span class="text-purple-600 font-black text-sm tracking-widest uppercase mb-3 block lang-tr">Seviye 2</span>
+                            <span class="text-purple-600 font-black text-sm tracking-widest uppercase mb-3 block lang-en">Level 2</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-tr">Gelişme (B1-B2)</h3>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-en">Intermediate (B1-B2)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-tr">Speaking partneri promptlarını kullanın. Quizlet setlerimi çalışın.</p>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-en">Use speaking partner prompts. Study my Quizlet sets.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex flex-col md:flex-row items-center justify-between group">
+                        <div class="md:w-5/12 order-2 md:order-1 premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                            <span class="text-pink-600 font-black text-sm tracking-widest uppercase mb-3 block lang-tr">Seviye 3</span>
+                            <span class="text-pink-600 font-black text-sm tracking-widest uppercase mb-3 block lang-en">Level 3</span>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-tr">Ustalık (C1+)</h3>
+                            <h3 class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-2 lang-en">Mastery (C1+)</h3>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-tr">Akademik makale yazımı ve IELTS hazırlık promptlarına geçin.</p>
+                            <p class="text-slate-600 dark:text-slate-400 font-medium lang-en">Move to academic article writing and IELTS prep prompts.</p>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white dark:bg-dark-surface border-4 border-pink-500 rounded-full flex items-center justify-center z-10 shadow-xl order-1 md:order-2 mb-6 md:mb-0">
+                            <span class="font-heading text-xl font-black text-pink-600 dark:text-pink-400">3</span>
                         </div>
                         <div class="md:w-5/12 order-3"></div>
                     </div>
@@ -518,10 +531,10 @@
                     </div>
 
                     <p class="text-lg font-medium text-slate-600 dark:text-slate-400 mb-10 leading-relaxed lang-tr">
-                        Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar.
+                        Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun.
                     </p>
                     <p class="text-lg font-medium text-slate-600 dark:text-slate-400 mb-10 leading-relaxed lang-en">
-                        All resources prepared during my internship and university.
+                        All resources prepared during my internship and university. Tested in class, curriculum compliant.
                     </p>
                     <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="inline-flex items-center gap-3 text-primary-700 dark:text-primary-400 font-black text-lg hover:gap-5 transition-all lang-tr">
                         Google Drive'a Git <i data-lucide="arrow-right" class="w-6 h-6"></i>
@@ -529,6 +542,41 @@
                     <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank" class="inline-flex items-center gap-3 text-primary-700 dark:text-primary-400 font-black text-lg hover:gap-5 transition-all lang-en">
                         Go to Google Drive <i data-lucide="arrow-right" class="w-6 h-6"></i>
                     </a>
+                </div>
+                
+                <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-tr">Berkan'ın Arşivi</h3>
+                        <h3 class="font-heading text-2xl font-extrabold text-slate-900 dark:text-white lang-en">Berkan's Archive</h3>
+                        <span class="px-4 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-black rounded-full lang-tr">50+ DOSYA</span>
+                        <span class="px-4 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-black rounded-full lang-en">50+ FILES</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary-400 transition-colors cursor-pointer group">
+                            <div class="p-3 bg-white dark:bg-slate-800 shadow-sm text-red-500 rounded-xl">
+                                <i data-lucide="file-text" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 dark:text-white lang-tr">Ders Planları.pdf</h4>
+                                <h4 class="font-bold text-slate-900 dark:text-white lang-en">Lesson Plans.pdf</h4>
+                                <p class="text-xs font-semibold text-slate-500 lang-tr">2.4 MB • PDF</p>
+                                <p class="text-xs font-semibold text-slate-500 lang-en">2.4 MB • PDF</p>
+                            </div>
+                            <i data-lucide="download" class="w-5 h-5 text-slate-400 ml-auto group-hover:text-primary-600"></i>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary-400 transition-colors cursor-pointer group">
+                            <div class="p-3 bg-white dark:bg-slate-800 shadow-sm text-blue-500 rounded-xl">
+                                <i data-lucide="image" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 dark:text-white lang-tr">Kelime Kartları.png</h4>
+                                <h4 class="font-bold text-slate-900 dark:text-white lang-en">Flashcards.png</h4>
+                                <p class="text-xs font-semibold text-slate-500 lang-tr">5.1 MB • PNG</p>
+                                <p class="text-xs font-semibold text-slate-500 lang-en">5.1 MB • PNG</p>
+                            </div>
+                            <i data-lucide="download" class="w-5 h-5 text-slate-400 ml-auto group-hover:text-primary-600"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -550,12 +598,36 @@
                     <p class="font-medium text-slate-600 dark:text-slate-400 lang-en">Digital assistants that make learning fun.</p>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                     <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
                         <div class="w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center text-green-600 dark:text-green-400 font-black text-3xl shadow-sm border border-green-100 dark:border-green-900 group-hover:scale-110 transition-transform">C</div>
                         <div>
                             <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">ChatGPT</h3>
                             <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">AI Asistan</p>
                             <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">AI Assistant</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-3xl shadow-sm border border-blue-100 dark:border-blue-900 group-hover:scale-110 transition-transform">Q</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">Quizlet</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">Kelime Kartları</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">Flashcards</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-purple-50 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-600 dark:text-purple-400 font-black text-3xl shadow-sm border border-purple-100 dark:border-purple-900 group-hover:scale-110 transition-transform">D</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">DeepL</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">Çeviri</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">Translation</p>
+                        </div>
+                    </div>
+                    <div class="premium-box p-6 rounded-3xl flex flex-col items-center text-center gap-4 bg-white dark:bg-dark-surface cursor-pointer group">
+                        <div class="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center text-red-600 dark:text-red-400 font-black text-3xl shadow-sm border border-red-100 dark:border-red-900 group-hover:scale-110 transition-transform">Y</div>
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white">YouTube</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-tr">Video</p>
+                            <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wide lang-en">Video</p>
                         </div>
                     </div>
                 </div>
@@ -580,9 +652,10 @@
                         <p class="font-medium text-slate-600 dark:text-slate-400 mt-2 lang-en">Turn AI assistant into an English teacher.</p>
                     </div>
                 </div>
+
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
-                         <div class="flex justify-between items-start mb-6">
+                        <div class="flex justify-between items-start mb-6">
                             <div class="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl border border-purple-100 dark:border-purple-900">
                                 <i data-lucide="calendar" class="w-6 h-6"></i>
                             </div>
@@ -602,10 +675,54 @@
                         </button>
                         <p id="p1" class="hidden">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</p>
                     </div>
+
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900">
+                                <i data-lucide="pen-tool" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-black rounded-full lang-tr">SINAV</span>
+                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-black rounded-full lang-en">EXAM</span>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Quiz Hazırlayıcı</h3>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Quiz Preparer</h3>
+                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
+                            "Generate 5 multiple choice reading comprehension questions based on the text below..."
+                        </div>
+                        <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
+                            Kopyala
+                        </button>
+                        <button onclick="copyToClipboard('p2')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
+                            Copy
+                        </button>
+                        <p id="p2" class="hidden">"Generate 5 multiple choice reading comprehension questions based on the text below. Include answer key: [TEXT]"</p>
+                    </div>
+
+                    <div class="premium-box p-8 rounded-3xl bg-white dark:bg-dark-surface flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-2xl border border-orange-100 dark:border-orange-900">
+                                <i data-lucide="mic" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-black rounded-full lang-tr">SPEAKING</span>
+                            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-xs font-black rounded-full lang-en">SPEAKING</span>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-tr">Konuşma Partneri</h3>
+                        <h3 class="font-heading font-extrabold text-xl text-slate-900 dark:text-white mb-3 lang-en">Conversation Partner</h3>
+                        <div class="bg-slate-100 dark:bg-black/40 p-5 rounded-2xl text-sm font-bold font-mono text-slate-600 dark:text-slate-300 mb-8 flex-grow border border-slate-200 dark:border-slate-800 leading-relaxed">
+                            "Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."
+                        </div>
+                        <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-tr">
+                            Kopyala
+                        </button>
+                        <button onclick="copyToClipboard('p3')" class="w-full py-4 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-sm shadow-lg btn-3d lang-en">
+                            Copy
+                        </button>
+                        <p id="p3" class="hidden">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food. Correct my mistakes."</p>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
         <section id="downloads" class="py-24 px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12">
@@ -680,6 +797,15 @@
                         </summary>
                         <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-tr">Evet, paylaştığım tüm ders planları ve promptlar tamamen ücretsizdir.</p>
                         <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-en">Yes, all shared lesson plans and prompts are completely free.</p>
+                    </details>
+                    <details class="group premium-box p-6 rounded-3xl bg-white dark:bg-dark-surface cursor-pointer">
+                        <summary class="flex justify-between items-center font-bold text-lg text-slate-900 dark:text-white select-none">
+                            <span class="lang-tr">Özel ders veriyor musunuz?</span>
+                            <span class="lang-en">Do you give private lessons?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-tr">Şu anda staj yoğunluğum nedeniyle sadece online grup dersleri için kontenjan açabiliyorum.</p>
+                        <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium lang-en">Currently, due to my internship workload, I can only open slots for online group lessons.</p>
                     </details>
                 </div>
             </div>
@@ -772,412 +898,6 @@
         <span class="font-bold text-slate-900 dark:text-white lang-en">Copied to clipboard!</span>
     </div>
 
-    <script>
-        lucide.createIcons();
-        const html = document.documentElement;
-        
-        // --- SEARCH FUNCTIONALITY ---
-        function toggleSearch() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('active');
-            if (modal.classList.contains('active')) {
-                document.getElementById('search-input').focus();
-            } else {
-                document.getElementById('search-input').value = '';
-                document.getElementById('search-results').innerHTML = '<p class="text-slate-500 text-sm font-medium lang-tr">Aramaya başlamak için yazmaya başlayın...</p><p class="text-slate-500 text-sm font-medium lang-en">Start typing to search...</p>';
-            }
-            lucide.createIcons();
-        }
-
-        const searchableContent = [
-            { title: '6. Sınıf Full Rehber', titleEn: '6th Grade Full Guide', type: 'material', link: '#downloads', level: 'A1-A2' },
-            { title: 'Öğretmen Kasam', titleEn: 'Teacher Vault', type: 'material', link: '#downloads', level: 'Teacher' },
-            { title: 'Yol Haritası', titleEn: 'Roadmap', type: 'section', link: '#roadmap' },
-            { title: 'Promptlar', titleEn: 'Prompts', type: 'section', link: '#prompts' },
-            { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog' },
-            { title: 'AI ile İngilizce Öğrenme', titleEn: 'Learn English with AI', type: 'blog', link: '#blog' }
-        ];
-
-        function performSearch(query) {
-            const results = document.getElementById('search-results');
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            
-            if (query.length < 2) {
-                results.innerHTML = lang === 'tr' 
-                    ? '<p class="text-slate-500 text-sm font-medium">Aramaya başlamak için yazmaya başlayın...</p>'
-                    : '<p class="text-slate-500 text-sm font-medium">Start typing to search...</p>';
-                return;
-            }
-            
-            const filtered = searchableContent.filter(item => {
-                const searchIn = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
-                return searchIn.includes(query.toLowerCase());
-            });
-            
-            if (filtered.length === 0) {
-                results.innerHTML = lang === 'tr'
-                    ? '<p class="text-slate-500 text-sm font-medium">Sonuç bulunamadı.</p>'
-                    : '<p class="text-slate-500 text-sm font-medium">No results found.</p>';
-                return;
-            }
-            
-            results.innerHTML = filtered.map(item => `
-                <a href="${item.link}" onclick="toggleSearch()" class="block p-4 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 cursor-pointer transition-colors">
-                    <h4 class="font-bold mb-1 text-slate-900 dark:text-white">${lang === 'tr' ? item.title : item.titleEn}</h4>
-                    <p class="text-sm text-slate-600 dark:text-slate-400">${item.type} ${item.level || ''}</p>
-                </a>
-            `).join('');
-        }
-
-        // --- THEME ---
-        function initThemeWithAutoDetection() {
-            const savedTheme = localStorage.getItem('theme');
-            const hour = new Date().getHours();
-            
-            if (savedTheme) {
-                if (savedTheme === 'dark') html.classList.add('dark');
-                else html.classList.remove('dark');
-            } else if (hour >= 20 || hour < 7) {
-                html.classList.add('dark');
-            }
-        }
-
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            html.classList.toggle('dark');
-            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-        });
-
-        // --- LANGUAGE ---
-        function toggleLanguage() {
-            if (html.getAttribute('lang') === 'tr') {
-                html.setAttribute('lang', 'en');
-                document.title = "Berkan's Tips | English & AI";
-                localStorage.lang = 'en';
-            } else {
-                html.setAttribute('lang', 'tr');
-                document.title = "Berkan'dan İpuçları | English & AI";
-                localStorage.lang = 'tr';
-            }
-            // Re-render dynamic content
-            setTimeout(() => {
-                renderBlog();
-                renderComments();
-                renderDownloads();
-            }, 100);
-        }
-
-        if (localStorage.lang === 'en') {
-            toggleLanguage(); // Apply immediately if stored as en
-        }
-        document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
-
-        // --- BLOG SECTION ---
-        const blogPosts = [
-            {
-                id: 1,
-                title: 'AI ile İngilizce Nasıl Öğrenilir?',
-                titleEn: 'How to Learn English with AI?',
-                excerpt: 'Yapay zekanın gücünü kullanarak İngilizce öğrenmeyi nasıl hızlandırabilirsiniz?',
-                excerptEn: 'How can you accelerate English learning using the power of AI?',
-                date: '13 Ocak 2026',
-                dateEn: 'January 13, 2026',
-                content: 'ChatGPT ve Claude gibi AI araçları ile konuşma pratiği yapabilir, writing düzeltmeleri alabilir ve kişiselleştirilmiş ders planları oluşturabilirsiniz...',
-                contentEn: 'With AI tools like ChatGPT and Claude, you can practice conversations, get writing corrections, and create personalized lesson plans...'
-            },
-            {
-                id: 2,
-                title: '10 Dakikada Kelime Öğrenme Teknikleri',
-                titleEn: 'Word Learning Techniques in 10 Minutes',
-                excerpt: 'Günde sadece 10 dakika ayırarak kelime dağarcığınızı nasıl genişletebilirsiniz?',
-                excerptEn: 'How can you expand your vocabulary by dedicating just 10 minutes a day?',
-                date: '10 Ocak 2026',
-                dateEn: 'January 10, 2026',
-                content: 'Spaced repetition tekniği ve Quizlet kullanarak etkili kelime öğrenme yöntemleri...',
-                contentEn: 'Effective vocabulary learning methods using spaced repetition and Quizlet...'
-            },
-            {
-                id: 3,
-                title: 'Speaking Pratiği için 5 Altın İpucu',
-                titleEn: '5 Golden Tips for Speaking Practice',
-                excerpt: 'Konuşma becerinizi geliştirmek için mutlaka denemeniz gereken 5 yöntem.',
-                excerptEn: '5 methods you must try to improve your speaking skills.',
-                date: '5 Ocak 2026',
-                dateEn: 'January 5, 2026',
-                content: 'Shadowing tekniği, AI conversation partners ve daha fazlası...',
-                contentEn: 'Shadowing technique, AI conversation partners and more...'
-            }
-        ];
-
-        function renderBlog() {
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            const blogSection = document.getElementById('blog-posts');
-            if (!blogSection) return;
-            
-            blogSection.innerHTML = blogPosts.map(post => `
-                <article class="premium-box p-6 rounded-3xl cursor-pointer hover:scale-105 transition-transform" onclick="openBlogPost(${post.id})">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl mb-4"></div>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">${lang === 'tr' ? post.date : post.dateEn}</p>
-                    <h3 class="font-heading font-bold text-xl mb-3 text-slate-900 dark:text-white">${lang === 'tr' ? post.title : post.titleEn}</h3>
-                    <p class="text-slate-600 dark:text-slate-400 mb-4">${lang === 'tr' ? post.excerpt : post.excerptEn}</p>
-                    <button class="text-primary-600 dark:text-primary-400 font-bold hover:underline">
-                        ${lang === 'tr' ? 'Devamını Oku →' : 'Read More →'}
-                    </button>
-                </article>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function openBlogPost(id) {
-            const post = blogPosts.find(p => p.id === id);
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            alert(`${lang === 'tr' ? post.title : post.titleEn}\n\n${lang === 'tr' ? post.content : post.contentEn}`);
-        }
-
-        // --- COMMENTS SECTION ---
-        const badWordsTR = ['kötü', 'aptal', 'salak', 'ahmak', 'gerizekalı'];
-        const badWordsEN = ['bad', 'stupid', 'idiot', 'fool', 'dumb'];
-        const allBadWords = [...badWordsTR, ...badWordsEN];
-        let comments = [];
-
-        function filterProfanity(text) {
-            let filtered = text;
-            allBadWords.forEach(word => {
-                const regex = new RegExp(word, 'gi');
-                filtered = filtered.replace(regex, '*'.repeat(word.length));
-            });
-            return filtered;
-        }
-
-        function addComment() {
-            const name = document.getElementById('comment-name').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            
-            if (!name || !text) {
-                alert(lang === 'tr' ? 'Lütfen tüm alanları doldurun!' : 'Please fill all fields!');
-                return;
-            }
-            
-            const filteredName = filterProfanity(name);
-            const filteredText = filterProfanity(text);
-            
-            comments.unshift({
-                name: filteredName,
-                text: filteredText,
-                date: new Date().toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US')
-            });
-            
-            document.getElementById('comment-name').value = '';
-            document.getElementById('comment-text').value = '';
-            renderComments();
-            
-            alert(lang === 'tr' ? 'Yorumunuz eklendi!' : 'Your comment has been added!');
-        }
-
-        function renderComments() {
-            const container = document.getElementById('comments-list');
-            if (!container) return;
-            
-            if (comments.length === 0) {
-                const lang = document.documentElement.getAttribute('lang') || 'tr';
-                container.innerHTML = `<p class="text-center text-slate-500">${lang === 'tr' ? 'Henüz yorum yok. İlk yorumu siz yapın!' : 'No comments yet. Be the first to comment!'}</p>`;
-                return;
-            }
-            
-            container.innerHTML = comments.map(c => `
-                <div class="premium-box p-6 rounded-3xl">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                            ${c.name[0].toUpperCase()}
-                        </div>
-                        <div>
-                            <p class="font-bold text-slate-900 dark:text-white">${c.name}</p>
-                            <p class="text-sm text-slate-500">${c.date}</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-700 dark:text-slate-300">${c.text}</p>
-                </div>
-            `).join('');
-        }
-
-        // --- DOWNLOADS SECTION ---
-        const downloadMaterials = [
-            { id: 1, title: '6. Sınıf Full Rehber.docx', level: 'beginner', size: '2.4 MB', type: 'docx', url: 'https://your-drive-link-here.com/file1' },
-            { id: 2, title: 'Öğretmen Kasam.zip', level: 'teacher', size: '45.2 MB', type: 'zip', url: 'https://your-drive-link-here.com/file2' },
-            { id: 3, title: 'Grammar Basics A1-A2.pdf', level: 'beginner', size: '1.8 MB', type: 'pdf', url: 'https://your-drive-link-here.com/file3' },
-            { id: 4, title: 'IELTS Preparation C1.pdf', level: 'advanced', size: '3.2 MB', type: 'pdf', url: 'https://your-drive-link-here.com/file4' },
-            { id: 5, title: 'Speaking Practice B1-B2.docx', level: 'intermediate', size: '1.5 MB', type: 'docx', url: 'https://your-drive-link-here.com/file5' }
-        ];
-
-        function renderDownloads(filter = 'all') {
-            const grid = document.getElementById('downloads-grid');
-            if (!grid) return;
-            
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            const filtered = filter === 'all' ? downloadMaterials : downloadMaterials.filter(m => m.level === filter);
-            
-            grid.innerHTML = filtered.map(m => `
-                <div class="premium-box p-6 rounded-3xl">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
-                            <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
-                        </div>
-                        <span class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded-full text-xs font-bold uppercase text-slate-600 dark:text-slate-300">${m.size}</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">${m.title}</h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 uppercase font-bold">${m.level}</p>
-                    <button onclick="downloadFile(${m.id})" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 btn-3d">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                        ${lang === 'tr' ? 'İndir' : 'Download'}
-                    </button>
-                </div>
-            `).join('');
-            
-            lucide.createIcons();
-        }
-
-        function filterDownloads(level) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.closest('button').classList.add('active');
-            renderDownloads(level);
-        }
-
-        function downloadFile(id) {
-            const file = downloadMaterials.find(m => m.id === id);
-            if (file && file.url) {
-                // In a real scenario, uncomment: window.open(file.url, '_blank');
-                const lang = document.documentElement.getAttribute('lang') || 'tr';
-                alert(lang === 'tr' 
-                    ? `${file.title} indiriliyor... (Demo)` 
-                    : `Downloading ${file.title}... (Demo)`);
-            }
-        }
-
-        // --- CHATBOT ---
-        function toggleChatbot() {
-            const window = document.getElementById('chatbot-window');
-            window.classList.toggle('active');
-            lucide.createIcons();
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            const messagesDiv = document.getElementById('chat-messages');
-            const lang = document.documentElement.getAttribute('lang') || 'tr';
-            
-            messagesDiv.innerHTML += `
-                <div class="flex justify-end mb-3">
-                    <div class="bg-primary-600 text-white px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%] font-medium">${message}</div>
-                </div>
-            `;
-            
-            input.value = '';
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            
-            // Simple response simulation
-            setTimeout(() => {
-                const responses = {
-                    tr: [
-                        'Merhaba! Size nasıl yardımcı olabilirim?',
-                        'İngilizce öğrenme konusunda soru sormak isterseniz buradayım!',
-                        'Materyaller hakkında bilgi almak için "materyaller" yazabilirsiniz.',
-                        'Daha fazla bilgi için blog bölümünü ziyaret edebilirsiniz.'
-                    ],
-                    en: [
-                        'Hello! How can I help you?',
-                        'I\'m here if you want to ask about English learning!',
-                        'You can type "materials" to get info about materials.',
-                        'Visit the blog section for more information.'
-                    ]
-                };
-                
-                const randomResponse = responses[lang][Math.floor(Math.random() * responses[lang].length)];
-                
-                messagesDiv.innerHTML += `
-                    <div class="flex mb-3">
-                        <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${randomResponse}</div>
-                    </div>
-                `;
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }, 1000);
-        }
-
-        // --- UTILS ---
-        function copyToClipboard(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            const cleanText = text.replace(/^"|"$/g, '');
-            navigator.clipboard.writeText(cleanText).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.remove('translate-y-40', 'opacity-0');
-                setTimeout(() => {
-                    toast.classList.add('translate-y-40', 'opacity-0');
-                }, 3000);
-            });
-        }
-
-        // --- AUDIO PLAYER (Fixed) ---
-        let currentAudio = null;
-        let currentId = null;
-
-        function toggleAudio(id) {
-            const audio = document.getElementById('audio-' + id);
-            const icon = document.getElementById('icon-' + id);
-            const btn = document.getElementById('btn-' + id);
-
-            if (currentAudio === audio && !audio.paused) {
-                audio.pause();
-                const currentIcon = document.getElementById('icon-' + id);
-                if (currentIcon) currentIcon.setAttribute('data-lucide', 'play-circle');
-                btn.classList.remove('audio-playing');
-                currentAudio = null;
-                currentId = null;
-            } else {
-                if (currentAudio && currentAudio !== audio) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                    const oldIcon = document.getElementById('icon-' + currentId);
-                    const oldBtn = document.getElementById('btn-' + currentId);
-                    if (oldIcon) oldIcon.setAttribute('data-lucide', 'play-circle');
-                    if (oldBtn) oldBtn.classList.remove('audio-playing');
-                }
-                audio.play();
-                icon.setAttribute('data-lucide', 'pause-circle');
-                btn.classList.add('audio-playing');
-                currentAudio = audio;
-                currentId = id;
-            }
-            lucide.createIcons();
-
-            audio.onended = function() {
-                const freshIcon = document.getElementById('icon-' + id);
-                const freshBtn = document.getElementById('btn-' + id);
-                if (freshIcon) freshIcon.setAttribute('data-lucide', 'play-circle');
-                if (freshBtn) freshBtn.classList.remove('audio-playing');
-                lucide.createIcons();
-                if (currentAudio === audio) {
-                    currentAudio = null;
-                    currentId = null;
-                }
-            };
-        }
-
-        // --- INIT ---
-        document.addEventListener('DOMContentLoaded', function() {
-            initThemeWithAutoDetection();
-            renderBlog();
-            renderComments();
-            renderDownloads();
-            
-            const chatInput = document.getElementById('chat-input');
-            if (chatInput) {
-                chatInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') sendMessage();
-                });
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
