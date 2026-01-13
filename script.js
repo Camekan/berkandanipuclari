@@ -370,32 +370,51 @@ function copyToClipboard(elementId) {
     });
 }
 
-// === YOUTUBE AUTO-UPDATE (ADDED) ===
+// === YOUTUBE AUTO-UPDATE (WITH DEBUG LOGGING ADDED) ===
 async function fetchLatestVideo() {
+    console.log('🎬 Starting fetchLatestVideo...');
     try {
         const backendUrl = "https://berkan-ai-backend.lanselam.workers.dev/"; 
+        console.log('📡 Fetching from:', backendUrl);
+        
         const response = await fetch(backendUrl);
         const data = await response.json();
+        
+        console.log('📺 Backend response:', data);
 
         if (data.videoId) {
             const iframe = document.getElementById('latest-video');
+            console.log('🎯 Iframe found:', !!iframe);
+            
             if (iframe) {
-                iframe.src = `https://www.youtube.com/embed/${data.videoId}`;
+                const newSrc = `https://www.youtube.com/embed/${data.videoId}`;
+                iframe.src = newSrc;
+                console.log('✅ Video updated!');
+                console.log('📹 Video ID:', data.videoId);
+                console.log('📝 Video title:', data.title);
+                console.log('🔗 New iframe src:', newSrc);
+            } else {
+                console.error('❌ Iframe element #latest-video NOT FOUND in DOM!');
             }
+        } else {
+            console.error('❌ No videoId in backend response');
         }
     } catch (error) {
-        console.error("Error fetching video:", error);
+        console.error("❌ Error fetching video:", error);
     }
 }
 
 // === INIT ===
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM Content Loaded');
+    
     initThemeWithAutoDetection();
     renderBlog();
     renderComments();
     renderDownloads();
     
     // Auto-update YouTube on load
+    console.log('📺 Calling fetchLatestVideo...');
     fetchLatestVideo();
     
     const chatInput = document.getElementById('chat-input');
