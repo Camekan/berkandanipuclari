@@ -19,8 +19,22 @@ function toggleSearch() {
 }
 
 const searchableContent = [
-    { title: '6. Sınıf Full Rehber', titleEn: '6th Grade Full Guide', type: 'material', link: '#downloads', level: 'A1-A2', keywords: 'materyal download indir pdf book kitap' },
-    { title: 'Öğretmen Kasam', titleEn: 'Teacher Vault', type: 'material', link: '#downloads', level: 'Teacher', keywords: 'materyal ders planı lesson plan' },
+    { 
+        title: '6. Sınıf Full Rehber', 
+        titleEn: '6th Grade Full Guide', 
+        type: 'material', 
+        link: '#downloads', 
+        level: 'A1-A2',
+        keywords: 'materyal download indir pdf book kitap'
+    },
+    { 
+        title: 'Öğretmen Kasam', 
+        titleEn: 'Teacher Vault', 
+        type: 'material', 
+        link: '#downloads', 
+        level: 'Teacher',
+        keywords: 'materyal ders planı lesson plan'
+    },
     { title: 'Yol Haritası', titleEn: 'Roadmap', type: 'section', link: '#roadmap', keywords: 'plan program level seviye' },
     { title: 'Promptlar', titleEn: 'Prompts', type: 'section', link: '#prompts', keywords: 'ai chatgpt komut' },
     { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog', keywords: 'yazı makale article' },
@@ -40,6 +54,7 @@ function performSearch(query) {
     }
     
     const lowerQuery = query.toLowerCase();
+
     const filtered = searchableContent.filter(item => {
         const title = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
         return title.includes(lowerQuery) || (item.keywords && item.keywords.includes(lowerQuery));
@@ -226,13 +241,13 @@ function renderComments() {
 }
 
 // === DOWNLOADS ===
+// Put your Google Drive links here
 const downloadMaterials = [
     { 
         id: 1, 
         title: '6. Sınıf Full Rehber', 
         level: 'beginner', 
         size: '2.4 MB', 
-        // PASTE YOUR REAL GOOGLE DRIVE LINKS HERE
         url: 'https://drive.google.com/your-real-link-1' 
     },
     { 
@@ -325,7 +340,7 @@ async function sendMessage() {
         
         if (data.error) throw new Error(data.error);
 
-        // Get the AI text
+        // Get the AI text safely
         let aiResponse = "Hata: Cevap alınamadı.";
         if (data.candidates && data.candidates[0]?.content?.parts?.[0]) {
              aiResponse = data.candidates[0].content.parts[0].text;
