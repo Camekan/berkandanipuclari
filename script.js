@@ -16,13 +16,21 @@ async function fetchBloggerPosts() {
     try {
         // Fetch JSON feed from Blogger
         const res = await fetch(`${BLOGGER_URL}/feeds/posts/default?alt=json&max-results=3`);
-        if (!res.ok) throw new Error('Blogger feed failed');
+        
+        if (!res.ok) {
+            if (res.status === 404) throw new Error("Blog Bulunamadı (Check URL)");
+            throw new Error('Blogger Connection Failed');
+        }
         
         const data = await res.json();
         
-        // If no posts found
+        // CHECK: Is the blog empty?
         if (!data.feed || !data.feed.entry || data.feed.entry.length === 0) {
-            container.innerHTML = '<p class="text-center col-span-full text-slate-500">Henüz yazı yok. (No posts yet)</p>';
+            container.innerHTML = `
+                <div class="col-span-full text-center p-8 bg-slate-50 dark:bg-slate-800 rounded-3xl">
+                    <p class="text-slate-500 font-bold mb-2">Henüz yazı yok / No posts yet</p>
+                    <a href="${BLOGGER_URL}" target="_blank" class="text-primary-600 hover:underline">İlk yazıyı yazmak için tıklayın</a>
+                </div>`;
             return;
         }
 
@@ -31,23 +39,22 @@ async function fetchBloggerPosts() {
             // 1. Get Title
             const title = post.title.$t;
             
-            // 2. Get Date
-            const date = new Date(post.published.$t).toLocaleDateString('tr-TR', {
-                day: 'numeric', month: 'long', year: 'numeric'
-            });
+            // 2. Get Date AND TIME (EXACT TIME ADDED)
+            const dateObj = new Date(post.published.$t);
+            const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+            const timeStr = dateObj.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
-            // 3. Get Link (Find the one that is 'alternate' aka the real link)
+            // 3. Get Link
             const linkObj = post.link.find(l => l.rel === 'alternate');
             const link = linkObj ? linkObj.href : '#';
 
             // 4. Get Image
-            // Blogger thumbnails are small (/s72-c/). We replace it with /w600/ to get high quality.
-            let img = 'https://images.unsplash.com/photo-1499750310159-52f8f6032d59?w=800&q=80'; // Fallback image
+            let img = 'https://images.unsplash.com/photo-1499750310159-52f8f6032d59?w=800&q=80';
             if (post.media$thumbnail) {
                 img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/'); 
             }
 
-            // 5. Get Excerpt (Clean HTML tags)
+            // 5. Get Excerpt
             const rawContent = post.content ? post.content.$t : (post.summary ? post.summary.$t : '');
             const div = document.createElement('div');
             div.innerHTML = rawContent;
@@ -62,8 +69,9 @@ async function fetchBloggerPosts() {
                             Blogger
                         </div>
                     </div>
-                    <span class="text-xs font-bold text-slate-400 mb-2 flex items-center gap-1">
-                        <i data-lucide="calendar" class="w-3 h-3"></i> ${date}
+                    <span class="text-xs font-bold text-slate-400 mb-2 flex items-center gap-2">
+                        <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${dateStr}</span>
+                        <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${timeStr}</span>
                     </span>
                     <h3 class="font-heading font-bold text-xl mb-3 text-slate-900 dark:text-white leading-tight">${title}</h3>
                     <p class="text-slate-600 dark:text-slate-400 mb-4 text-sm flex-grow line-clamp-3">${excerpt}</p>
@@ -80,7 +88,9 @@ async function fetchBloggerPosts() {
         console.error("Blogger Error:", error);
         container.innerHTML = `
             <div class="col-span-full text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-2xl text-red-600">
-                <p>Blog yazıları yüklenemedi. (Check Blogger URL in script.js)</p>
+                <p class="font-bold">Hata: Blog verisi alınamadı.</p>
+                <p class="text-sm mt-1">Lütfen Blogger'da en az 1 yazı paylaştığınızdan emin olun.</p>
+                <a href="${BLOGGER_URL}" target="_blank" class="text-xs underline mt-2 block">${BLOGGER_URL}</a>
             </div>`;
     }
 }
@@ -100,7 +110,7 @@ const searchableContent = [
     { title: '6. Sınıf Full Rehber', link: '#downloads', type: 'Material' },
     { title: 'Öğretmen Kasası', link: '#downloads', type: 'Material' },
     { title: 'Yol Haritası (Roadmap)', link: '#roadmap', type: 'Section' },
-    { title: 'Blog', link: 'https://berkandanipuclari.blogspot.com/', type: 'External' }
+    { title: 'Blog', link: BLOGGER_URL, type: 'External' }
 ];
 
 function performSearch(query) {
@@ -186,7 +196,7 @@ async function sendMessage() {
 // === INIT ===
 document.addEventListener('DOMContentLoaded', () => {
     initThemeWithAutoDetection();
-    fetchBloggerPosts(); // <--- HERE IS THE NEW FUNCTION
+    fetchBloggerPosts(); // Loads Blogger posts with TIME
     fetchLatestVideo();
     
     // Audio Players
@@ -203,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(typeof lucide !== 'undefined') lucide.createIcons();
 });
 
-// Audio Toggle Helper
 function toggleAudio(id) {
     const audio = document.getElementById('audio-' + id);
     if(audio.paused) audio.play();
