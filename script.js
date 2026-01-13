@@ -2,108 +2,193 @@
 // CONFIGURATION
 // ==========================================
 const BLOGGER_URL = "https://berkandanipuclari.blogspot.com"; 
+const BACKEND_URL = "https://berkan-ai-backend.lanselam.workers.dev"; // Your worker URL
 // ==========================================
 
-// === ICONS & INIT ===
-if(typeof lucide !== 'undefined') lucide.createIcons();
-const html = document.documentElement;
-
-// === 1. LANGUAGE TOGGLE (FIXED) ===
-function toggleLanguage() {
-    // Switch the attribute on the HTML tag
-    const currentLang = html.getAttribute('lang');
-    const newLang = currentLang === 'tr' ? 'en' : 'tr';
+// === INIT ===
+document.addEventListener('DOMContentLoaded', () => {
+    if(typeof lucide !== 'undefined') lucide.createIcons();
     
-    html.setAttribute('lang', newLang);
-    localStorage.lang = newLang;
+    // Auto-Run Functions
+    fetchBloggerPosts();
+    fetchLatestVideo();
+    initTheme();
+    initLanguage();
+    tryAutoplayMusic(); // Try to start music
+});
+
+// === 1. MUSIC & AUDIO LOGIC ===
+let isMusicPlaying = false;
+
+function tryAutoplayMusic() {
+    const bgMusic = document.getElementById('bg-music');
+    if (!bgMusic) return;
+
+    // Try to play automatically
+    const playPromise = bgMusic.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.then(_ => {
+            // Autoplay started!
+            isMusicPlaying = true;
+            updateMusicUI(true);
+        }).catch(error => {
+            // Autoplay was prevented. 
+            // Add a one-time click listener to the document to start music on first interaction
+            const startMusicOnInteraction = () => {
+                bgMusic.play();
+                isMusicPlaying = true;
+                updateMusicUI(true);
+                document.removeEventListener('click', startMusicOnInteraction);
+            };
+            document.addEventListener('click', startMusicOnInteraction);
+        });
+    }
 }
 
-// Apply saved language on load
-if (localStorage.lang === 'en') {
-    html.setAttribute('lang', 'en');
-} else {
-    html.setAttribute('lang', 'tr');
+function toggleBgMusic() {
+    const bgMusic = document.getElementById('bg-music');
+    if (!bgMusic) return;
+
+    if (bgMusic.paused) {
+        bgMusic.play();
+        isMusicPlaying = true;
+    } else {
+        bgMusic.pause();
+        isMusicPlaying = false;
+    }
+    updateMusicUI(isMusicPlaying);
 }
 
-document.getElementById('lang-toggle')?.addEventListener('click', toggleLanguage);
-
-// === 2. COPY TO CLIPBOARD (FIXED) ===
-function copyToClipboard(elementId) {
-    const textElement = document.getElementById(elementId);
-    if (!textElement) return;
+function updateMusicUI(isPlaying) {
+    const musicIcon = document.getElementById('music-icon');
+    const btn = document.querySelector('.music-widget button');
     
-    // Remove quotes if present
-    const textToCopy = textElement.innerText.replace(/^"|"$/g, '');
-    
-    navigator.clipboard.writeText(textToCopy).then(() => {
-        // Show Toast
-        const toast = document.getElementById('toast');
-        toast.classList.remove('translate-y-40', 'opacity-0'); // Show
-        setTimeout(() => {
-            toast.classList.add('translate-y-40', 'opacity-0'); // Hide after 3s
-        }, 3000);
-    }).catch(err => console.error('Copy failed:', err));
+    if (isPlaying) {
+        musicIcon.setAttribute('data-lucide', 'pause');
+        btn.classList.add('audio-playing', 'border-indigo-400');
+    } else {
+        musicIcon.setAttribute('data-lucide', 'music');
+        btn.classList.remove('audio-playing', 'border-indigo-400');
+    }
+    if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// === 3. BLOGGER FEED (DYNAMIC) ===
-async function fetchBloggerPosts() {
-    const container = document.getElementById('blog-posts');
-    if (!container) return; 
+function toggleAudio(id) {
+    const audio = document.getElementById('audio-' + id);
+    const icon = document.getElementById('icon-' + id);
+    const btn = document.getElementById('btn-' + id);
 
-    // Using JSONP to avoid CORS errors
-    const script = document.createElement('script');
-    script.src = `${BLOGGER_URL}/feeds/posts/default?alt=json-in-script&max-results=3&callback=displayBloggerPosts`;
-    script.onerror = () => {
-        container.innerHTML = '<p class="text-center text-red-500 col-span-full">Blog verisi yüklenemedi.</p>';
+    if (audio.paused) {
+        // Stop others
+        document.querySelectorAll('audio').forEach(a => { 
+            if (a.id !== 'bg-music' && a !== audio) { 
+                a.pause(); 
+                a.currentTime = 0; 
+                // Reset other icons (simplified)
+                const otherId = a.id.replace('audio-', '');
+                const otherIcon = document.getElementById('icon-' + otherId);
+                if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
+            } 
+        });
+        
+        audio.play();
+        icon.setAttribute('data-lucide', 'pause-circle');
+        btn.classList.add('animate-pulse', 'bg-indigo-100');
+        
+        audio.onended = () => {
+            icon.setAttribute('data-lucide', 'play-circle');
+            btn.classList.remove('animate-pulse', 'bg-indigo-100');
+            if(typeof lucide !== 'undefined') lucide.createIcons();
+        };
+    } else {
+        audio.pause();
+        icon.setAttribute('data-lucide', 'play-circle');
+        btn.classList.remove('animate-pulse', 'bg-indigo-100');
+    }
+    if(typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+// === 2. THEME & LANGUAGE ===
+function initTheme() {
+    const html = document.documentElement;
+    const hour = new Date().getHours();
+    // Auto dark mode if user hasn't set preference, based on time (7PM - 7AM)
+    const isNight = hour >= 19 || hour < 7;
+    
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && isNight)) {
+        html.classList.add('dark');
+    }
+    
+    document.getElementById('theme-toggle').onclick = () => {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
     };
+}
+
+function initLanguage() {
+    const html = document.documentElement;
+    const savedLang = localStorage.getItem('lang') || 'tr';
+    html.setAttribute('lang', savedLang);
+    
+    document.getElementById('lang-toggle').onclick = () => {
+        const current = html.getAttribute('lang');
+        const next = current === 'tr' ? 'en' : 'tr';
+        html.setAttribute('lang', next);
+        localStorage.setItem('lang', next);
+    };
+}
+
+// === 3. BLOGGER FEED (DYNAMIC JSONP) ===
+function fetchBloggerPosts() {
+    const script = document.createElement('script');
+    // max-results=3 to show only 3 posts
+    script.src = `${BLOGGER_URL}/feeds/posts/default?alt=json-in-script&max-results=3&callback=displayBloggerPosts`;
     document.body.appendChild(script);
 }
 
-// Callback function for Blogger
 window.displayBloggerPosts = function(data) {
     const container = document.getElementById('blog-posts');
     if (!container) return;
 
-    if (!data.feed || !data.feed.entry || data.feed.entry.length === 0) {
-        container.innerHTML = '<p class="text-center text-slate-500 col-span-full">Henüz yazı yok.</p>';
+    if (!data.feed || !data.feed.entry) {
+        container.innerHTML = '<p class="text-center text-slate-500 w-full col-span-full">Henüz yazı bulunamadı.</p>';
         return;
     }
 
     container.innerHTML = data.feed.entry.map(post => {
         const title = post.title.$t;
+        const link = post.link.find(l => l.rel === 'alternate').href;
         const dateObj = new Date(post.published.$t);
         const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-        const timeStr = dateObj.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
         
-        // Find Link
-        const link = post.link.find(l => l.rel === 'alternate').href;
-
-        // Find Image (High Res)
-        let img = 'https://images.unsplash.com/photo-1499750310159-52f8f6032d59?w=800&q=80';
+        // Try to find a thumbnail, fallback to Unsplash
+        let img = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80';
         if (post.media$thumbnail) {
-            img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/');
+            img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/'); // Get higher res
         }
 
-        // Create Excerpt
-        const div = document.createElement('div');
-        div.innerHTML = post.content ? post.content.$t : (post.summary ? post.summary.$t : '');
-        const excerpt = (div.textContent || div.innerText || '').substring(0, 100) + '...';
+        // Extract snippet text
+        const contentDiv = document.createElement('div');
+        contentDiv.innerHTML = post.content ? post.content.$t : post.summary.$t;
+        const snippet = contentDiv.innerText.substring(0, 100) + '...';
 
         return `
-            <article class="premium-box p-6 rounded-3xl flex flex-col h-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:shadow-xl transition-all group" onclick="window.open('${link}', '_blank')">
-                <div class="h-48 bg-gray-200 rounded-2xl mb-4 overflow-hidden relative">
-                    <img src="${img}" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500">
-                    <div class="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-bold">Blogger</div>
+            <article class="premium-box p-0 rounded-3xl overflow-hidden group cursor-pointer h-full flex flex-col bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all" onclick="window.open('${link}', '_blank')">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="${img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${title}">
+                    <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs font-bold">
+                        ${dateStr}
+                    </div>
                 </div>
-                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3">
-                    <i data-lucide="calendar" class="w-3 h-3"></i> ${dateStr}
-                    <i data-lucide="clock" class="w-3 h-3 ml-2"></i> ${timeStr}
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2 leading-tight group-hover:text-primary-600 transition-colors">${title}</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 flex-grow line-clamp-3">${snippet}</p>
+                    <div class="text-primary-600 dark:text-primary-400 font-bold text-sm mt-auto flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        <span class="lang-tr">Devamını Oku</span><span class="lang-en">Read More</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
                 </div>
-                <h3 class="font-heading font-bold text-xl mb-2 text-slate-900 dark:text-white leading-tight">${title}</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 flex-grow mb-4">${excerpt}</p>
-                <button class="text-blue-600 font-bold hover:underline text-left mt-auto flex items-center gap-1">
-                    <span class="lang-tr">Devamını Oku</span><span class="lang-en">Read More</span> <i data-lucide="external-link" class="w-4 h-4"></i>
-                </button>
             </article>
         `;
     }).join('');
@@ -111,58 +196,172 @@ window.displayBloggerPosts = function(data) {
     if(typeof lucide !== 'undefined') lucide.createIcons();
 };
 
-// === 4. YOUTUBE AUTO UPDATE ===
+// === 4. YOUTUBE (BACKEND FETCH) ===
 async function fetchLatestVideo() {
     try {
-        const response = await fetch("https://berkan-ai-backend.lanselam.workers.dev/");
+        // Fetch from your worker
+        const response = await fetch(BACKEND_URL); 
         const data = await response.json();
-        if (data.videoId) {
+        
+        if (data && data.videoId) {
             const iframe = document.getElementById('latest-video');
-            if (iframe) iframe.src = `https://www.youtube.com/embed/${data.videoId}`;
+            if(iframe) {
+                iframe.src = `https://www.youtube.com/embed/${data.videoId}?rel=0`;
+            }
         }
-    } catch (e) { console.error(e); }
+    } catch (e) {
+        console.error("Video fetch error:", e);
+        // Fallback to a playlist or default video if fetch fails
+        const iframe = document.getElementById('latest-video');
+        if(iframe && !iframe.src) {
+            iframe.src = "https://www.youtube.com/embed/videoseries?list=PLdjrP3ZbJABbPN1aipZwB7zf1CsjB2ZZo";
+        }
+    }
 }
 
-// === 5. SEARCH & UI ===
+// === 5. CHATBOT (REAL GEMINI BACKEND) ===
+function toggleChatbot() {
+    document.getElementById('chatbot-window').classList.toggle('active');
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const container = document.getElementById('chat-messages');
+    const sendBtn = document.getElementById('send-btn');
+    const msg = input.value.trim();
+    
+    if (!msg) return;
+
+    // UI Updates
+    input.value = '';
+    sendBtn.disabled = true;
+    
+    // Add User Message
+    container.innerHTML += `
+        <div class="bg-primary-600 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[85%] shadow-md mb-3">
+            ${msg}
+        </div>
+    `;
+    container.scrollTop = container.scrollHeight;
+
+    // Add Loading Bubble
+    const loadingId = 'loading-' + Date.now();
+    container.innerHTML += `
+        <div id="${loadingId}" class="bg-slate-100 dark:bg-slate-700 text-slate-500 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] shadow-sm mb-3 flex gap-1">
+            <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
+            <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-75"></span>
+            <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-150"></span>
+        </div>
+    `;
+    container.scrollTop = container.scrollHeight;
+
+    try {
+        // CALL YOUR WORKER
+        // Assuming your worker accepts POST to root or /chat with JSON body { message: "..." }
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg })
+        });
+
+        if (!response.ok) throw new Error("API Error");
+
+        const data = await response.json();
+        const reply = data.reply || data.response || "Sorry, I couldn't get a response.";
+
+        // Remove loading
+        document.getElementById(loadingId).remove();
+
+        // Render Markdown Response
+        const htmlReply = marked.parse(reply);
+        
+        container.innerHTML += `
+            <div class="bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] shadow-sm mb-3 prose prose-sm dark:prose-invert">
+                ${htmlReply}
+            </div>
+        `;
+
+    } catch (error) {
+        console.error(error);
+        document.getElementById(loadingId).remove();
+        container.innerHTML += `
+            <div class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] mb-3 text-xs font-bold">
+                Error connecting to AI. Please try again later.
+            </div>
+        `;
+    }
+
+    sendBtn.disabled = false;
+    container.scrollTop = container.scrollHeight;
+}
+
+// === 6. UI UTILS ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
-    if (modal.classList.contains('active')) setTimeout(() => document.getElementById('search-input').focus(), 100);
-    else document.getElementById('search-input').value = '';
+    if (modal.classList.contains('active')) {
+        setTimeout(() => document.getElementById('search-input').focus(), 100);
+    }
 }
 
-// === INIT ===
-document.addEventListener('DOMContentLoaded', () => {
-    // Init functions
-    fetchBloggerPosts();
-    fetchLatestVideo();
+function performSearch(query) {
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = '';
     
-    // Theme Init
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && new Date().getHours() >= 20)) {
-        html.classList.add('dark');
-    }
-    document.getElementById('theme-toggle').onclick = () => {
-        html.classList.toggle('dark');
-        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-    };
+    if (query.length < 2) return;
 
-    // Chatbot Toggle
-    const chatWindow = document.getElementById('chatbot-window');
-    document.querySelectorAll('.chatbot-toggle-btn').forEach(btn => {
-        btn.addEventListener('click', () => chatWindow.classList.toggle('active'));
+    // Static Search Data (Can be expanded)
+    const data = [
+        { t: "Ders Planı (Lesson Plan)", l: "#prompts" },
+        { t: "Quiz Hazırlayıcı", l: "#prompts" },
+        { t: "Roadmap Level 1", l: "#roadmap" },
+        { t: "Download: Teacher Vault", l: "#downloads" },
+        { t: "Blog Posts", l: "#blog" },
+        { t: "YouTube Channel", l: "#social-feeds" }
+    ];
+
+    const filtered = data.filter(i => i.t.toLowerCase().includes(query.toLowerCase()));
+    
+    if(filtered.length === 0) {
+        resultsContainer.innerHTML = '<div class="p-3 text-slate-500 text-sm">Sonuç bulunamadı.</div>';
+        return;
+    }
+
+    filtered.forEach(item => {
+        resultsContainer.innerHTML += `
+            <div class="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl cursor-pointer" onclick="window.location.href='${item.l}'; toggleSearch();">
+                <span class="font-bold text-slate-800 dark:text-slate-200">${item.t}</span>
+            </div>
+        `;
+    });
+}
+
+function copyToClipboard(elementId) {
+    const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
+    navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.remove('opacity-0', 'translate-y-40');
+        setTimeout(() => toast.classList.add('opacity-0', 'translate-y-40'), 3000);
+    });
+}
+
+// Scrollspy
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    let current = '';
+
+    sections.forEach(section => {
+        const top = section.offsetTop;
+        if (pageYOffset >= (top - 200)) {
+            current = section.getAttribute('id');
+        }
     });
 
-    if(typeof lucide !== 'undefined') lucide.createIcons();
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current) && current !== '') {
+            link.classList.add('active');
+        }
+    });
 });
-
-// Audio Helper
-function toggleAudio(id) {
-    const audio = document.getElementById('audio-' + id);
-    if(audio.paused) {
-        document.querySelectorAll('audio').forEach(a => { if(a !== audio) { a.pause(); a.currentTime = 0; } });
-        audio.play();
-    } else {
-        audio.pause();
-    }
-}
