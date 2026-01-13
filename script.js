@@ -370,12 +370,33 @@ function copyToClipboard(elementId) {
     });
 }
 
+// === YOUTUBE AUTO-UPDATE (ADDED) ===
+async function fetchLatestVideo() {
+    try {
+        const backendUrl = "https://berkan-ai-backend.lanselam.workers.dev/"; 
+        const response = await fetch(backendUrl);
+        const data = await response.json();
+
+        if (data.videoId) {
+            const iframe = document.getElementById('latest-video');
+            if (iframe) {
+                iframe.src = `https://www.youtube.com/embed/${data.videoId}`;
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching video:", error);
+    }
+}
+
 // === INIT ===
 document.addEventListener('DOMContentLoaded', function() {
     initThemeWithAutoDetection();
     renderBlog();
     renderComments();
     renderDownloads();
+    
+    // Auto-update YouTube on load
+    fetchLatestVideo();
     
     const chatInput = document.getElementById('chat-input');
     if(chatInput) chatInput.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
