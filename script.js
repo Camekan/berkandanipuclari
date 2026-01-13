@@ -9,7 +9,6 @@ const BACKEND_URL = "https://berkan-ai-backend.lanselam.workers.dev"; // Your wo
 document.addEventListener('DOMContentLoaded', () => {
     if(typeof lucide !== 'undefined') lucide.createIcons();
     
-    // Auto-Run Functions
     fetchBloggerPosts();
     fetchLatestVideo();
     initTheme();
@@ -26,7 +25,6 @@ function tryAutoplayMusic() {
     if (!bgMusic) return;
 
     const playPromise = bgMusic.play();
-    
     if (playPromise !== undefined) {
         playPromise.then(_ => {
             isMusicPlaying = true;
@@ -210,7 +208,7 @@ async function fetchLatestVideo() {
     }
 }
 
-// === 5. CHATBOT ===
+// === 5. CHATBOT (CONNECTED TO WORKER) ===
 function toggleChatbot() {
     document.getElementById('chatbot-window').classList.toggle('active');
 }
@@ -257,7 +255,7 @@ async function sendMessage() {
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const data = await response.json();
-        const reply = data.reply || data.response || "Sorry, I received an empty response.";
+        const reply = data.reply || "Sorry, I received an empty response.";
 
         document.getElementById(loadingId).remove();
 
