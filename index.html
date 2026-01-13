@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 <head>
@@ -403,14 +404,19 @@
                     <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i>
                     Yol Haritası
                 </a>
-                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-8 sm:px-10 py-4 
-    <section id="downloads" class="py-24 px-6">
+                <a href="#roadmap" class="group bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-600 px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 shadow-lg btn-3d lang-en">
+                    <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                    Roadmap
+                </a>
+            </div>
+        </section>
+<section id="downloads" class="py-24 px-6">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="font-heading text-4xl font-black mb-4 lang-tr">Materyalleri İndir</h2>
             <h2 class="font-heading text-4xl font-black mb-4 lang-en">Download Materials</h2>
         </div>
-
+       
         <div class="flex flex-wrap justify-center gap-3 mb-8">
             <button onclick="filterDownloads('all')" class="filter-btn active px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
                 <span class="lang-tr">Tümü</span><span class="lang-en">All</span>
@@ -422,11 +428,10 @@
                 <span class="lang-tr">Öğretmen</span><span class="lang-en">Teacher</span>
             </button>
         </div>
-
+       
         <div id="downloads-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
 </section>
-
 <section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
@@ -437,12 +442,11 @@
         <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </div>
 </section>
-
 <section id="comments" class="py-24 px-6">
     <div class="max-w-4xl mx-auto">
         <h2 class="font-heading text-4xl font-black mb-12 text-center lang-tr">Yorumlar</h2>
         <h2 class="font-heading text-4xl font-black mb-12 text-center lang-en">Comments</h2>
-
+       
         <div class="premium-box p-8 rounded-3xl mb-8">
             <h3 class="font-bold text-xl mb-4 lang-tr">Yorum Yap</h3>
             <h3 class="font-bold text-xl mb-4 lang-en">Leave a Comment</h3>
@@ -452,23 +456,20 @@
                 <span class="lang-tr">Gönder</span><span class="lang-en">Submit</span>
             </button>
         </div>
-
+       
         <div id="comments-list" class="space-y-4"></div>
     </div>
 </section>
-
+    </main>
 <div class="chatbot-widget">
     <button onclick="toggleChatbot()" class="bg-primary-600 hover:bg-primary-700 text-white p-4 rounded-full shadow-2xl btn-3d">
         <i data-lucide="message-circle" class="w-6 h-6"></i>
     </button>
 </div>
-
 <div id="chatbot-window" class="chatbot-window premium-box rounded-3xl">
     <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-        <div>
-            <h3 class="font-bold lang-tr">AI Asistan</h3>
-            <h3 class="font-bold lang-en">AI Assistant</h3>
-        </div>
+        <h3 class="font-bold lang-tr">AI Asistan</h3>
+        <h3 class="font-bold lang-en">AI Assistant</h3>
         <button onclick="toggleChatbot()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg">
             <i data-lucide="x" class="w-5 h-5"></i>
         </button>
@@ -483,16 +484,14 @@
         </div>
     </div>
 </div>
-
-<script>
+    <script>
 // All your original JavaScript code stays here, then add these NEW functions:
-
 // === AUTO DARK MODE DETECTION ===
 function initThemeWithAutoDetection() {
     const html = document.documentElement;
     const savedTheme = localStorage.getItem('theme');
     const hour = new Date().getHours();
-
+   
     if (savedTheme) {
         if (savedTheme === 'dark') html.classList.add('dark');
         else html.classList.remove('dark');
@@ -500,33 +499,24 @@ function initThemeWithAutoDetection() {
         html.classList.add('dark');
     }
 }
-
 // Update your existing theme toggle
-const themeToggleBtn = document.getElementById('theme-toggle');
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', function() {
-        const html = document.documentElement;
-        html.classList.toggle('dark');
-        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-    });
-}
-
+document.getElementById('theme-toggle').addEventListener('click', function() {
+    const html = document.documentElement;
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+});
 // === SEARCH FUNCTIONALITY ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
     if (modal.classList.contains('active')) {
-        const input = document.getElementById('search-input');
-        if (input) input.focus();
+        document.getElementById('search-input').focus();
     } else {
-        const input = document.getElementById('search-input');
-        if (input) input.value = '';
-        const resultsEl = document.getElementById('search-results');
-        if (resultsEl) resultsEl.innerHTML = '<p class="text-slate-500 text-sm font-medium lang-tr">Aramaya başlamak için yazmaya başlayın...</p><p class="text-slate-500 text-sm font-medium lang-en">Start typing to search...</p>';
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-results').innerHTML = '<p class="text-slate-500 text-sm font-medium lang-tr">Aramaya başlamak için yazmaya başlayın...</p><p class="text-slate-500 text-sm font-medium lang-en">Start typing to search...</p>';
     }
-    if (window.lucide && lucide.createIcons) lucide.createIcons();
+    lucide.createIcons();
 }
-
 const searchableContent = [
     { title: '6. Sınıf Full Rehber', titleEn: '6th Grade Full Guide', type: 'material', link: '#downloads', level: 'A1-A2' },
     { title: 'Öğretmen Kasam', titleEn: 'Teacher Vault', type: 'material', link: '#downloads', level: 'Teacher' },
@@ -535,32 +525,29 @@ const searchableContent = [
     { title: 'Blog', titleEn: 'Blog', type: 'section', link: '#blog' },
     { title: 'AI ile İngilizce Öğrenme', titleEn: 'Learn English with AI', type: 'blog', link: '#blog' }
 ];
-
 function performSearch(query) {
     const results = document.getElementById('search-results');
     const lang = document.documentElement.getAttribute('lang') || 'tr';
-
-    if (!results) return;
-
+   
     if (query.length < 2) {
-        results.innerHTML = lang === 'tr' 
+        results.innerHTML = lang === 'tr'
             ? '<p class="text-slate-500 text-sm font-medium">Aramaya başlamak için yazmaya başlayın...</p>'
             : '<p class="text-slate-500 text-sm font-medium">Start typing to search...</p>';
         return;
     }
-
+   
     const filtered = searchableContent.filter(item => {
         const searchIn = lang === 'tr' ? item.title.toLowerCase() : item.titleEn.toLowerCase();
         return searchIn.includes(query.toLowerCase());
     });
-
+   
     if (filtered.length === 0) {
         results.innerHTML = lang === 'tr'
             ? '<p class="text-slate-500 text-sm font-medium">Sonuç bulunamadı.</p>'
             : '<p class="text-slate-500 text-sm font-medium">No results found.</p>';
         return;
     }
-
+   
     results.innerHTML = filtered.map(item => `
         <a href="${item.link}" onclick="toggleSearch()" class="block p-4 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 cursor-pointer transition-colors">
             <h4 class="font-bold mb-1">${lang === 'tr' ? item.title : item.titleEn}</h4>
@@ -568,7 +555,6 @@ function performSearch(query) {
         </a>
     `).join('');
 }
-
 // === BLOG SECTION ===
 const blogPosts = [
     {
@@ -605,12 +591,11 @@ const blogPosts = [
         contentEn: 'Shadowing technique, AI conversation partners and more...'
     }
 ];
-
 function renderBlog() {
     const lang = document.documentElement.getAttribute('lang') || 'tr';
     const blogSection = document.getElementById('blog-posts');
     if (!blogSection) return;
-
+   
     blogSection.innerHTML = blogPosts.map(post => `
         <article class="premium-box p-6 rounded-3xl cursor-pointer hover:scale-105 transition-transform" onclick="openBlogPost(${post.id})">
             <div class="h-48 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl mb-4"></div>
@@ -622,23 +607,18 @@ function renderBlog() {
             </button>
         </article>
     `).join('');
-    if (window.lucide && lucide.createIcons) lucide.createIcons();
+    lucide.createIcons();
 }
-
 function openBlogPost(id) {
     const post = blogPosts.find(p => p.id === id);
     const lang = document.documentElement.getAttribute('lang') || 'tr';
-    if (!post) return;
     alert(`${lang === 'tr' ? post.title : post.titleEn}\n\n${lang === 'tr' ? post.content : post.contentEn}`);
 }
-
 // === COMMENTS SECTION WITH MULTILINGUAL PROFANITY FILTER ===
 const badWordsTR = ['kötü', 'aptal', 'salak', 'ahmak', 'gerizekalı'];
 const badWordsEN = ['bad', 'stupid', 'idiot', 'fool', 'dumb'];
 const allBadWords = [...badWordsTR, ...badWordsEN];
-
 let comments = [];
-
 function filterProfanity(text) {
     let filtered = text;
     allBadWords.forEach(word => {
@@ -647,43 +627,41 @@ function filterProfanity(text) {
     });
     return filtered;
 }
-
 function addComment() {
     const name = document.getElementById('comment-name').value.trim();
     const text = document.getElementById('comment-text').value.trim();
     const lang = document.documentElement.getAttribute('lang') || 'tr';
-
+   
     if (!name || !text) {
         alert(lang === 'tr' ? 'Lütfen tüm alanları doldurun!' : 'Please fill all fields!');
         return;
     }
-
+   
     const filteredName = filterProfanity(name);
     const filteredText = filterProfanity(text);
-
+   
     comments.unshift({
         name: filteredName,
         text: filteredText,
         date: new Date().toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US')
     });
-
+   
     document.getElementById('comment-name').value = '';
     document.getElementById('comment-text').value = '';
     renderComments();
-
+   
     alert(lang === 'tr' ? 'Yorumunuz eklendi!' : 'Your comment has been added!');
 }
-
 function renderComments() {
     const container = document.getElementById('comments-list');
     if (!container) return;
-
+   
     if (comments.length === 0) {
         const lang = document.documentElement.getAttribute('lang') || 'tr';
         container.innerHTML = `<p class="text-center text-slate-500">${lang === 'tr' ? 'Henüz yorum yok. İlk yorumu siz yapın!' : 'No comments yet. Be the first to comment!'}</p>`;
         return;
     }
-
+   
     container.innerHTML = comments.map(c => `
         <div class="premium-box p-6 rounded-3xl">
             <div class="flex items-center gap-3 mb-3">
@@ -699,35 +677,29 @@ function renderComments() {
         </div>
     `).join('');
 }
-
 // === AI CHATBOT ===
 function toggleChatbot() {
-    const windowEl = document.getElementById('chatbot-window');
-    if (!windowEl) return;
-    windowEl.classList.toggle('active');
-    if (window.lucide && lucide.createIcons) lucide.createIcons();
+    const window = document.getElementById('chatbot-window');
+    window.classList.toggle('active');
+    lucide.createIcons();
 }
-
 async function sendMessage() {
     const input = document.getElementById('chat-input');
-    if (!input) return;
     const message = input.value.trim();
     if (!message) return;
-
+   
     const messagesDiv = document.getElementById('chat-messages');
     const lang = document.documentElement.getAttribute('lang') || 'tr';
-
-    if (messagesDiv) {
-        messagesDiv.innerHTML += `
-            <div class="flex justify-end mb-3">
-                <div class="bg-primary-600 text-white px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%] font-medium">${message}</div>
-            </div>
-        `;
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-
+   
+    messagesDiv.innerHTML += `
+        <div class="flex justify-end mb-3">
+            <div class="bg-primary-600 text-white px-4 py-2 rounded-2xl rounded-tr-sm max-w-[80%] font-medium">${message}</div>
+        </div>
+    `;
+   
     input.value = '';
-
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+   
     // Simple responses (replace with Claude API)
     setTimeout(() => {
         const responses = {
@@ -739,25 +711,22 @@ async function sendMessage() {
             ],
             en: [
                 'Hello! How can I help you?',
-                'I\\'m here if you want to ask about English learning!',
+                'I\'m here if you want to ask about English learning!',
                 'You can type "materials" to get info about materials.',
                 'Visit the blog section for more information.'
             ]
         };
-
+       
         const randomResponse = responses[lang][Math.floor(Math.random() * responses[lang].length)];
-
-        if (messagesDiv) {
-            messagesDiv.innerHTML += `
-                <div class="flex mb-3">
-                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${randomResponse}</div>
-                </div>
-            `;
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-    }, 800);
+       
+        messagesDiv.innerHTML += `
+            <div class="flex mb-3">
+                <div class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">${randomResponse}</div>
+            </div>
+        `;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }, 1000);
 }
-
 // Enter key support for chatbot
 document.addEventListener('DOMContentLoaded', function() {
     const chatInput = document.getElementById('chat-input');
@@ -767,7 +736,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
 // === DOWNLOADS SECTION WITH FILTERS ===
 const downloadMaterials = [
     { id: 1, title: '6. Sınıf Full Rehber.docx', level: 'beginner', size: '2.4 MB', type: 'docx', url: 'https://your-drive-link-here.com/file1' },
@@ -776,14 +744,13 @@ const downloadMaterials = [
     { id: 4, title: 'IELTS Preparation C1.pdf', level: 'advanced', size: '3.2 MB', type: 'pdf', url: 'https://your-drive-link-here.com/file4' },
     { id: 5, title: 'Speaking Practice B1-B2.docx', level: 'intermediate', size: '1.5 MB', type: 'docx', url: 'https://your-drive-link-here.com/file5' }
 ];
-
 function renderDownloads(filter = 'all') {
     const grid = document.getElementById('downloads-grid');
     if (!grid) return;
-
+   
     const lang = document.documentElement.getAttribute('lang') || 'tr';
     const filtered = filter === 'all' ? downloadMaterials : downloadMaterials.filter(m => m.level === filter);
-
+   
     grid.innerHTML = filtered.map(m => `
         <div class="premium-box p-6 rounded-3xl">
             <div class="flex items-start justify-between mb-4">
@@ -800,30 +767,25 @@ function renderDownloads(filter = 'all') {
             </button>
         </div>
     `).join('');
-
-    if (window.lucide && lucide.createIcons) lucide.createIcons();
+   
+    lucide.createIcons();
 }
-
-function filterDownloads(level, evt) {
-    // support both event from inline onclick and programmatic
-    const allBtns = document.querySelectorAll('.filter-btn');
-    allBtns.forEach(btn => btn.classList.remove('active'));
-    if (evt && evt.target) evt.target.classList.add('active');
+function filterDownloads(level) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
     renderDownloads(level);
 }
-
 function downloadFile(id) {
     const file = downloadMaterials.find(m => m.id === id);
     if (file && file.url) {
         window.open(file.url, '_blank');
-    } else if (file) {
+    } else {
         const lang = document.documentElement.getAttribute('lang') || 'tr';
-        alert(lang === 'tr' 
-            ? `${file.title} indiriliyor... (Demo - gerçek link ekleyin)` 
+        alert(lang === 'tr'
+            ? `${file.title} indiriliyor... (Demo - gerçek link ekleyin)`
             : `Downloading ${file.title}... (Demo - add real link)`);
     }
 }
-
 // === INITIALIZE EVERYTHING ===
 document.addEventListener('DOMContentLoaded', function() {
     initThemeWithAutoDetection();
@@ -831,16 +793,15 @@ document.addEventListener('DOMContentLoaded', function() {
     renderComments();
     renderDownloads();
 });
-
 // Update language toggle to re-render content
-const langToggleBtn = document.getElementById('lang-toggle');
-if (langToggleBtn) {
-    langToggleBtn.addEventListener('click', function() {
-        setTimeout(() => {
-            renderBlog();
-            renderComments();
-            renderDownloads();
-        }, 100);
-    });
-}
+document.getElementById('lang-toggle').addEventListener('click', function() {
+    setTimeout(() => {
+        renderBlog();
+        renderComments();
+        renderDownloads();
+    }, 100);
+});
 </script>
+</body>
+</html>
+```
