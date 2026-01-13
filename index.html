@@ -15,15 +15,7 @@
     <meta name="description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
     <meta name="keywords" content="İngilizce öğrenme, AI ile İngilizce, ders materyalleri, promptlar, yol haritası">
     <meta name="author" content="Berkan">
-    <meta property="og:title" content="Berkan'dan İpuçları | English & AI">
-    <meta property="og:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
-    <meta property="og:image" content="https://imgur.com/a/c6kUNMS">
-    <meta property="og:url" content="https://example.com">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Berkan'dan İpuçları | English & AI">
-    <meta name="twitter:description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin.">
-    <meta name="twitter:image" content="https://imgur.com/a/c6kUNMS">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -78,18 +70,11 @@
         html { -webkit-tap-highlight-color: transparent; }
         body { font-weight: 500; }
 
-        .animate-blob, .premium-box {
-            will-change: transform; 
-            transform: translateZ(0); 
-        }
+        .animate-blob, .premium-box { will-change: transform; transform: translateZ(0); }
 
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { 
-            background: #94a3b8; 
-            border-radius: 6px; 
-            border: 3px solid #f1f5f9; 
-        }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 6px; border: 3px solid #f1f5f9; }
         .dark ::-webkit-scrollbar-track { background: #020617; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; border-color: #020617; }
 
@@ -112,9 +97,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid #cbd5e1; 
-            box-shadow: 
-                0 4px 6px -1px rgba(0, 0, 0, 0.05),
-                0 0 0 1px rgba(0,0,0,0.02); 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0,0,0,0.02); 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -127,10 +110,7 @@
         .premium-box:hover {
             transform: translateY(-6px);
             border-color: #38bdf8; 
-            box-shadow: 
-                0 20px 25px -5px rgba(0, 0, 0, 0.1), 
-                0 10px 10px -5px rgba(0, 0, 0, 0.04),
-                0 0 0 2px rgba(56, 189, 248, 0.2); 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(56, 189, 248, 0.2); 
         }
         .dark .premium-box:hover {
             border-color: #38bdf8;
@@ -157,23 +137,11 @@
         :root:not([lang="en"]) .lang-en { display: none !important; }
         :root[lang="en"] .lang-tr { display: none !important; }
 
-        /* Audio Player Animation */
-        .audio-playing {
-            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
-        }
-
         /* Mobile Menu */
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 80px;
-            left: 0;
-            right: 0;
+            top: 80px; left: 0; right: 0;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid #cbd5e1;
@@ -187,49 +155,27 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .mobile-menu.active { display: block; }
-        .mobile-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
+        .mobile-menu a { display: block; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .dark .mobile-menu a { border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        @media (max-width: 640px) {
-            .hero-title { font-size: 2.5rem !important; line-height: 1.1; }
-            .logo-text { font-size: 0.9rem !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
-        }
 
         /* Search Modal */
         #search-modal {
             display: none;
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             z-index: 60;
-            align-items: start;
-            justify-content: center;
+            align-items: start; justify-content: center;
             padding-top: 5rem;
         }
         #search-modal.active { display: flex; }
 
         /* Chatbot */
-        .chatbot-widget {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 100;
-        }
+        .chatbot-widget { position: fixed; bottom: 24px; right: 24px; z-index: 100; }
         .chatbot-window {
-            position: fixed;
-            bottom: 100px;
-            right: 24px;
-            width: 380px;
-            max-width: calc(100vw - 48px);
-            height: 500px;
-            z-index: 99;
-            display: none;
-            flex-direction: column;
+            position: fixed; bottom: 100px; right: 24px;
+            width: 380px; max-width: calc(100vw - 48px); height: 500px;
+            z-index: 99; display: none; flex-direction: column;
             background: white;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
@@ -239,14 +185,9 @@
 
         /* Filter buttons */
         .filter-btn.active {
-            background: #0ea5e9 !important;
-            color: white !important;
-            border-color: #0ea5e9 !important;
+            background: #0ea5e9 !important; color: white !important; border-color: #0ea5e9 !important;
         }
-        .dark .filter-btn.active {
-            background: #38bdf8 !important;
-            color: #020617 !important;
-        }
+        .dark .filter-btn.active { background: #38bdf8 !important; color: #020617 !important; }
     </style>
 </head>
 <body class="bg-aurora text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
@@ -272,7 +213,7 @@
                 <a href="#downloads" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">İndirilenler</a>
                 <a href="#downloads" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Downloads</a>
                 
-                <a href="https://berkans-tips.blogspot.com" target="_blank" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">Blog</a>
+                <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">Blog</a>
                 
                 <a href="#roadmap" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-tr">Yol Haritası</a>
                 <a href="#roadmap" class="px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all lang-en">Roadmap</a>
@@ -308,7 +249,7 @@
             <a href="#materials" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Materials</a>
             <a href="#downloads" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">İndirilenler</a>
             <a href="#downloads" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Downloads</a>
-            <a href="https://berkans-tips.blogspot.com" target="_blank" class="text-slate-700 dark:text-slate-300 font-bold">Blog</a>
+            <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="text-slate-700 dark:text-slate-300 font-bold">Blog</a>
             <a href="#roadmap" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Yol Haritası</a>
             <a href="#roadmap" class="text-slate-700 dark:text-slate-300 font-bold lang-en">Roadmap</a>
             <a href="#prompts" class="text-slate-700 dark:text-slate-300 font-bold lang-tr">Promptlar</a>
@@ -814,16 +755,26 @@
         </section>
 
         <section id="blog" class="py-24 px-6 bg-white/60 dark:bg-white/5">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white mb-6">Blog</h2>
-                <p class="text-xl text-slate-600 dark:text-slate-400 mb-10">
-                    İngilizce öğrenme serüveniniz için en güncel ipuçları, ders notları ve rehberler.
-                </p>
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="font-heading text-4xl font-black text-slate-900 dark:text-white mb-4">Blog</h2>
+                    <p class="text-xl text-slate-600 dark:text-slate-400 mb-8">
+                        En son yazılarım (Latest Posts)
+                    </p>
+                </div>
+
+                <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="col-span-full text-center py-10">
+                        <div class="inline-block w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="mt-2 text-slate-500">Yükleniyor...</p>
+                    </div>
+                </div>
                 
-                <a href="https://berkans-tips.blogspot.com" target="_blank" class="inline-flex items-center gap-3 bg-orange-500 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-orange-600 transition-colors shadow-xl btn-3d">
-                    <i data-lucide="edit-3" class="w-6 h-6"></i>
-                    Bloga Git (Go to Blog)
-                </a>
+                <div class="text-center">
+                    <a href="https://berkandanipuclari.blogspot.com/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl transition-transform hover:scale-105 shadow-lg">
+                        Tümünü Gör / View All <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
