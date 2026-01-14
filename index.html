@@ -36,18 +36,21 @@
                         dark: { bg: '#020617', surface: '#0f172a' }
                     },
                     animation: {
-                        'blob-bounce': 'blob-bounce 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1)',
-                        'pulse-glow': 'pulse-glow 3s infinite'
+                        // FIXED: Made background bounce smoother and side-to-side
+                        'blob-bounce': 'blob-bounce 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1)',
+                        // FIXED: Slowed down pulse glow to 5s
+                        'pulse-glow': 'pulse-glow 5s infinite' 
                     },
                     keyframes: {
                         'blob-bounce': {
                             '0%': { transform: 'translate(0, 0) scale(1)' },
-                            '50%': { transform: 'translate(20px, -20px) scale(1.1)' },
-                            '100%': { transform: 'translate(-20px, 20px) scale(0.95)' }
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0, 0) scale(1)' }
                         },
                         'pulse-glow': {
-                            '0%, 100%': { opacity: '0.6' },
-                            '50%': { opacity: '1' }
+                            '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.05)' }
                         }
                     }
                 }
@@ -107,9 +110,9 @@
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased font-sans">
 
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-400/40 dark:bg-cyan-600/20 rounded-full filter blur-[120px] animate-blob-bounce mix-blend-multiply dark:mix-blend-screen"></div>
-        <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-purple-400/30 dark:bg-indigo-900/30 rounded-full filter blur-[100px] animate-blob-bounce animation-delay-2000 mix-blend-multiply dark:mix-blend-screen"></div>
-        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-400/30 dark:bg-blue-900/20 rounded-full filter blur-[100px] animate-blob-bounce animation-delay-4000 mix-blend-multiply dark:mix-blend-screen"></div>
+        <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-cyan-400/30 dark:bg-cyan-600/20 rounded-full filter blur-[120px] animate-blob-bounce mix-blend-multiply dark:mix-blend-screen"></div>
+        <div class="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-purple-400/30 dark:bg-indigo-900/30 rounded-full filter blur-[100px] animate-blob-bounce animation-delay-2000 mix-blend-multiply dark:mix-blend-screen"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] bg-blue-400/30 dark:bg-blue-900/20 rounded-full filter blur-[100px] animate-blob-bounce animation-delay-4000 mix-blend-multiply dark:mix-blend-screen"></div>
     </div>
 
     <div class="music-widget">
