@@ -105,36 +105,43 @@ function toggleAudio(id) {
     const btn = document.getElementById('btn-' + id);
 
     if (audio.paused) {
+        // Pause all other audio
         document.querySelectorAll('audio').forEach(a => { 
             if (a.id !== 'bg-music' && a !== audio) { 
                 a.pause(); 
                 a.currentTime = 0; 
+                
+                // Reset other icons
                 const otherId = a.id.replace('audio-', '');
                 const otherIcon = document.getElementById('icon-' + otherId);
-                if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
                 const otherBtn = document.getElementById('btn-' + otherId);
-                if(otherBtn) otherBtn.classList.remove('animate-pulse', 'bg-indigo-100');
+                
+                if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
+                if(otherBtn) otherBtn.classList.remove('animate-pulse', 'bg-indigo-100', 'dark:bg-indigo-900/50');
             } 
         });
         
         audio.play().then(() => {
+            // Update Current Icon to Pause
             icon.setAttribute('data-lucide', 'pause-circle');
-            btn.classList.add('animate-pulse', 'bg-indigo-100');
+            btn.classList.add('animate-pulse', 'bg-indigo-100', 'dark:bg-indigo-900/50');
+            if(typeof lucide !== 'undefined') lucide.createIcons();
         }).catch(err => {
             console.warn("Audio play failed:", err);
         });
         
+        // Reset when finished
         audio.onended = () => {
             icon.setAttribute('data-lucide', 'play-circle');
-            btn.classList.remove('animate-pulse', 'bg-indigo-100');
+            btn.classList.remove('animate-pulse', 'bg-indigo-100', 'dark:bg-indigo-900/50');
             if(typeof lucide !== 'undefined') lucide.createIcons();
         };
     } else {
         audio.pause();
         icon.setAttribute('data-lucide', 'play-circle');
-        btn.classList.remove('animate-pulse', 'bg-indigo-100');
+        btn.classList.remove('animate-pulse', 'bg-indigo-100', 'dark:bg-indigo-900/50');
+        if(typeof lucide !== 'undefined') lucide.createIcons();
     }
-    if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 // === 2. THEME & LANGUAGE ===
