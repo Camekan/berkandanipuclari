@@ -1,74 +1,32 @@
 // ==========================================
-// CONFIGURATION & CONSTANTS
+// CONFIGURATION
 // ==========================================
 'use strict';
+
 const BLOGGER_URL = "https://berkandanipuclari.blogspot.com"; 
 const BACKEND_URL = "https://berkan-ai-backend.lanselam.workers.dev"; // Your worker URL
-const MAX_MESSAGE_LENGTH = 500;
-const SNIPPET_LENGTH = 100;
-const BLOGGER_TIMEOUT_MS = 10000;
-const API_TIMEOUT_MS = 15000;
-
-// State Management
-const audioState = new Map(); // Tracks playing audio elements
-
-// ==========================================
-// UTILITY FUNCTIONS
 // ==========================================
 
-// Safe Storage Wrapper (Fixes Crash if Cookies/Storage Blocked)
+// === SAFE STORAGE WRAPPER ===
 const storage = {
     get: (key) => {
-        try { return localStorage.getItem(key); } 
-        catch(e) { return null; }
+        try {
+            return localStorage.getItem(key);
+        } catch (e) {
+            console.warn('Storage unavailable', e);
+            return null;
+        }
     },
-    set: (key, val) => {
-        try { localStorage.setItem(key, val); } 
-        catch(e) { console.warn('Storage failed/blocked'); }
+    set: (key, value) => {
+        try {
+            localStorage.setItem(key, value);
+        } catch (e) {
+            console.warn('Storage failed', e);
+        }
     }
 };
 
-// HTML Escaping Utility
-function escapeHtml(unsafe) {
-    if (!unsafe) return "";
-    return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
-}
-
-// Clipboard Fallback for Older Browsers
-function fallbackCopyTextToClipboard(text) {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-        document.execCommand('copy');
-        showToast();
-    } catch (err) {
-        console.error('Fallback: Oops, unable to copy', err);
-    }
-    document.body.removeChild(textArea);
-}
-
-function showToast() {
-    const toast = document.getElementById('toast');
-    if(toast) {
-        toast.classList.remove('opacity-0', 'translate-y-40');
-        setTimeout(() => toast.classList.add('opacity-0', 'translate-y-40'), 3000);
-    }
-}
-
-// ==========================================
-// INIT
-// ==========================================
+// === INIT ===
 document.addEventListener('DOMContentLoaded', () => {
     if(typeof lucide !== 'undefined') lucide.createIcons();
     
@@ -79,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     tryAutoplayMusic(); 
     initScrollSpy(); 
-    initMobileMenu();
     
     // Set a generic welcome message
     const initialMsg = document.querySelector('#chat-messages div');
@@ -88,19 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function initMobileMenu() {
-    // Close mobile menu when a link is clicked
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.remove('active');
-        });
-    });
-}
-
-// ==========================================
-// 1. MUSIC & AUDIO LOGIC
-// ==========================================
-let isBgMusicPlaying = false;
+// === 1. MUSIC & AUDIO LOGIC ===
+let isMusicPlaying = false;
 
 function tryAutoplayMusic() {
     const bgMusic = document.getElementById('bg-music');
@@ -110,13 +56,13 @@ function tryAutoplayMusic() {
     
     if (playPromise !== undefined) {
         playPromise.then(_ => {
-            isBgMusicPlaying = true;
+            isMusicPlaying = true;
             updateMusicUI(true);
         }).catch(error => {
-            // Autoplay blocked - waiting for interaction
+            console.log("Autoplay prevented by browser policy.");
             const startMusicOnInteraction = () => {
-                bgMusic.play().catch(e => console.warn('Audio play failed:', e));
-                isBgMusicPlaying = true;
+                bgMusic.play().catch(e => console.error("Audio play failed:", e));
+                isMusicPlaying = true;
                 updateMusicUI(true);
                 document.removeEventListener('click', startMusicOnInteraction);
             };
@@ -130,17 +76,13 @@ function toggleBgMusic() {
     if (!bgMusic) return;
 
     if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-            isBgMusicPlaying = true;
-            updateMusicUI(true);
-        }).catch(err => {
-            console.warn('Audio play failed:', err);
-        });
+        bgMusic.play().catch(e => console.error("Play failed:", e));
+        isMusicPlaying = true;
     } else {
         bgMusic.pause();
-        isBgMusicPlaying = false;
-        updateMusicUI(false);
+        isMusicPlaying = false;
     }
+    updateMusicUI(isMusicPlaying);
 }
 
 function updateMusicUI(isPlaying) {
@@ -163,12 +105,10 @@ function toggleAudio(id) {
     const btn = document.getElementById('btn-' + id);
 
     if (audio.paused) {
-        // Stop all other audios using state management or query
         document.querySelectorAll('audio').forEach(a => { 
             if (a.id !== 'bg-music' && a !== audio) { 
                 a.pause(); 
                 a.currentTime = 0; 
-                // Reset UI for others
                 const otherId = a.id.replace('audio-', '');
                 const otherIcon = document.getElementById('icon-' + otherId);
                 if(otherIcon) otherIcon.setAttribute('data-lucide', 'play-circle');
@@ -180,30 +120,24 @@ function toggleAudio(id) {
         audio.play().then(() => {
             icon.setAttribute('data-lucide', 'pause-circle');
             btn.classList.add('animate-pulse', 'bg-indigo-100');
-            // Update State Map
-            audioState.set(id, true);
         }).catch(err => {
-            console.warn("Audio play error", err);
+            console.warn("Audio play failed:", err);
         });
         
         audio.onended = () => {
             icon.setAttribute('data-lucide', 'play-circle');
             btn.classList.remove('animate-pulse', 'bg-indigo-100');
-            audioState.set(id, false);
             if(typeof lucide !== 'undefined') lucide.createIcons();
         };
     } else {
         audio.pause();
         icon.setAttribute('data-lucide', 'play-circle');
         btn.classList.remove('animate-pulse', 'bg-indigo-100');
-        audioState.set(id, false);
     }
     if(typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// ==========================================
-// 2. THEME & LANGUAGE
-// ==========================================
+// === 2. THEME & LANGUAGE ===
 function initTheme() {
     const html = document.documentElement;
     const hour = new Date().getHours();
@@ -233,26 +167,24 @@ function initLanguage() {
     };
 }
 
-// ==========================================
-// 3. BLOGGER FEED
-// ==========================================
+// === 3. BLOGGER FEED ===
 function fetchBloggerPosts() {
+    const container = document.getElementById('blog-posts');
     const script = document.createElement('script');
+    
+    // Safety timeout in case Blogger script hangs
+    const timeout = setTimeout(() => {
+        if (container.innerHTML.includes('animate-spin')) {
+            container.innerHTML = '<p class="text-center text-slate-500 w-full col-span-full">Yazılar yüklenemedi / Posts unavailable.</p>';
+        }
+    }, 8000);
+
     script.src = `${BLOGGER_URL}/feeds/posts/default?alt=json-in-script&max-results=3&callback=displayBloggerPosts`;
     
-    // Error Handling
     script.onerror = () => {
-        const container = document.getElementById('blog-posts');
-        if(container) container.innerHTML = '<p class="text-center text-slate-500 w-full col-span-full">Blog yüklenemedi / Blog unavailable</p>';
+        clearTimeout(timeout);
+        container.innerHTML = '<p class="text-center text-slate-500 w-full col-span-full">Blog servisine erişilemiyor.</p>';
     };
-
-    // Timeout fallback
-    setTimeout(() => {
-        const container = document.getElementById('blog-posts');
-        if (container && container.innerHTML.includes('animate-spin')) {
-            script.onerror();
-        }
-    }, BLOGGER_TIMEOUT_MS);
 
     document.body.appendChild(script);
 }
@@ -266,6 +198,7 @@ window.displayBloggerPosts = function(data) {
         return;
     }
 
+    // Safe to clear spinner now
     container.innerHTML = data.feed.entry.map(post => {
         const title = post.title.$t;
         const link = post.link.find(l => l.rel === 'alternate').href;
@@ -279,10 +212,10 @@ window.displayBloggerPosts = function(data) {
 
         const contentDiv = document.createElement('div');
         contentDiv.innerHTML = post.content ? post.content.$t : post.summary.$t;
-        const snippet = contentDiv.innerText.substring(0, SNIPPET_LENGTH) + '...';
+        const snippet = contentDiv.innerText.substring(0, 100) + '...';
 
         return `
-            <article class="premium-box p-0 rounded-3xl overflow-hidden group cursor-pointer h-full flex flex-col bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all" onclick="window.open('${link}', '_blank', 'noopener,noreferrer')">
+            <article class="premium-box p-0 rounded-3xl overflow-hidden group cursor-pointer h-full flex flex-col bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all" onclick="window.open('${link}', '_blank')">
                 <div class="h-48 overflow-hidden relative">
                     <img src="${img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${title}">
                     <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs font-bold">
@@ -303,23 +236,10 @@ window.displayBloggerPosts = function(data) {
     if(typeof lucide !== 'undefined') lucide.createIcons();
 };
 
-// ==========================================
-// 4. YOUTUBE
-// ==========================================
+// === 4. YOUTUBE ===
 async function fetchLatestVideo() {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
-
     try {
-        const response = await fetch(BACKEND_URL, { 
-            method: 'GET',
-            signal: controller.signal 
-        }); 
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) throw new Error('API Error');
-
+        const response = await fetch(BACKEND_URL); 
         const data = await response.json();
         
         if (data && data.videoId) {
@@ -329,17 +249,11 @@ async function fetchLatestVideo() {
             }
         }
     } catch (e) {
-        if (e.name === 'AbortError') {
-            console.error("YouTube Fetch timed out");
-        } else {
-            console.error("Video fetch error:", e);
-        }
+        console.error("Video fetch error:", e);
     }
 }
 
-// ==========================================
-// 5. CHATBOT
-// ==========================================
+// === 5. CHATBOT ===
 function toggleChatbot() {
     document.getElementById('chatbot-window').classList.toggle('active');
 }
@@ -347,27 +261,27 @@ function toggleChatbot() {
 let isProcessing = false; // Rate limiting
 
 async function sendMessage() {
-    if (isProcessing) return; // Prevent double submit
-    
+    if (isProcessing) return;
+
     const input = document.getElementById('chat-input');
     const container = document.getElementById('chat-messages');
     const sendBtn = document.getElementById('send-btn');
     
-    // Sanitize Input (Limit length)
-    const rawMsg = input.value.trim().substring(0, MAX_MESSAGE_LENGTH);
+    // Sanitize input: Trim and limit length
+    const msg = input.value.trim().substring(0, 500);
     
-    if (!rawMsg || rawMsg.length < 2) return;
+    if (!msg || msg.length < 2) return;
 
-    input.value = '';
     isProcessing = true;
+    input.value = '';
     sendBtn.disabled = true;
     
-    // Use HTML escaping utility for user message
-    const safeUserMsg = escapeHtml(rawMsg);
-    
+    // Sanitize output for user message (basic prevention)
+    const safeMsg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
     container.innerHTML += `
         <div class="bg-primary-600 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[85%] shadow-md mb-3">
-            ${safeUserMsg}
+            ${safeMsg}
         </div>
     `;
     container.scrollTop = container.scrollHeight;
@@ -382,10 +296,6 @@ async function sendMessage() {
     `;
     container.scrollTop = container.scrollHeight;
 
-    // Use AbortController for Fetch Timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
-
     try {
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
@@ -393,11 +303,8 @@ async function sendMessage() {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json' 
             },
-            body: JSON.stringify({ message: rawMsg }),
-            signal: controller.signal
+            body: JSON.stringify({ message: msg })
         });
-        
-        clearTimeout(timeoutId);
 
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
@@ -406,13 +313,14 @@ async function sendMessage() {
 
         document.getElementById(loadingId).remove();
 
-        // Security: Sanitize HTML Output with DOMPurify
-        let cleanReply = DOMPurify.sanitize(reply);
-        let htmlReply = cleanReply;
-        
+        let htmlReply = reply;
         if(typeof marked !== 'undefined') {
-            // Parse Markdown then sanitize again
-            htmlReply = DOMPurify.sanitize(marked.parse(cleanReply));
+            htmlReply = marked.parse(reply);
+        }
+
+        // XSS Protection via DOMPurify
+        if(typeof DOMPurify !== 'undefined') {
+            htmlReply = DOMPurify.sanitize(htmlReply);
         }
         
         container.innerHTML += `
@@ -422,18 +330,18 @@ async function sendMessage() {
         `;
 
     } catch (error) {
-        document.getElementById(loadingId).remove();
+        const loader = document.getElementById(loadingId);
+        if(loader) loader.remove();
         
-        let errorMsg = 'Error: Something went wrong. Try again later.';
-        if (error.name === 'TypeError') errorMsg = 'Network error. Please check your connection.';
-        if (error.name === 'AbortError') errorMsg = 'Request timed out. Server took too long.';
-        
+        let errorText = "Error: Please try again later.";
+        if (error.name === 'TypeError') errorText = "Network error. Please check your connection.";
+
         container.innerHTML += `
             <div class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-xl rounded-tl-none mr-auto max-w-[85%] mb-3 text-xs font-bold">
-                ${errorMsg}
+                ${errorText}
             </div>
         `;
-        console.error("Chat error:", error);
+        console.error(error);
     }
 
     sendBtn.disabled = false;
@@ -441,9 +349,7 @@ async function sendMessage() {
     container.scrollTop = container.scrollHeight;
 }
 
-// ==========================================
-// 6. UI UTILS
-// ==========================================
+// === 6. UI UTILS ===
 function toggleSearch() {
     const modal = document.getElementById('search-modal');
     modal.classList.toggle('active');
@@ -485,17 +391,10 @@ function performSearch(query) {
 
 function copyToClipboard(elementId) {
     const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
-    
-    if (!navigator.clipboard) {
-        fallbackCopyTextToClipboard(text);
-        return;
-    }
-
     navigator.clipboard.writeText(text).then(() => {
-        showToast();
-    }, (err) => {
-        console.error('Async: Could not copy text: ', err);
-        fallbackCopyTextToClipboard(text);
+        const toast = document.getElementById('toast');
+        toast.classList.remove('opacity-0', 'translate-y-40');
+        setTimeout(() => toast.classList.add('opacity-0', 'translate-y-40'), 3000);
     });
 }
 
