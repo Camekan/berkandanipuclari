@@ -4,7 +4,7 @@
 'use strict';
 
 const BLOGGER_URL = "https://berkandanipuclari.blogspot.com"; 
-const BACKEND_URL = "https://berkan-ai-backend.lanselam.workers.dev"; // Your worker URL
+const BACKEND_URL = "https://berkan-ai-backend.lanselam.workers.dev"; 
 // ==========================================
 
 // === SAFE STORAGE WRAPPER ===
@@ -28,7 +28,6 @@ const storage = {
 
 // === INIT ===
 document.addEventListener('DOMContentLoaded', () => {
-    // Auto-Run Functions
     fetchBloggerPosts();
     fetchLatestVideo();
     initLanguage();
@@ -91,12 +90,10 @@ function toggleAudio(id) {
     const btn = document.querySelector(`button[onclick="toggleAudio('${id}')"]`);
 
     if (audio.paused) {
-        // Pause all other audio
         document.querySelectorAll('audio').forEach(a => { 
             if (a.id !== 'bg-music' && a !== audio) { 
                 a.pause(); 
                 a.currentTime = 0; 
-                // Reset other buttons
                 const otherId = a.id.replace('audio-', '');
                 const otherBtn = document.querySelector(`button[onclick="toggleAudio('${otherId}')"]`);
                 if(otherBtn) otherBtn.innerText = "Play";
@@ -119,7 +116,6 @@ function toggleAudio(id) {
 }
 
 // === 2. LANGUAGE ===
-// Note: Dark mode logic was removed to match the 2010s aesthetic.
 function initLanguage() {
     const html = document.documentElement;
     const savedLang = storage.get('lang') || 'tr';
@@ -133,7 +129,7 @@ function initLanguage() {
     };
 }
 
-// === 3. BLOGGER FEED ===
+// === 3. BLOGGER FEED (Modernized with Images) ===
 function fetchBloggerPosts() {
     const container = document.getElementById('blog-posts');
     const script = document.createElement('script');
@@ -163,23 +159,31 @@ window.displayBloggerPosts = function(data) {
         return;
     }
 
+    // Maps original modern image fetching logic into our hybrid grid structure
     container.innerHTML = data.feed.entry.map(post => {
         const title = post.title.$t;
         const link = post.link.find(l => l.rel === 'alternate').href;
         const dateObj = new Date(post.published.$t);
-        const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const dateStr = dateObj.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' });
+        
+        // Fetch Image exactly like the original code did
+        let img = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80';
+        if (post.media$thumbnail) {
+            img = post.media$thumbnail.url.replace(/\/s[0-9]+.*?\//, '/w600/');
+        }
         
         const contentDiv = document.createElement('div');
         contentDiv.innerHTML = post.content ? post.content.$t : post.summary.$t;
-        const snippet = contentDiv.innerText.substring(0, 150) + '...';
+        const snippet = contentDiv.innerText.substring(0, 100) + '...';
 
-        // Classic basic HTML structure for posts
         return `
-            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dotted #ccc;">
-                <h3 style="margin-bottom: 3px;"><a href="${link}" target="_blank">${title}</a></h3>
-                <small style="color: #888;">Posted on: ${dateStr}</small>
-                <p style="margin-top: 5px; font-size: 12px;">${snippet}</p>
-                <a href="${link}" target="_blank" style="font-size: 11px; font-weight: bold;">Read More &raquo;</a>
+            <div class="blog-card">
+                <img src="${img}" alt="${title}" class="blog-img">
+                <div class="blog-content">
+                    <h3><a href="${link}" target="_blank">${title}</a></h3>
+                    <p>${snippet}</p>
+                    <a href="${link}" target="_blank" style="font-size: 13px; font-weight: bold;">Read More &raquo;</a>
+                </div>
             </div>
         `;
     }).join('');
@@ -213,7 +217,6 @@ async function sendMessage() {
     const sendBtn = document.getElementById('send-btn');
     
     const msg = input.value.trim().substring(0, 500);
-    
     if (!msg || msg.length < 2) return;
 
     isProcessing = true;
@@ -223,18 +226,17 @@ async function sendMessage() {
     
     const safeMsg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-    // Old school chat UI structure
     container.innerHTML += `
         <div class="chat-msg">
-            <strong class="chat-you">You:</strong> ${safeMsg}
+            <span class="chat-you">You:</span> ${safeMsg}
         </div>
     `;
     container.scrollTop = container.scrollHeight;
 
     const loadingId = 'loading-' + Date.now();
     container.innerHTML += `
-        <div id="${loadingId}" class="chat-msg" style="color: #888; font-style: italic;">
-            AI Assistant is typing...
+        <div id="${loadingId}" class="chat-msg" style="color: #94a3b8; font-style: italic;">
+            Camekans AI is typing...
         </div>
     `;
     container.scrollTop = container.scrollHeight;
@@ -266,7 +268,7 @@ async function sendMessage() {
         
         container.innerHTML += `
             <div class="chat-msg">
-                <strong class="chat-ai">AI Assistant:</strong> ${htmlReply}
+                <span class="chat-ai">Camekans AI:</span> ${htmlReply}
             </div>
         `;
 
@@ -278,7 +280,7 @@ async function sendMessage() {
         if (error.name === 'TypeError') errorText = "Network error. Please check your connection.";
 
         container.innerHTML += `
-            <div class="chat-msg" style="color: red;">
+            <div class="chat-msg" style="color: #ef4444;">
                 <strong>System:</strong> ${errorText}
             </div>
         `;
@@ -295,7 +297,6 @@ async function sendMessage() {
 function copyToClipboard(elementId) {
     const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
     navigator.clipboard.writeText(text).then(() => {
-        // Replaced modern toast with classic alert box
         alert("Text copied to clipboard!");
     });
 }
