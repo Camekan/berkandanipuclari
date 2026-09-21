@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <!-- Google Analytics (Kept intact) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZXGHW6B7G"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,161 +10,203 @@
     </script>
     
     <meta charset="UTF-8">
-    <title>Berkan'dan İpuçları | English & AI</title>
-    <meta name="description" content="İngilizce öğrenmeyi yapay zeka ile süperleştirin. Berkan'ın özel materyalleri, yol haritası ve promptları ile hızlı ilerleyin.">
+    <title>Camekans</title>
+    <meta name="description" content="Welcome to Camekans! Supercharge your learning with AI and exclusive resources.">
     
-    <!-- Required Libraries for Chatbot parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 
     <style>
         /* ==========================================
-           CLASSIC 2010s CSS STYLING
+           HYBRID MODERN + RETRO CSS STYLING
            ========================================== */
         body {
-            font-family: Verdana, Arial, Helvetica, sans-serif;
-            background-color: #e9eaed; /* Classic FB-era gray */
-            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5; /* Modern soft gray */
+            color: #333;
             margin: 0;
             padding: 0;
-            font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        /* Language Toggle Logic */
         :root:not([lang="en"]) .lang-en { display: none !important; }
         :root[lang="en"] .lang-tr { display: none !important; }
 
-        a { color: #3b5998; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        a { color: #0284c7; text-decoration: none; transition: color 0.2s; }
+        a:hover { color: #0369a1; text-decoration: underline; }
         
-        h1, h2, h3 { font-family: Tahoma, sans-serif; font-weight: bold; margin-top: 0; color: #111; }
+        h1, h2, h3 { font-family: 'Segoe UI', Tahoma, sans-serif; font-weight: bold; margin-top: 0; color: #111; }
         
+        /* Classic 1024px Wrapper with Modern Shadows */
         #wrapper {
-            width: 960px;
-            margin: 20px auto;
+            max-width: 1024px;
+            margin: 30px auto;
             background-color: #ffffff;
-            border: 1px solid #cccccc;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
 
+        /* Modern Gradient Header */
         #header {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #ffffff;
-            padding: 20px 30px;
-            border-bottom: 4px solid #e74c3c;
+            padding: 30px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        #header h1 { color: #ffffff; margin: 0; font-size: 28px; }
+        #header h1 { color: #ffffff; margin: 0; font-size: 32px; letter-spacing: -0.5px; }
         
         #nav {
-            background-color: #f8f8f8;
-            border-bottom: 1px solid #dddddd;
-            padding: 10px 30px;
-            font-size: 13px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 40px;
+            font-size: 14px;
+            display: flex;
+            gap: 20px;
         }
         
-        #nav a { margin-right: 15px; font-weight: bold; }
+        #nav a { font-weight: 600; color: #475569; }
+        #nav a:hover { color: #0284c7; text-decoration: none; }
         
         #content-area {
             display: flex;
-            padding: 20px;
+            padding: 30px;
+            gap: 30px;
         }
 
         #main-content {
-            width: 68%;
-            padding-right: 20px;
-            border-right: 1px dashed #cccccc;
+            width: 65%;
         }
 
         #sidebar {
-            width: 32%;
-            padding-left: 20px;
+            width: 35%;
         }
 
         .section-box {
-            border: 1px solid #dddddd;
-            background-color: #fafafa;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
         }
 
         .section-box h2 {
-            font-size: 18px;
-            border-bottom: 1px solid #cccccc;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        /* Classic Buttons */
+        /* Modernized Buttons */
         button, .btn {
-            background-color: #f5f5f5;
-            background-image: linear-gradient(top, #ffffff, #e6e6e6);
-            border: 1px solid #cccccc;
-            border-color: #cccccc #cccccc #aaaaaa;
-            color: #333333;
-            padding: 4px 10px;
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
             font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 3px;
-            font-family: Arial, sans-serif;
-            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
         }
-        button:hover, .btn:hover { background-color: #e6e6e6; }
+        button:hover, .btn:hover { background-color: #0369a1; transform: translateY(-1px); }
+        button.secondary { background-color: #f1f5f9; color: #475569; box-shadow: none; }
+        button.secondary:hover { background-color: #e2e8f0; }
         
-        /* Sidebar Widgets */
+        /* YouTube Channel Promo Box */
+        .yt-promo {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+        .yt-promo h3 { color: white; margin-bottom: 10px; font-size: 22px; }
+        .yt-promo a {
+            display: inline-block;
+            background: white;
+            color: #ef4444;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .yt-promo a:hover { background: #fef2f2; transform: scale(1.02); }
+
+        /* Widget Styling (Sidebar) */
         .widget {
-            border: 1px solid #d3d6db;
-            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
             background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
         }
         .widget-title {
-            background: #f2f2f2;
-            padding: 8px 10px;
-            font-weight: bold;
-            border-bottom: 1px solid #d3d6db;
-            font-size: 12px;
+            background: #f8fafc;
+            padding: 12px 20px;
+            font-weight: 700;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+            color: #1e293b;
         }
-        .widget-content { padding: 10px; font-size: 12px; }
+        .widget-content { padding: 20px; font-size: 13px; }
 
-        /* Chatbot Old-School Styling */
+        /* Modern Blog Grid (Requested by User) */
+        .blog-card {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .blog-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .blog-img {
+            width: 120px;
+            height: 90px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .blog-content h3 { font-size: 16px; margin-bottom: 5px; line-height: 1.3; }
+        .blog-content p { font-size: 13px; color: #64748b; margin: 0 0 8px 0; }
+
+        /* Hybrid Chatbot */
         #chat-messages {
             height: 250px;
             overflow-y: scroll;
-            border: 1px inset #ccc;
-            background: #ffffff;
-            padding: 5px;
-            margin-bottom: 10px;
-            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 13px;
         }
-        .chat-msg { margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px; }
-        .chat-you { color: #2980b9; }
-        .chat-ai { color: #c0392b; }
-        #chat-input { width: 70%; padding: 4px; font-family: Arial; border: 1px solid #999; }
+        .chat-msg { margin-bottom: 12px; }
+        .chat-you { color: #0284c7; font-weight: bold; }
+        .chat-ai { color: #10b981; font-weight: bold; }
+        #chat-input { width: 68%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
+        #chat-input:focus { border-color: #0284c7; }
 
-        /* Form Inputs */
-        input[type="text"], input[type="email"] {
-            padding: 5px;
-            border: 1px solid #aaa;
-            border-radius: 2px;
-        }
-
-        hr { border: 0; border-top: 1px solid #ddd; margin: 20px 0; }
+        hr { border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0; }
         
         #footer {
-            background-color: #222;
-            color: #aaa;
+            background-color: #0f172a;
+            color: #94a3b8;
             text-align: center;
-            padding: 15px;
-            font-size: 11px;
-            border-top: 4px solid #444;
+            padding: 25px;
+            font-size: 13px;
         }
-        
-        .clear { clear: both; }
+        #footer a { color: #e2e8f0; }
     </style>
 </head>
 <body>
@@ -174,14 +215,11 @@
     <!-- Header -->
     <div id="header">
         <div>
-            <h1>
-                <span class="lang-tr">Berkan'dan İpuçları</span>
-                <span class="lang-en">Berkan's Tips</span>
-            </h1>
-            <small style="color: #bbb;">English & AI Learning Resources</small>
+            <h1>Camekans</h1>
+            <div style="color: #94a3b8; margin-top: 5px; font-weight: 500;">English & AI Learning Resources</div>
         </div>
         <div>
-            <button id="lang-toggle">
+            <button class="secondary" id="lang-toggle">
                 <span class="lang-tr">Switch to English</span>
                 <span class="lang-en">Türkçe'ye Geç</span>
             </button>
@@ -190,11 +228,10 @@
 
     <!-- Navigation -->
     <div id="nav">
-        <a href="#welcome">Home</a> |
-        <a href="#materials"><span class="lang-tr">Materyaller</span><span class="lang-en">Materials</span></a> |
-        <a href="#prompts"><span class="lang-tr">Promptlar</span><span class="lang-en">Prompts</span></a> |
-        <a href="#blog">Blog</a> |
-        <a href="https://www.youtube.com/@berkandanipuclar%C4%B1" target="_blank">YouTube</a>
+        <a href="#welcome">Home</a>
+        <a href="#materials"><span class="lang-tr">Materyaller</span><span class="lang-en">Materials</span></a>
+        <a href="#blog">Blog</a>
+        <a href="https://www.youtube.com/@Camekans" target="_blank" style="color: #ef4444; font-weight: bold;">YouTube Channel</a>
     </div>
 
     <!-- Content Area -->
@@ -203,38 +240,48 @@
         <!-- MAIN COLUMN -->
         <div id="main-content">
             
-            <div id="welcome" class="section-box" style="background-color: #fffde7; border-color: #f0e68c;">
+            <div id="welcome" class="section-box" style="background-color: #f0f9ff; border-color: #bae6fd;">
                 <h2>
-                    <span class="lang-tr">Hoşgeldiniz! İngilizceyi Süperleştirin.</span>
-                    <span class="lang-en">Welcome! Supercharge your English.</span>
+                    <span class="lang-tr">Hoşgeldiniz! Öğrenmeyi Süperleştirin.</span>
+                    <span class="lang-en">Welcome! Supercharge your learning.</span>
                 </h2>
                 <p>
-                    <span class="lang-tr">Yapay zeka ve özel materyallerle hedefine ışık hızında ulaş. Aşağıdaki kaynakları kullanarak hemen çalışmaya başlayabilirsin.</span>
-                    <span class="lang-en">Reach your goal at light speed with AI and special materials. Use the resources below to start studying immediately.</span>
+                    <span class="lang-tr">Yapay zeka ve özel materyallerle hedefine ışık hızında ulaş. Camekans kanalında paylaştığım kaynakları kullanarak hemen çalışmaya başlayabilirsin.</span>
+                    <span class="lang-en">Reach your goal at light speed with AI and special materials. Use the resources I share on the Camekans channel to start studying immediately.</span>
                 </p>
             </div>
 
             <!-- YouTube Video -->
             <div class="section-box">
                 <h2><span class="lang-tr">En Yeni Video</span><span class="lang-en">Latest Video</span></h2>
-                <iframe id="latest-video" width="100%" height="340" src="" frameborder="0" allowfullscreen></iframe>
-                <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                    <span class="lang-tr">Yapay zeka ile hatalarınızı analiz edip düzeltmenin yolları.</span>
-                    <span class="lang-en">Ways to analyze and correct your mistakes with AI.</span>
+                <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <iframe id="latest-video" width="100%" height="360" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <p style="font-size: 13px; color: #64748b; margin-top: 10px;">
+                    <span class="lang-tr">Kanalımdaki en son yapay zeka ve eğitim ipuçları.</span>
+                    <span class="lang-en">The latest AI and education tips from my channel.</span>
                 </p>
+            </div>
+
+            <!-- Modernized Blog Posts with Images -->
+            <div id="blog" class="section-box">
+                <h2><span class="lang-tr">Son Yazılar</span><span class="lang-en">Latest Posts</span></h2>
+                <div id="blog-posts">
+                    <i style="color: #64748b;">Loading posts...</i>
+                </div>
             </div>
 
             <!-- Materials -->
             <div id="materials" class="section-box">
                 <h2><span class="lang-tr">Hazır Ders Materyalleri</span><span class="lang-en">Ready Lesson Materials</span></h2>
                 <p>
-                    <span class="lang-tr">Staj dönemimde ve üniversitede hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun.</span>
-                    <span class="lang-en">All resources prepared during my internship and university. Tested in class, curriculum compliant.</span>
+                    <span class="lang-tr">Eğitim süreçleri için hazırladığım tüm kaynaklar. Sınıf içinde test edilmiş, müfredata uygun.</span>
+                    <span class="lang-en">All resources prepared for educational processes. Tested in class, curriculum compliant.</span>
                 </p>
-                <ul>
-                    <li><b><span class="lang-tr">6. Sınıf Full Rehber</span><span class="lang-en">6th Grade Guide</span></b> (2.4 MB PDF) - <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank">Download</a></li>
-                    <li><b>Teacher Vault</b> (45 MB ZIP) - <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank">Download</a></li>
-                    <li><b>B1 Speaking Cards</b> (1.2 MB PNG) - <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank">Download</a></li>
+                <ul style="line-height: 2;">
+                    <li><b><span class="lang-tr">6. Sınıf Full Rehber</span><span class="lang-en">6th Grade Guide</span></b> (2.4 MB PDF) - <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank">Download Here</a></li>
+                    <li><b>Teacher Vault</b> (45 MB ZIP) - <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank">Download Here</a></li>
+                    <li><b>B1 Speaking Cards</b> (1.2 MB PNG) - <a href="https://drive.google.com/drive/folders/1nM7OoeFkGq82YtZetx1cV5LkFVVHueXT" target="_blank">Download Here</a></li>
                 </ul>
             </div>
 
@@ -243,40 +290,10 @@
                 <h2><span class="lang-tr">Prompt Kütüphanesi</span><span class="lang-en">Prompt Library</span></h2>
                 
                 <p><strong><span class="lang-tr">Ders Planı Oluşturucu:</span><span class="lang-en">Lesson Plan Creator:</span></strong></p>
-                <div style="background: #eee; padding: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
+                <div style="background: #f8fafc; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; font-family: monospace; margin-bottom: 10px;">
                     <span id="p1">"Create a 40-minute English lesson plan for A2 level students about 'Daily Routines'. Include a warm-up game."</span>
                 </div>
-                <button onclick="copyToClipboard('p1')" style="margin-top: 5px;">Copy Prompt</button>
-
-                <hr>
-
-                <p><strong><span class="lang-tr">Konuşma Partneri:</span><span class="lang-en">Conversation Partner:</span></strong></p>
-                <div style="background: #eee; padding: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
-                    <span id="p3">"Act as a waiter at a restaurant. I will be the customer. Let's practice ordering food..."</span>
-                </div>
-                <button onclick="copyToClipboard('p3')" style="margin-top: 5px;">Copy Prompt</button>
-            </div>
-
-            <!-- Blog Posts (Injected by JS) -->
-            <div id="blog" class="section-box">
-                <h2>Blog</h2>
-                <div id="blog-posts">
-                    <i>Loading posts...</i>
-                </div>
-            </div>
-
-            <!-- Disqus Comments -->
-            <div id="comments" class="section-box">
-                <h2><span class="lang-tr">Yorumlar</span><span class="lang-en">Comments</span></h2>
-                <div id="disqus_thread"></div>
-                <script>
-                    (function() { 
-                    var d = document, s = d.createElement('script');
-                    s.src = 'https://berkandanipuclari.disqus.com/embed.js';
-                    s.setAttribute('data-timestamp', +new Date());
-                    (d.head || d.body).appendChild(s);
-                    })();
-                </script>
+                <button onclick="copyToClipboard('p1')">Copy Prompt</button>
             </div>
 
         </div> <!-- End Main Content -->
@@ -284,12 +301,22 @@
         <!-- SIDEBAR -->
         <div id="sidebar">
             
+            <!-- YouTube Promo Widget -->
+            <div class="yt-promo">
+                <h3>Camekans</h3>
+                <p style="font-size: 13px; margin: 0; opacity: 0.9;">
+                    <span class="lang-tr">Daha fazla içerik için abone olun!</span>
+                    <span class="lang-en">Subscribe for more content!</span>
+                </p>
+                <a href="https://www.youtube.com/@Camekans" target="_blank">► Subscribe</a>
+            </div>
+
             <!-- Music Widget -->
             <div class="widget">
                 <div class="widget-title">Background Music</div>
                 <div class="widget-content" style="text-align: center;">
                     <audio id="bg-music" loop src="chill.mp3"></audio>
-                    <button id="music-btn" onclick="toggleBgMusic()">► Play Music</button>
+                    <button class="secondary" id="music-btn" onclick="toggleBgMusic()">► Play Music</button>
                 </div>
             </div>
 
@@ -297,26 +324,33 @@
             <div class="widget">
                 <div class="widget-title">Voice Notes</div>
                 <div class="widget-content">
-                    <ul style="list-style-type: square; padding-left: 15px; margin: 0;">
-                        <li style="margin-bottom: 5px;">Social Media Intro <button onclick="toggleAudio('1')">Play</button><audio id="audio-1" src="1.mp3"></audio></li>
-                        <li style="margin-bottom: 5px;">Roadmap Audio <button onclick="toggleAudio('2')">Play</button><audio id="audio-2" src="2.mp3"></audio></li>
-                        <li style="margin-bottom: 5px;">Materials <button onclick="toggleAudio('3')">Play</button><audio id="audio-3" src="3.mp3"></audio></li>
+                    <ul style="list-style-type: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                            Social Media Intro 
+                            <button class="secondary" onclick="toggleAudio('1')">Play</button>
+                            <audio id="audio-1" src="1.mp3"></audio>
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                            Roadmap Audio 
+                            <button class="secondary" onclick="toggleAudio('2')">Play</button>
+                            <audio id="audio-2" src="2.mp3"></audio>
+                        </li>
                     </ul>
                 </div>
             </div>
 
-            <!-- AI Chatbot (Moved from floating widget to classic sidebar box) -->
+            <!-- AI Chatbot (Hybrid look) -->
             <div class="widget">
                 <div class="widget-title">AI Assistant Chat</div>
                 <div class="widget-content">
                     <div id="chat-messages">
                         <div class="chat-msg">
-                            <strong class="chat-ai">AI Assistant:</strong> Hello! I am connected to Gemini AI via Berkan's backend. Ask me anything about English!
+                            <span class="chat-ai">Camekans AI:</span> Hello! I am connected via Camekans' backend. Ask me anything!
                         </div>
                     </div>
-                    <div style="display: flex;">
+                    <div style="display: flex; gap: 8px;">
                         <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
-                        <button onclick="sendMessage()" id="send-btn" style="width: 28%; margin-left: 2%;">Send</button>
+                        <button onclick="sendMessage()" id="send-btn" style="flex-shrink: 0;">Send</button>
                     </div>
                 </div>
             </div>
@@ -325,27 +359,42 @@
             <div class="widget">
                 <div class="widget-title">Newsletter</div>
                 <div class="widget-content">
-                    <p><span class="lang-tr">İpuçlarını Kaçırma!</span><span class="lang-en">Don't Miss Tips!</span></p>
-                    <input type="email" placeholder="Email Address" style="width: 90%; margin-bottom: 5px;">
-                    <button>Subscribe</button>
+                    <p style="margin-top: 0;"><span class="lang-tr">İpuçlarını Kaçırma!</span><span class="lang-en">Don't Miss Tips!</span></p>
+                    <input type="email" placeholder="Email Address" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                    <button style="width: 100%;">Subscribe</button>
                 </div>
             </div>
 
         </div> <!-- End Sidebar -->
         
-        <div class="clear"></div>
     </div> <!-- End Content Area -->
 
+    <!-- Disqus Comments (Full Width Bottom) -->
+    <div style="padding: 0 30px 30px 30px;">
+        <div class="section-box" style="margin-bottom: 0;">
+            <h2><span class="lang-tr">Yorumlar</span><span class="lang-en">Comments</span></h2>
+            <div id="disqus_thread"></div>
+            <script>
+                (function() { 
+                var d = document, s = d.createElement('script');
+                s.src = 'https://berkandanipuclari.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+            </script>
+        </div>
+    </div>
+
     <div id="footer">
-        <span class="lang-tr">Berkan'dan İpuçları &copy; 2010 - 2026. Tüm hakları saklıdır.</span>
-        <span class="lang-en">Berkan's Tips &copy; 2010 - 2026. All rights reserved.</span>
-        <br>
-        Best viewed in Internet Explorer 8.0+ at 1024x768 resolution.
+        <span class="lang-tr">Camekans &copy; 2026. Tüm hakları saklıdır.</span>
+        <span class="lang-en">Camekans &copy; 2026. All rights reserved.</span>
+        <br><br>
+        <a href="https://www.youtube.com/@Camekans" target="_blank">YouTube</a> | 
+        <a href="#header">Back to top</a>
     </div>
 
 </div>
 
-<!-- Old school alert style fallback for toast -->
 <script src="script.js"></script>
 </body>
 </html>
